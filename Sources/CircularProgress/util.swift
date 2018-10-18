@@ -162,13 +162,6 @@ extension NSFont {
 }
 
 
-//private extension NSColor {
-//	func with(alpha: Double) -> NSColor {
-//		return withAlphaComponent(CGFloat(alpha))
-//	}
-//}
-
-
 extension NSBezierPath {
 	static func circle(radius: Double, center: CGPoint) -> NSBezierPath {
 		let path = NSBezierPath()
