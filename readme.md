@@ -1,6 +1,6 @@
 # CircularProgress
 
-> Circular progress indicator your macOS app
+> Circular progress indicator for your macOS app
 
 <img src="screenshot.gif" width="834">
 
