@@ -41,7 +41,7 @@ public final class CircularProgress: NSView {
 	/**
 	Show `✔` instead `100%`.
 	*/
-	@IBInspectable public var showCheckmarkAtHundredPercent = true
+	@IBInspectable public var showCheckmarkAtHundredPercent: Bool = true
 
 	/**
 	The progress value in the range `0...1`.
