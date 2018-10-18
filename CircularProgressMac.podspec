@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 	s.name = 'CircularProgressMac'
-	s.version = '0.1.0'
+	s.version = '0.1.1'
 	s.summary = 'Circular progress indicator for macOS apps'
 	s.license = 'MIT'
 	s.homepage = 'https://github.com/sindresorhus/CircularProgress'
