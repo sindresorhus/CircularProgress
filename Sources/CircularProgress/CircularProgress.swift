@@ -90,6 +90,11 @@ public final class CircularProgress: NSView {
 		commonInit()
 	}
 
+	override public func prepareForInterfaceBuilder() {
+		commonInit()
+		progressCircle.progress = _progress
+	}
+
 	/**
 	Initialize the progress view with a width/height of the given `size`.
 	*/
