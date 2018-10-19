@@ -6,6 +6,62 @@ func delay(seconds: TimeInterval, closure: @escaping () -> Void) {
 }
 
 
+extension Collection {
+	/**
+	Returns a infinite sequence with consecutively unique random elements from the collection.
+
+	```
+	let x = [1, 2, 3].uniqueRandomElementIterator()
+
+	x.next()
+	//=> 2
+	x.next()
+	//=> 1
+
+	for element in x.prefix(2) {
+		print(element)
+	}
+	//=> 3
+	//=> 1
+	```
+	*/
+	func uniqueRandomElementIterator() -> AnyIterator<Element> {
+		var previousNumber: Int?
+
+		return AnyIterator {
+			var offset: Int
+			repeat {
+				offset = Int.random(in: 0..<self.count)
+			} while offset == previousNumber
+			previousNumber = offset
+
+			let index = self.index(self.startIndex, offsetBy: offset)
+			return self[index]
+		}
+	}
+}
+
+
+extension NSColor {
+	static let systemColors: Set<NSColor> = [
+		.systemBlue,
+		.systemBrown,
+		.systemGray,
+		.systemGreen,
+		.systemOrange,
+		.systemPink,
+		.systemPurple,
+		.systemRed,
+		.systemYellow
+	]
+
+	private static let uniqueRandomSystemColors = systemColors.uniqueRandomElementIterator()
+	static func uniqueRandomSystemColor() -> NSColor {
+		return uniqueRandomSystemColors.next()!
+	}
+}
+
+
 extension CGRect {
 	/**
 	Returns a CGRect where `self` is centered in `rect`
