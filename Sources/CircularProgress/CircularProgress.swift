@@ -116,12 +116,11 @@ public final class CircularProgress: NSView {
 		layer?.addSublayer(progressLabel)
 	}
 
+	#if TARGET_INTERFACE_BUILDER
 	public override func viewDidMoveToWindow() {
 		super.viewDidMoveToWindow()
 
-		#if TARGET_INTERFACE_BUILDER
 		enforceAspectRatio()
-		#endif
 	}
 
 	private func enforceAspectRatio() {
@@ -133,6 +132,7 @@ public final class CircularProgress: NSView {
 										 multiplier: 1,
 										 constant: 0))
 	}
+	#endif
 
 	/**
 	Reset the progress back to zero without animating.
