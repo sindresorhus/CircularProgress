@@ -20,9 +20,10 @@ public final class CircularProgress: NSView {
 
 	private lazy var progressLabel = with(CATextLayer(text: "0%")) {
 		$0.color = color
-		$0.frame = bounds
 		$0.fontSize = bounds.width * 0.2
-		$0.position.y = bounds.midY * 0.25
+		$0.frame = CGRect(x: 0, y: 0, width: bounds.width, height: $0.preferredFrameSize().height)
+		$0.position = CGPoint(x: bounds.midX, y: bounds.midY)
+		$0.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 		$0.alignmentMode = .center
 		$0.font = NSFont.helveticaNeueLight // Not using the system font as it has too much number width variance
 	}
@@ -113,6 +114,24 @@ public final class CircularProgress: NSView {
 		layer?.addSublayer(backgroundCircle)
 		layer?.addSublayer(progressCircle)
 		layer?.addSublayer(progressLabel)
+	}
+
+	public override func viewDidMoveToWindow() {
+		super.viewDidMoveToWindow()
+
+		#if TARGET_INTERFACE_BUILDER
+		enforceAspectRatio()
+		#endif
+	}
+
+	private func enforceAspectRatio() {
+		addConstraint(NSLayoutConstraint(item: self,
+										 attribute: .height,
+										 relatedBy: .equal,
+										 toItem: self,
+										 attribute: .width,
+										 multiplier: 1,
+										 constant: 0))
 	}
 
 	/**
