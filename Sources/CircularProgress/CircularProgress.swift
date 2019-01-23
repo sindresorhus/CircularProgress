@@ -145,10 +145,7 @@ public final class CircularProgress: NSView {
 		progressLabel.string = "0%"
 	}
 
-	/**
-	Cancel the progress.
-	*/
-	public func cancelProgress() {
+	private func cancelProgress() {
 		progressInstance?.cancel()
 		resetProgress()
 	}

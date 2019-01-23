@@ -86,6 +86,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 }
 ```
 
+Setting a `Progress` object that `isCancellable` automatically enables the cancel button.
 
 ## API
 
