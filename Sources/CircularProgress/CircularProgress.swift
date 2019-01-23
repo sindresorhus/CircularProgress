@@ -162,7 +162,7 @@ public final class CircularProgress: NSView {
 			removeTrackingArea(oldTrackingArea)
 		}
 
-		guard onCancel != nil else {
+		guard progressInstance?.isCancellable != nil else {
 			return
 		}
 
@@ -180,14 +180,8 @@ public final class CircularProgress: NSView {
 		trackingArea = newTrackingArea
 	}
 
-	public var onCancel: CancelClosure? {
-		didSet {
-			updateTrackingAreas()
-		}
-	}
-
 	override public func mouseEntered(with event: NSEvent) {
-		guard onCancel != nil, progressInstance?.isCancellable ?? false else {
+		guard progressInstance?.isCancellable ?? false else {
 			super.mouseEntered(with: event)
 			return
 		}
@@ -197,7 +191,7 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func mouseExited(with event: NSEvent) {
-		guard onCancel != nil, progressInstance?.isCancellable ?? false else {
+		guard progressInstance?.isCancellable ?? false else {
 			super.mouseExited(with: event)
 			return
 		}

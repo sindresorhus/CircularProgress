@@ -15,10 +15,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		circularProgress.showCheckmarkAtHundredPercent = true
 
-		circularProgress.onCancel = {
-			print("Should cancel")
-		}
-
 		animateWithRandomColor()
 	}
 
@@ -26,18 +22,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 		return true
 	}
 
-	func animateWithRandomColor() {
+	private func animateWithRandomColor() {
 		var startAnimating: (() -> Void)!
 		var timer: Timer!
 
 		startAnimating = {
+			let progress = Progress(totalUnitCount: 50)
+			self.circularProgress.progressInstance = progress
+
 			self.circularProgress.resetProgress()
 			self.circularProgress.color = NSColor.uniqueRandomSystemColor()
 
 			timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
-				self.circularProgress.progress += 0.01
+				progress.completedUnitCount += 1
 
-				if self.circularProgress.progress == 1 {
+				if progress.isFinished || progress.isCancelled {
 					timer.invalidate()
 
 					delay(seconds: 1) {
