@@ -4,8 +4,7 @@ import CircularProgress
 @NSApplicationMain
 final class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet private var window: NSWindow!
-
-	let circularProgress = CircularProgress(size: 200)
+	@IBOutlet var circularProgress: CircularProgress!
 
 	func applicationWillFinishLaunching(_ notification: Notification) {
 		window.isMovableByWindowBackground = true
@@ -14,11 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 
 	func applicationDidFinishLaunching(_ notification: Notification) {
-		let view = window.contentView!
-
-		circularProgress.frame = circularProgress.frame.centered(in: view.bounds)
 		circularProgress.showCheckmarkAtHundredPercent = true
-		view.addSubview(circularProgress)
 
 		animateWithRandomColor()
 	}
