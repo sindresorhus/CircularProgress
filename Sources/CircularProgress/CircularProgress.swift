@@ -155,8 +155,6 @@ public final class CircularProgress: NSView {
 
 	private var trackingArea: NSTrackingArea?
 
-	public typealias CancelClosure = (() -> Void)
-
 	override public func updateTrackingAreas() {
 		if let oldTrackingArea = trackingArea {
 			removeTrackingArea(oldTrackingArea)
@@ -167,7 +165,7 @@ public final class CircularProgress: NSView {
 		}
 
 		let newTrackingArea = NSTrackingArea(
-			rect: bounds,
+			rect: cancelButton.frame,
 			options: [
 				.mouseEnteredAndExited,
 				.activeInActiveApp
