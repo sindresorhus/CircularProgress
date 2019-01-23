@@ -28,6 +28,17 @@ public final class CircularProgress: NSView {
 		$0.font = NSFont.helveticaNeueLight // Not using the system font as it has too much number width variance
 	}
 
+	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
+		$0.textColor = color
+		$0.backgroundColor = color.with(alpha: 0.1)
+		$0.activeBackgroundColor = color
+		$0.borderWidth = 0
+		$0.isHidden = true
+		$0.onAction = { _ in
+			self.cancelProgress()
+		}
+	}
+
 	/**
 	Color of the circular progress view.
 
@@ -61,7 +72,9 @@ public final class CircularProgress: NSView {
 				self.progressCircle.progress = self._progress
 			})
 
-			progressLabel.string = showCheckmarkAtHundredPercent && _progress == 1 ? "✔" : "\(Int(_progress * 100))%"
+			if !progressLabel.isHidden {
+				progressLabel.string = showCheckmarkAtHundredPercent && _progress == 1 ? "✓" : "\(Int(_progress * 100))%"
+			}
 
 			// TODO: Figure out why I need to flush here to get the label to update in `Gifski.app`.
 			CATransaction.flush()
@@ -108,6 +121,10 @@ public final class CircularProgress: NSView {
 		backgroundCircle.strokeColor = color.with(alpha: 0.5).cgColor
 		progressCircle.strokeColor = color.cgColor
 		progressLabel.foregroundColor = color.cgColor
+
+		cancelButton.textColor = color
+		cancelButton.backgroundColor = color.with(alpha: 0.1)
+		cancelButton.activeBackgroundColor = color
 	}
 
 	private func commonInit() {
@@ -115,6 +132,8 @@ public final class CircularProgress: NSView {
 		layer?.addSublayer(backgroundCircle)
 		layer?.addSublayer(progressCircle)
 		layer?.addSublayer(progressLabel)
+
+		addSubview(cancelButton)
 	}
 
 	/**
@@ -124,5 +143,66 @@ public final class CircularProgress: NSView {
 		_progress = 0
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
+	}
+
+	/**
+	Cancel the progress.
+	*/
+	public func cancelProgress() {
+		progressInstance?.cancel()
+		resetProgress()
+	}
+
+	private var trackingArea: NSTrackingArea?
+
+	public typealias CancelClosure = (() -> Void)
+
+	override public func updateTrackingAreas() {
+		if let oldTrackingArea = trackingArea {
+			removeTrackingArea(oldTrackingArea)
+		}
+
+		guard onCancel != nil else {
+			return
+		}
+
+		let newTrackingArea = NSTrackingArea(
+			rect: bounds,
+			options: [
+				.mouseEnteredAndExited,
+				.activeInActiveApp
+			],
+			owner: self,
+			userInfo: nil
+		)
+
+		addTrackingArea(newTrackingArea)
+		trackingArea = newTrackingArea
+	}
+
+	public var onCancel: CancelClosure? {
+		didSet {
+			updateTrackingAreas()
+		}
+	}
+
+	override public func mouseEntered(with event: NSEvent) {
+		guard onCancel != nil, progressInstance?.isCancellable ?? false else {
+			super.mouseEntered(with: event)
+			return
+		}
+
+		progressLabel.isHidden = true
+		cancelButton.fadeIn()
+	}
+
+	override public func mouseExited(with event: NSEvent) {
+		guard onCancel != nil, progressInstance?.isCancellable ?? false else {
+			super.mouseExited(with: event)
+			return
+		}
+
+		progressLabel.isHidden = false
+		cancelButton.isHidden = true
 	}
 }

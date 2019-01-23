@@ -15,6 +15,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		circularProgress.showCheckmarkAtHundredPercent = true
 
+		circularProgress.onCancel = {
+			print("Should cancel")
+		}
+
 		animateWithRandomColor()
 	}
 
