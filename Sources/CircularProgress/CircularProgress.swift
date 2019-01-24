@@ -198,13 +198,14 @@ public final class CircularProgress: NSView {
 			isCancelled = true
 			return
 		}
+
 		progressInstance.cancel()
 	}
 
 	/**
 	Triggers when the progress was cancelled succesfully.
 	*/
-	public var onCancelled: (() -> Void)?
+	public var onCancelled: ((CircularProgress) -> Void)?
 
 	public var _isCancellable = false
 	/**
@@ -219,6 +220,7 @@ public final class CircularProgress: NSView {
 		}
 		set {
 			_isCancellable = newValue
+
 			updateTrackingAreas()
 		}
 	}
@@ -232,12 +234,14 @@ public final class CircularProgress: NSView {
 			if let progressInstance = progressInstance {
 				return progressInstance.isCancelled
 			}
+
 			return _isCancelled
 		}
 		set {
 			_isCancelled = newValue
+
 			if newValue {
-				onCancelled?()
+				onCancelled?(self)
 			}
 		}
 	}
