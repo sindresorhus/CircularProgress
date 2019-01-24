@@ -121,6 +121,31 @@ Reset the progress back to zero without animating.
 */
 func resetProgress() {}
 
+/**
+Cancels `Progress` if it's set and prevents further updates.
+*/
+public func cancelProgress() {}
+
+/**
+Triggers when the progress was cancelled succesfully.
+*/
+public var onCancelled: (() -> Void)?
+
+/**
+Returns whether the progress is finished.
+*/
+@IBInspectable public private(set) var isFinished: Bool
+
+/**
+If the progress view is cancellable it shows the cancel button.
+*/
+@IBInspectable public var isCancellable: Bool
+
+/**
+Returns whether the progress has been cancelled.
+*/
+@IBInspectable public private(set) var isCancelled: Bool
+
 init(frame: CGRect) {}
 init?(coder: NSCoder) {}
 

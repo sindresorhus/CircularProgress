@@ -88,6 +88,9 @@ public final class CircularProgress: NSView {
 	}
 
 	private var _isFinished = false
+	/**
+	Returns whether the progress is finished.
+	*/
 	@IBInspectable public private(set) var isFinished: Bool {
 		get {
 			if let progressInstance = progressInstance {
@@ -198,9 +201,15 @@ public final class CircularProgress: NSView {
 		progressInstance.cancel()
 	}
 
+	/**
+	Triggers when the progress was cancelled succesfully.
+	*/
 	public var onCancelled: (() -> Void)?
 
 	public var _isCancellable = false
+	/**
+	If the progress view is cancellable it shows the cancel button.
+	*/
 	@IBInspectable public var isCancellable: Bool {
 		get {
 			if let progressInstance = progressInstance {
@@ -215,6 +224,9 @@ public final class CircularProgress: NSView {
 	}
 
 	private var _isCancelled = false
+	/**
+	Returns whether the progress has been cancelled.
+	*/
 	@IBInspectable public private(set) var isCancelled: Bool {
 		get {
 			if let progressInstance = progressInstance {
