@@ -6,6 +6,8 @@ public final class CircularProgress: NSView {
 	private lazy var radius = bounds.width < bounds.height ? bounds.midX * 0.8 : bounds.midY * 0.8
 	private var _progress: Double = 0
 	private var progressObserver: NSKeyValueObservation?
+	private var finishedObserver: NSKeyValueObservation?
+	private var cancelledObserver: NSKeyValueObservation?
 
 	private lazy var backgroundCircle = with(CAShapeLayer.circle(radius: Double(radius), center: bounds.center)) {
 		$0.frame = bounds
@@ -73,11 +75,32 @@ public final class CircularProgress: NSView {
 			})
 
 			if !progressLabel.isHidden {
-				progressLabel.string = showCheckmarkAtHundredPercent && _progress == 1 ? "✓" : "\(Int(_progress * 100))%"
+				progressLabel.string = "\(Int(_progress * 100))%"
+			}
+
+			if _progress == 1 {
+				isFinished = true
 			}
 
 			// TODO: Figure out why I need to flush here to get the label to update in `Gifski.app`.
 			CATransaction.flush()
+		}
+	}
+
+	private var _isFinished = false
+	@IBInspectable public private(set) var isFinished: Bool {
+		get {
+			if let progressInstance = progressInstance {
+				return progressInstance.isFinished
+			}
+			return _isFinished
+		}
+		set {
+			_isFinished = newValue
+
+			if _isFinished && showCheckmarkAtHundredPercent {
+				progressLabel.string = "✓"
+			}
 		}
 	}
 
@@ -88,8 +111,22 @@ public final class CircularProgress: NSView {
 		didSet {
 			if let progressInstance = progressInstance {
 				progressObserver = progressInstance.observe(\.fractionCompleted) { sender, _ in
+					guard !self.isCancelled && !sender.isFinished else {
+						return
+					}
 					self.progress = sender.fractionCompleted
 				}
+				finishedObserver = progressInstance.observe(\.isFinished) { sender, _ in
+					guard !sender.isCancelled && sender.isFinished else {
+						return
+					}
+					self.progress = 1
+				}
+				cancelledObserver = progressInstance.observe(\.isCancelled) { sender, _ in
+					self.isCancelled = sender.isCancelled
+				}
+
+				isCancellable = progressInstance.isCancellable
 			}
 		}
 	}
@@ -141,13 +178,56 @@ public final class CircularProgress: NSView {
 	*/
 	public func resetProgress() {
 		_progress = 0
+		_isFinished = false
+		_isCancelled = false
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
 	}
 
-	private func cancelProgress() {
-		progressInstance?.cancel()
-		resetProgress()
+	/**
+	Cancels `Progress` if it's set and prevents further updates.
+	*/
+	public func cancelProgress() {
+		guard isCancellable else {
+			return
+		}
+		guard let progressInstance = progressInstance else {
+			isCancelled = true
+			return
+		}
+		progressInstance.cancel()
+	}
+
+	public var onCancelled: (() -> Void)?
+
+	public var _isCancellable = false
+	@IBInspectable public var isCancellable: Bool {
+		get {
+			if let progressInstance = progressInstance {
+				return progressInstance.isCancellable
+			}
+			return _isCancellable
+		}
+		set {
+			_isCancellable = newValue
+			updateTrackingAreas()
+		}
+	}
+
+	private var _isCancelled = false
+	@IBInspectable public private(set) var isCancelled: Bool {
+		get {
+			if let progressInstance = progressInstance {
+				return progressInstance.isCancelled
+			}
+			return _isCancelled
+		}
+		set {
+			_isCancelled = newValue
+			if newValue {
+				onCancelled?()
+			}
+		}
 	}
 
 	private var trackingArea: NSTrackingArea?
@@ -157,7 +237,7 @@ public final class CircularProgress: NSView {
 			removeTrackingArea(oldTrackingArea)
 		}
 
-		guard progressInstance?.isCancellable != nil else {
+		guard isCancellable else {
 			return
 		}
 
@@ -176,7 +256,7 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func mouseEntered(with event: NSEvent) {
-		guard progressInstance?.isCancellable ?? false else {
+		guard isCancellable else {
 			super.mouseEntered(with: event)
 			return
 		}
@@ -186,7 +266,7 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func mouseExited(with event: NSEvent) {
-		guard progressInstance?.isCancellable ?? false else {
+		guard isCancellable else {
 			super.mouseExited(with: event)
 			return
 		}

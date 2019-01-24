@@ -4,7 +4,8 @@ import CircularProgress
 @NSApplicationMain
 final class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet private var window: NSWindow!
-	@IBOutlet private var circularProgress: CircularProgress!
+	@IBOutlet private var manualCircularProgress: CircularProgress!
+	@IBOutlet private var progressCircularProgress: CircularProgress!
 
 	func applicationWillFinishLaunching(_ notification: Notification) {
 		window.isMovableByWindowBackground = true
@@ -13,30 +14,62 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 
 	func applicationDidFinishLaunching(_ notification: Notification) {
-		circularProgress.showCheckmarkAtHundredPercent = true
-
-		animateWithRandomColor()
+		configureManualView()
+		configureProgressBasedView()
 	}
 
 	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
 		return true
 	}
 
-	private func animateWithRandomColor() {
+	private func configureManualView() {
+		manualCircularProgress.onCancelled = {
+			print("Manual cancelled!")
+		}
+
+		animateWithRandomColor(manualCircularProgress, start: { circularProgress in
+
+			circularProgress.resetProgress()
+
+		}, tick: { circularProgress in
+
+			circularProgress.progress += 0.01
+
+		})
+
+	}
+
+	private func configureProgressBasedView() {
+		progressCircularProgress.onCancelled = {
+			print("Progress cancelled!")
+		}
+
+		animateWithRandomColor(progressCircularProgress, start: { circularProgress in
+
+			circularProgress.resetProgress()
+
+			let progress = Progress(totalUnitCount: 50)
+			circularProgress.progressInstance = progress
+
+		}, tick: { circularProgress in
+
+			circularProgress.progressInstance?.completedUnitCount += 1
+
+		})
+	}
+
+	private func animateWithRandomColor(_ circularProgress: CircularProgress, start: @escaping (CircularProgress) -> Void, tick: @escaping (CircularProgress) -> Void) {
 		var startAnimating: (() -> Void)!
 		var timer: Timer!
 
 		startAnimating = {
-			let progress = Progress(totalUnitCount: 50)
-			self.circularProgress.progressInstance = progress
-
-			self.circularProgress.resetProgress()
-			self.circularProgress.color = NSColor.uniqueRandomSystemColor()
+			circularProgress.color = NSColor.uniqueRandomSystemColor()
+			start(circularProgress)
 
 			timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
-				progress.completedUnitCount += 1
+				tick(circularProgress)
 
-				if progress.isFinished || progress.isCancelled {
+				if circularProgress.isFinished || circularProgress.isCancelled {
 					timer.invalidate()
 
 					delay(seconds: 1) {
