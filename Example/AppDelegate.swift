@@ -23,8 +23,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 
 	private func configureManualView() {
-		manualCircularProgress.onCancelled = { circularProgress in
-			circularProgress.alphaValue = 0.3
+		manualCircularProgress.onCancelled = {
+			self.manualCircularProgress.alphaValue = 0.3
 		}
 
 		animateWithRandomColor(
@@ -40,8 +40,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 
 	private func configureProgressBasedView() {
-		progressCircularProgress.onCancelled = { circularProgress in
-			circularProgress.alphaValue = 0.3
+		progressCircularProgress.onCancelled = {
+			self.manualCircularProgress.alphaValue = 0.3
 		}
 
 		animateWithRandomColor(

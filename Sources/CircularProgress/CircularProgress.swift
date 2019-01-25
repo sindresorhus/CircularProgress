@@ -211,7 +211,7 @@ public final class CircularProgress: NSView {
 	/**
 	Triggers when the progress was cancelled succesfully.
 	*/
-	public var onCancelled: ((CircularProgress) -> Void)?
+	public var onCancelled: (() -> Void)?
 
 	public var _isCancellable = false
 	/**
@@ -247,7 +247,7 @@ public final class CircularProgress: NSView {
 			_isCancelled = newValue
 
 			if newValue {
-				onCancelled?(self)
+				onCancelled?()
 			}
 		}
 	}
