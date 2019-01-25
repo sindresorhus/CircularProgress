@@ -96,6 +96,7 @@ public final class CircularProgress: NSView {
 			if let progressInstance = progressInstance {
 				return progressInstance.isFinished
 			}
+
 			return _isFinished
 		}
 		set {
@@ -117,14 +118,18 @@ public final class CircularProgress: NSView {
 					guard !self.isCancelled && !sender.isFinished else {
 						return
 					}
+
 					self.progress = sender.fractionCompleted
 				}
+
 				finishedObserver = progressInstance.observe(\.isFinished) { sender, _ in
 					guard !sender.isCancelled && sender.isFinished else {
 						return
 					}
+
 					self.progress = 1
 				}
+
 				cancelledObserver = progressInstance.observe(\.isCancelled) { sender, _ in
 					self.isCancelled = sender.isCancelled
 				}
@@ -194,6 +199,7 @@ public final class CircularProgress: NSView {
 		guard isCancellable else {
 			return
 		}
+
 		guard let progressInstance = progressInstance else {
 			isCancelled = true
 			return
@@ -216,11 +222,11 @@ public final class CircularProgress: NSView {
 			if let progressInstance = progressInstance {
 				return progressInstance.isCancellable
 			}
+
 			return _isCancellable
 		}
 		set {
 			_isCancellable = newValue
-
 			updateTrackingAreas()
 		}
 	}
