@@ -92,6 +92,7 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func prepareForInterfaceBuilder() {
+		super.prepareForInterfaceBuilder()
 		commonInit()
 		progressCircle.progress = _progress
 	}

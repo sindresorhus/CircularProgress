@@ -4,7 +4,7 @@ import CircularProgress
 @NSApplicationMain
 final class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet private var window: NSWindow!
-	@IBOutlet var circularProgress: CircularProgress!
+	@IBOutlet private var circularProgress: CircularProgress!
 
 	func applicationWillFinishLaunching(_ notification: Notification) {
 		window.isMovableByWindowBackground = true
