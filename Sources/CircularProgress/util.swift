@@ -314,7 +314,7 @@ extension NSControl {
 	let button = NSButton(title: "Unicorn", target: nil, action: nil)
 
 	button.onAction = { sender in
-	print("Button action: \(sender)")
+		print("Button action: \(sender)")
 	}
 	```
 	*/
@@ -337,7 +337,7 @@ extension NSView {
 		timingFunction: CAMediaTimingFunction = .default,
 		animations: @escaping (() -> Void),
 		completion: (() -> Void)? = nil
-		) {
+	) {
 		DispatchQueue.main.asyncAfter(duration: delay) {
 			NSAnimationContext.runAnimationGroup({ context in
 				context.allowsImplicitAnimation = true
@@ -356,7 +356,7 @@ extension NSView {
 			delay: delay,
 			animations: {
 				self.isHidden = false
-		},
+			},
 			completion: completion
 		)
 	}
