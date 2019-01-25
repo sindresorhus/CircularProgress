@@ -27,17 +27,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 			circularProgress.alphaValue = 0.3
 		}
 
-		animateWithRandomColor(manualCircularProgress, start: { circularProgress in
-
-			circularProgress.alphaValue = 1.0
-			circularProgress.resetProgress()
-
-		}, tick: { circularProgress in
-
-			circularProgress.progress += 0.01
-
-		})
-
+		animateWithRandomColor(
+			manualCircularProgress,
+			start: { circularProgress in
+				circularProgress.alphaValue = 1.0
+				circularProgress.resetProgress()
+			},
+			tick: { circularProgress in
+				circularProgress.progress += 0.01
+			}
+		)
 	}
 
 	private func configureProgressBasedView() {
@@ -45,22 +44,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 			circularProgress.alphaValue = 0.3
 		}
 
-		animateWithRandomColor(progressCircularProgress, start: { circularProgress in
+		animateWithRandomColor(
+			progressCircularProgress,
+			start: { circularProgress in
+				circularProgress.alphaValue = 1.0
+				circularProgress.resetProgress()
 
-			circularProgress.alphaValue = 1.0
-			circularProgress.resetProgress()
-
-			let progress = Progress(totalUnitCount: 50)
-			circularProgress.progressInstance = progress
-
-		}, tick: { circularProgress in
-
-			circularProgress.progressInstance?.completedUnitCount += 1
-
-		})
+				let progress = Progress(totalUnitCount: 50)
+				circularProgress.progressInstance = progress
+			},
+			tick: { circularProgress in
+				circularProgress.progressInstance?.completedUnitCount += 1
+			}
+		)
 	}
 
-	private func animateWithRandomColor(_ circularProgress: CircularProgress, start: @escaping (CircularProgress) -> Void, tick: @escaping (CircularProgress) -> Void) {
+	private func animateWithRandomColor(
+		_ circularProgress: CircularProgress,
+		start: @escaping (CircularProgress) -> Void,
+		tick: @escaping (CircularProgress
+	) -> Void) {
 		var startAnimating: (() -> Void)!
 		var timer: Timer!
 
