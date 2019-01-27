@@ -62,8 +62,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	private func animateWithRandomColor(
 		_ circularProgress: CircularProgress,
 		start: @escaping (CircularProgress) -> Void,
-		tick: @escaping (CircularProgress
-	) -> Void) {
+		tick: @escaping (CircularProgress) -> Void
+	) {
 		var startAnimating: (() -> Void)!
 		var timer: Timer!
 
