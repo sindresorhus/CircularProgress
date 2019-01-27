@@ -284,3 +284,80 @@ extension NSBezierPath {
 		self.init(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
 	}
 }
+
+final class AssociatedObject<T: Any> {
+	subscript(index: Any) -> T? {
+		get {
+			return objc_getAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque()) as! T?
+		} set {
+			objc_setAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque(), newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+		}
+	}
+}
+
+extension NSControl {
+	typealias ActionClosure = ((NSControl) -> Void)
+
+	private struct AssociatedKeys {
+		static let onActionClosure = AssociatedObject<ActionClosure>()
+	}
+
+	@objc
+	private func callClosure(_ sender: NSControl) {
+		onAction?(sender)
+	}
+
+	/**
+	Closure version of `.action`
+
+	```
+	let button = NSButton(title: "Unicorn", target: nil, action: nil)
+
+	button.onAction = { sender in
+		print("Button action: \(sender)")
+	}
+	```
+	*/
+	var onAction: ActionClosure? {
+		get {
+			return AssociatedKeys.onActionClosure[self]
+		}
+		set {
+			AssociatedKeys.onActionClosure[self] = newValue
+			action = #selector(callClosure)
+			target = self
+		}
+	}
+}
+
+extension NSView {
+	static func animate(
+		duration: TimeInterval = 1,
+		delay: TimeInterval = 0,
+		timingFunction: CAMediaTimingFunction = .default,
+		animations: @escaping (() -> Void),
+		completion: (() -> Void)? = nil
+	) {
+		DispatchQueue.main.asyncAfter(duration: delay) {
+			NSAnimationContext.runAnimationGroup({ context in
+				context.allowsImplicitAnimation = true
+				context.duration = duration
+				context.timingFunction = timingFunction
+				animations()
+			}, completionHandler: completion)
+		}
+	}
+
+	func fadeIn(duration: TimeInterval = 1, delay: TimeInterval = 0, completion: (() -> Void)? = nil) {
+		isHidden = true
+
+		NSView.animate(
+			duration: duration,
+			delay: delay,
+			animations: {
+				self.isHidden = false
+			},
+			completion: completion
+		)
+	}
+}

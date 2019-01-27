@@ -86,6 +86,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 }
 ```
 
+Setting a `Progress` object that is [`isCancellable`](https://developer.apple.com/documentation/foundation/progress/1409348-iscancellable) automatically enables the cancel button.
+
 
 ## API
 
@@ -118,6 +120,31 @@ var progressInstance: Progress?
 Reset the progress back to zero without animating.
 */
 func resetProgress() {}
+
+/**
+Cancels `Progress` if it's set and prevents further updates.
+*/
+func cancelProgress() {}
+
+/**
+Triggers when the progress was cancelled succesfully.
+*/
+var onCancelled: (() -> Void)?
+
+/**
+Returns whether the progress is finished.
+*/
+@IBInspectable private(set) var isFinished: Bool
+
+/**
+If the progress view is cancellable it shows the cancel button.
+*/
+@IBInspectable var isCancellable: Bool
+
+/**
+Returns whether the progress has been cancelled.
+*/
+@IBInspectable private(set) var isCancelled: Bool
 
 init(frame: CGRect) {}
 init?(coder: NSCoder) {}

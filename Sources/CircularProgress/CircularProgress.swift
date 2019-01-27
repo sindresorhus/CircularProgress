@@ -6,6 +6,8 @@ public final class CircularProgress: NSView {
 	private lazy var radius = bounds.width < bounds.height ? bounds.midX * 0.8 : bounds.midY * 0.8
 	private var _progress: Double = 0
 	private var progressObserver: NSKeyValueObservation?
+	private var finishedObserver: NSKeyValueObservation?
+	private var cancelledObserver: NSKeyValueObservation?
 
 	private lazy var backgroundCircle = with(CAShapeLayer.circle(radius: Double(radius), center: bounds.center)) {
 		$0.frame = bounds
@@ -26,6 +28,17 @@ public final class CircularProgress: NSView {
 		$0.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 		$0.alignmentMode = .center
 		$0.font = NSFont.helveticaNeueLight // Not using the system font as it has too much number width variance
+	}
+
+	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
+		$0.textColor = color
+		$0.backgroundColor = color.with(alpha: 0.1)
+		$0.activeBackgroundColor = color
+		$0.borderWidth = 0
+		$0.isHidden = true
+		$0.onAction = { _ in
+			self.cancelProgress()
+		}
 	}
 
 	/**
@@ -61,10 +74,37 @@ public final class CircularProgress: NSView {
 				self.progressCircle.progress = self._progress
 			})
 
-			progressLabel.string = showCheckmarkAtHundredPercent && _progress == 1 ? "✔" : "\(Int(_progress * 100))%"
+			if !progressLabel.isHidden {
+				progressLabel.string = "\(Int(_progress * 100))%"
+			}
+
+			if _progress == 1 {
+				isFinished = true
+			}
 
 			// TODO: Figure out why I need to flush here to get the label to update in `Gifski.app`.
 			CATransaction.flush()
+		}
+	}
+
+	private var _isFinished = false
+	/**
+	Returns whether the progress is finished.
+	*/
+	@IBInspectable public private(set) var isFinished: Bool {
+		get {
+			if let progressInstance = progressInstance {
+				return progressInstance.isFinished
+			}
+
+			return _isFinished
+		}
+		set {
+			_isFinished = newValue
+
+			if _isFinished && showCheckmarkAtHundredPercent {
+				progressLabel.string = "✓"
+			}
 		}
 	}
 
@@ -75,8 +115,26 @@ public final class CircularProgress: NSView {
 		didSet {
 			if let progressInstance = progressInstance {
 				progressObserver = progressInstance.observe(\.fractionCompleted) { sender, _ in
+					guard !self.isCancelled && !sender.isFinished else {
+						return
+					}
+
 					self.progress = sender.fractionCompleted
 				}
+
+				finishedObserver = progressInstance.observe(\.isFinished) { sender, _ in
+					guard !self.isCancelled && sender.isFinished else {
+						return
+					}
+
+					self.progress = 1
+				}
+
+				cancelledObserver = progressInstance.observe(\.isCancelled) { sender, _ in
+					self.isCancelled = sender.isCancelled
+				}
+
+				isCancellable = progressInstance.isCancellable
 			}
 		}
 	}
@@ -108,6 +166,10 @@ public final class CircularProgress: NSView {
 		backgroundCircle.strokeColor = color.with(alpha: 0.5).cgColor
 		progressCircle.strokeColor = color.cgColor
 		progressLabel.foregroundColor = color.cgColor
+
+		cancelButton.textColor = color
+		cancelButton.backgroundColor = color.with(alpha: 0.1)
+		cancelButton.activeBackgroundColor = color
 	}
 
 	private func commonInit() {
@@ -115,6 +177,8 @@ public final class CircularProgress: NSView {
 		layer?.addSublayer(backgroundCircle)
 		layer?.addSublayer(progressCircle)
 		layer?.addSublayer(progressLabel)
+
+		addSubview(cancelButton)
 	}
 
 	/**
@@ -122,7 +186,114 @@ public final class CircularProgress: NSView {
 	*/
 	public func resetProgress() {
 		_progress = 0
+		_isFinished = false
+		_isCancelled = false
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
+	}
+
+	/**
+	Cancels `Progress` if it's set and prevents further updates.
+	*/
+	public func cancelProgress() {
+		guard isCancellable else {
+			return
+		}
+
+		guard let progressInstance = progressInstance else {
+			isCancelled = true
+			return
+		}
+
+		progressInstance.cancel()
+	}
+
+	/**
+	Triggers when the progress was cancelled succesfully.
+	*/
+	public var onCancelled: (() -> Void)?
+
+	public var _isCancellable = false
+	/**
+	If the progress view is cancellable it shows the cancel button.
+	*/
+	@IBInspectable public var isCancellable: Bool {
+		get {
+			if let progressInstance = progressInstance {
+				return progressInstance.isCancellable
+			}
+
+			return _isCancellable
+		}
+		set {
+			_isCancellable = newValue
+			updateTrackingAreas()
+		}
+	}
+
+	private var _isCancelled = false
+	/**
+	Returns whether the progress has been cancelled.
+	*/
+	@IBInspectable public private(set) var isCancelled: Bool {
+		get {
+			if let progressInstance = progressInstance {
+				return progressInstance.isCancelled
+			}
+
+			return _isCancelled
+		}
+		set {
+			_isCancelled = newValue
+
+			if newValue {
+				onCancelled?()
+			}
+		}
+	}
+
+	private var trackingArea: NSTrackingArea?
+
+	override public func updateTrackingAreas() {
+		if let oldTrackingArea = trackingArea {
+			removeTrackingArea(oldTrackingArea)
+		}
+
+		guard isCancellable else {
+			return
+		}
+
+		let newTrackingArea = NSTrackingArea(
+			rect: cancelButton.frame,
+			options: [
+				.mouseEnteredAndExited,
+				.activeInActiveApp
+			],
+			owner: self,
+			userInfo: nil
+		)
+
+		addTrackingArea(newTrackingArea)
+		trackingArea = newTrackingArea
+	}
+
+	override public func mouseEntered(with event: NSEvent) {
+		guard isCancellable else {
+			super.mouseEntered(with: event)
+			return
+		}
+
+		progressLabel.isHidden = true
+		cancelButton.fadeIn()
+	}
+
+	override public func mouseExited(with event: NSEvent) {
+		guard isCancellable else {
+			super.mouseExited(with: event)
+			return
+		}
+
+		progressLabel.isHidden = false
+		cancelButton.isHidden = true
 	}
 }

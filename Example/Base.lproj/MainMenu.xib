@@ -15,7 +15,8 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="CircularProgressExample" customModuleProvider="target">
             <connections>
-                <outlet property="circularProgress" destination="SMF-pk-TSv" id="f6e-4m-pcp"/>
+                <outlet property="manualCircularProgress" destination="Xhy-S9-VRc" id="arP-3C-To1"/>
+                <outlet property="progressCircularProgress" destination="w1Y-Wj-BvT" id="Fg3-nC-1Ys"/>
                 <outlet property="window" destination="qrA-6v-96X" id="o33-hG-5om"/>
             </connections>
         </customObject>
@@ -69,24 +70,49 @@
         <window title="CircularProgress Example" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="qrA-6v-96X">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="131" y="158" width="440" height="280"/>
+            <rect key="contentRect" x="131" y="158" width="440" height="300"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="NR7-Ty-MDa">
-                <rect key="frame" x="0.0" y="0.0" width="440" height="280"/>
+                <rect key="frame" x="0.0" y="0.0" width="440" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="SMF-pk-TSv" customClass="CircularProgress" customModule="CircularProgress">
-                        <rect key="frame" x="120" y="40" width="200" height="200"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Xhy-S9-VRc" customClass="CircularProgress" customModule="CircularProgress">
+                        <rect key="frame" x="20" y="50" width="200" height="200"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="200" id="8OA-5t-VSk"/>
-                            <constraint firstAttribute="width" constant="200" id="LB3-DI-RwH"/>
+                            <constraint firstAttribute="width" constant="200" id="F4V-GI-CZs"/>
+                            <constraint firstAttribute="height" constant="200" id="Uu5-lc-rUj"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="progress">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lSV-Ki-zTa">
+                        <rect key="frame" x="74" y="38" width="93" height="18"/>
+                        <buttonCell key="cell" type="check" title="Cancellable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="a9K-wg-1zs">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="manualCircularProgress.isCancellable" id="C7e-AQ-sqW"/>
+                        </connections>
+                    </button>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="w1Y-Wj-BvT" customClass="CircularProgress" customModule="CircularProgress">
+                        <rect key="frame" x="220" y="50" width="200" height="200"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="o6o-0R-3ld"/>
+                            <constraint firstAttribute="height" constant="200" id="wnt-rv-UYT"/>
                         </constraints>
                     </customView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="SMF-pk-TSv" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="b6t-f1-BUn"/>
-                    <constraint firstItem="SMF-pk-TSv" firstAttribute="centerX" secondItem="NR7-Ty-MDa" secondAttribute="centerX" id="cBs-wu-43p"/>
+                    <constraint firstItem="lSV-Ki-zTa" firstAttribute="centerX" secondItem="Xhy-S9-VRc" secondAttribute="centerX" id="9gn-kh-Bt6"/>
+                    <constraint firstItem="w1Y-Wj-BvT" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="J1e-dd-P63"/>
+                    <constraint firstItem="Xhy-S9-VRc" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="Yok-5s-sGU"/>
+                    <constraint firstItem="w1Y-Wj-BvT" firstAttribute="centerX" secondItem="NR7-Ty-MDa" secondAttribute="centerX" constant="100" id="iuz-Bf-AV5"/>
+                    <constraint firstItem="Xhy-S9-VRc" firstAttribute="centerX" secondItem="NR7-Ty-MDa" secondAttribute="centerX" constant="-100" id="jVm-sk-tQA"/>
+                    <constraint firstItem="lSV-Ki-zTa" firstAttribute="bottom" secondItem="Xhy-S9-VRc" secondAttribute="bottom" constant="10" id="mEX-K6-QkT"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="208" y="502"/>
