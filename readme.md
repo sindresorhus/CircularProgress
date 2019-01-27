@@ -19,7 +19,7 @@ This package is used in production by the [Gifski](https://github.com/sindresorh
 #### SwiftPM
 
 ```swift
-.package(url: "https://github.com/sindresorhus/CircularProgress", from: "0.1.3")
+.package(url: "https://github.com/sindresorhus/CircularProgress", from: "0.2.0")
 ```
 
 #### Carthage
