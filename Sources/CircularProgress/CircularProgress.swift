@@ -123,7 +123,7 @@ public final class CircularProgress: NSView {
 				}
 
 				finishedObserver = progressInstance.observe(\.isFinished) { sender, _ in
-					guard !sender.isCancelled && sender.isFinished else {
+					guard !self.isCancelled && sender.isFinished else {
 						return
 					}
 
