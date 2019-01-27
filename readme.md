@@ -86,7 +86,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 }
 ```
 
-Setting a `Progress` object that is [`isCancellable`](https://developer.apple.com/documentation/foundation/progress/1409348-iscancellable) automatically enables the cancel button.
+### Cancel button
+
+<img src="screenshot-cancel.gif" width="300" align="right">
+
+If you use the `.progress` property, you need to opt into the cancel button by setting `.isCancellable = true`. You can be notified of when the button is clicked by setting the `.onCancelled` property to a closure.
+
+If you use the `.progressInstance` property, setting a `Progress` object that is [`isCancellable`](https://developer.apple.com/documentation/foundation/progress/1409348-iscancellable), which is the default, automatically enables the cancel button.
 
 
 ## API
