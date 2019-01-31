@@ -2,6 +2,26 @@ import Cocoa
 
 // TODO(sindresorhus): I plan to extract this into a reusable package when it's more mature.
 
+/**
+Convenience class for adding a tracking area to a view.
+
+```
+final class HoverView: NSView {
+	private lazy var trackingArea = TrackingArea(
+		for: self,
+		options: [
+			.mouseEnteredAndExited,
+			.activeInActiveApp
+		]
+	)
+
+	override func updateTrackingAreas() {
+		super.updateTrackingAreas()
+		trackingArea.update()
+	}
+}
+```
+*/
 final class TrackingArea {
 	private let view: NSView
 	private let rect: CGRect
@@ -9,7 +29,9 @@ final class TrackingArea {
 	private var trackingArea: NSTrackingArea?
 
 	/**
-	- Parameter rect: Defaults to `view.bounds`
+	- Parameters:
+		- view: The view to add tracking to.
+		- rect: The area inside the view to track. Defaults to the whole view (`view.bounds`).
 	*/
 	init(for view: NSView, rect: CGRect? = nil, options: NSTrackingArea.Options = []) {
 		self.view = view
@@ -17,6 +39,10 @@ final class TrackingArea {
 		self.options = options
 	}
 
+	/**
+	Updates the tracking area.
+	This should be called in your `NSView#updateTrackingAreas()` method.
+	*/
 	func update() {
 		if let oldTrackingArea = trackingArea {
 			view.removeTrackingArea(oldTrackingArea)
