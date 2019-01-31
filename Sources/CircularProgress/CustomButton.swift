@@ -212,6 +212,29 @@ open class CustomButton: NSButton {
 		}
 	}
 
+	private var trackingArea: NSTrackingArea?
+
+	override open func updateTrackingAreas() {
+		super.updateTrackingAreas()
+
+		if let oldTrackingArea = trackingArea {
+			removeTrackingArea(oldTrackingArea)
+		}
+
+		let newTrackingArea = NSTrackingArea(
+			rect: bounds,
+			options: [
+				.mouseEnteredAndExited,
+				.activeInActiveApp
+			],
+			owner: self,
+			userInfo: nil
+		)
+
+		addTrackingArea(newTrackingArea)
+		trackingArea = newTrackingArea
+	}
+
 	private func setup() {
 		wantsLayer = true
 
