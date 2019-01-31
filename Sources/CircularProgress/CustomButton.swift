@@ -2,6 +2,67 @@ import Cocoa
 
 // TODO(sindresorhus): I plan to extract this into a reusable package when it's more mature.
 
+/**
+Convenience class for adding a tracking area to a view.
+
+```
+final class HoverView: NSView {
+	private lazy var trackingArea = TrackingArea(
+		for: self,
+		options: [
+			.mouseEnteredAndExited,
+			.activeInActiveApp
+		]
+	)
+
+	override func updateTrackingAreas() {
+		super.updateTrackingAreas()
+		trackingArea.update()
+	}
+}
+```
+*/
+final class TrackingArea {
+	private let view: NSView
+	private let rect: CGRect
+	private let options: NSTrackingArea.Options
+	private var trackingArea: NSTrackingArea?
+
+	/**
+	- Parameters:
+		- view: The view to add tracking to.
+		- rect: The area inside the view to track. Defaults to the whole view (`view.bounds`).
+	*/
+	init(for view: NSView, rect: CGRect? = nil, options: NSTrackingArea.Options = []) {
+		self.view = view
+		self.rect = rect ?? view.bounds
+		self.options = options
+	}
+
+	/**
+	Updates the tracking area.
+	This should be called in your `NSView#updateTrackingAreas()` method.
+	*/
+	func update() {
+		if let oldTrackingArea = trackingArea {
+			view.removeTrackingArea(oldTrackingArea)
+		}
+
+		let newTrackingArea = NSTrackingArea(
+			rect: rect,
+			options: [
+				.mouseEnteredAndExited,
+				.activeInActiveApp
+			],
+			owner: view,
+			userInfo: nil
+		)
+
+		view.addTrackingArea(newTrackingArea)
+		trackingArea = newTrackingArea
+	}
+}
+
 extension CALayer {
 	// TODO: Find a way to use a strongly-typed KeyPath here.
 	// TODO: Accept NSColor instead of CGColor.
@@ -212,27 +273,17 @@ open class CustomButton: NSButton {
 		}
 	}
 
-	private var trackingArea: NSTrackingArea?
+	private lazy var trackingArea = TrackingArea(
+		for: self,
+		options: [
+			.mouseEnteredAndExited,
+			.activeInActiveApp
+		]
+	)
 
 	override open func updateTrackingAreas() {
 		super.updateTrackingAreas()
-
-		if let oldTrackingArea = trackingArea {
-			removeTrackingArea(oldTrackingArea)
-		}
-
-		let newTrackingArea = NSTrackingArea(
-			rect: bounds,
-			options: [
-				.mouseEnteredAndExited,
-				.activeInActiveApp
-			],
-			owner: self,
-			userInfo: nil
-		)
-
-		addTrackingArea(newTrackingArea)
-		trackingArea = newTrackingArea
+		trackingArea.update()
 	}
 
 	private func setup() {
