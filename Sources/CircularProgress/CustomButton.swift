@@ -2,6 +2,41 @@ import Cocoa
 
 // TODO(sindresorhus): I plan to extract this into a reusable package when it's more mature.
 
+final class TrackingArea {
+	private let view: NSView
+	private let rect: CGRect
+	private let options: NSTrackingArea.Options
+	private var trackingArea: NSTrackingArea?
+
+	/**
+	- Parameter rect: Defaults to `view.bounds`
+	*/
+	init(for view: NSView, rect: CGRect? = nil, options: NSTrackingArea.Options = []) {
+		self.view = view
+		self.rect = rect ?? view.bounds
+		self.options = options
+	}
+
+	func update() {
+		if let oldTrackingArea = trackingArea {
+			view.removeTrackingArea(oldTrackingArea)
+		}
+
+		let newTrackingArea = NSTrackingArea(
+			rect: rect,
+			options: [
+				.mouseEnteredAndExited,
+				.activeInActiveApp
+			],
+			owner: view,
+			userInfo: nil
+		)
+
+		view.addTrackingArea(newTrackingArea)
+		trackingArea = newTrackingArea
+	}
+}
+
 extension CALayer {
 	// TODO: Find a way to use a strongly-typed KeyPath here.
 	// TODO: Accept NSColor instead of CGColor.
@@ -212,27 +247,17 @@ open class CustomButton: NSButton {
 		}
 	}
 
-	private var trackingArea: NSTrackingArea?
+	private lazy var trackingArea = TrackingArea(
+		for: self,
+		options: [
+			.mouseEnteredAndExited,
+			.activeInActiveApp
+		]
+	)
 
 	override open func updateTrackingAreas() {
 		super.updateTrackingAreas()
-
-		if let oldTrackingArea = trackingArea {
-			removeTrackingArea(oldTrackingArea)
-		}
-
-		let newTrackingArea = NSTrackingArea(
-			rect: bounds,
-			options: [
-				.mouseEnteredAndExited,
-				.activeInActiveApp
-			],
-			owner: self,
-			userInfo: nil
-		)
-
-		addTrackingArea(newTrackingArea)
-		trackingArea = newTrackingArea
+		trackingArea.update()
 	}
 
 	private func setup() {
