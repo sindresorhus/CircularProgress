@@ -215,6 +215,8 @@ open class CustomButton: NSButton {
 	private var trackingArea: NSTrackingArea?
 
 	override open func updateTrackingAreas() {
+		super.updateTrackingAreas()
+
 		if let oldTrackingArea = trackingArea {
 			removeTrackingArea(oldTrackingArea)
 		}
