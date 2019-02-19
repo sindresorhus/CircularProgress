@@ -8,6 +8,7 @@ public final class CircularProgress: NSView {
 	private var progressObserver: NSKeyValueObservation?
 	private var finishedObserver: NSKeyValueObservation?
 	private var cancelledObserver: NSKeyValueObservation?
+	private var indeterminateObserver: NSKeyValueObservation?
 
 	private lazy var backgroundCircle = with(CAShapeLayer.circle(radius: Double(radius), center: bounds.center)) {
 		$0.frame = bounds
@@ -17,7 +18,6 @@ public final class CircularProgress: NSView {
 
 	private lazy var progressCircle = with(ProgressCircleShapeLayer(radius: Double(radius), center: bounds.center)) {
 		$0.lineWidth = CGFloat(lineWidth)
-		$0.isHidden = isIndeterminate
 	}
 
 	private lazy var progressLabel = with(CATextLayer(text: "0%")) {
@@ -32,7 +32,6 @@ public final class CircularProgress: NSView {
 
 	internal lazy var indeterminateCircle = with(IndeterminateShapeLayer(radius: Double(radius), center: bounds.center)) {
 		$0.lineWidth = CGFloat(lineWidth)
-		$0.isHidden = !isIndeterminate
 	}
 
 	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
@@ -107,8 +106,12 @@ public final class CircularProgress: NSView {
 		set {
 			_isFinished = newValue
 
-			if _isFinished && showCheckmarkAtHundredPercent {
-				progressLabel.string = "✓"
+			if _isFinished {
+				isIndeterminate = false
+
+				if showCheckmarkAtHundredPercent {
+					progressLabel.string = "✓"
+				}
 			}
 		}
 	}
@@ -139,7 +142,13 @@ public final class CircularProgress: NSView {
 					self.isCancelled = sender.isCancelled
 				}
 
+				indeterminateObserver = progressInstance.observe(\.isIndeterminate) { sender, _ in
+					self.isIndeterminate = sender.isIndeterminate
+				}
+
 				isCancellable = progressInstance.isCancellable
+
+				isIndeterminate = progressInstance.isIndeterminate
 			}
 		}
 	}
@@ -194,6 +203,9 @@ public final class CircularProgress: NSView {
 		layer?.addSublayer(progressLabel)
 
 		addSubview(cancelButton)
+
+		progressCircle.isHidden = isIndeterminate
+		indeterminateCircle.isHidden = !isIndeterminate
 	}
 
 	/**
@@ -203,6 +215,7 @@ public final class CircularProgress: NSView {
 		_progress = 0
 		_isFinished = false
 		_isCancelled = false
+		isIndeterminate = false
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
 
@@ -266,6 +279,7 @@ public final class CircularProgress: NSView {
 			if newValue {
 				onCancelled?()
 				visualizeCancelledStateIfNecessary()
+				stopIndeterminateState()
 			}
 		}
 	}
@@ -340,20 +354,40 @@ public final class CircularProgress: NSView {
 		cancelButton.isHidden = true
 	}
 
+	private var _isIndeterminate = false
 	/**
 	Returns whether the progress is indeterminate.
 	*/
-	@IBInspectable public var isIndeterminate: Bool = false {
-		didSet {
-			if isIndeterminate {
-				progressCircle.isHidden = true
-				indeterminateCircle.isHidden = false
-				indeterminateCircle.add(CABasicAnimation.rotate, forKey: "rotate")
+	@IBInspectable public var isIndeterminate: Bool {
+		get {
+			if let progressInstance = progressInstance {
+				return progressInstance.isIndeterminate
+			}
+
+			return _isIndeterminate
+		}
+		set {
+			willChangeValue(for: \.isIndeterminate)
+			_isIndeterminate = newValue
+			didChangeValue(for: \.isIndeterminate)
+
+			if _isIndeterminate {
+				startIndeterminateState()
 			} else {
-				indeterminateCircle.isHidden = true
-				progressCircle.isHidden = false
-				indeterminateCircle.removeAnimation(forKey: "rotate")
+				stopIndeterminateState()
 			}
 		}
+	}
+
+	private func startIndeterminateState() {
+		progressCircle.isHidden = true
+		indeterminateCircle.isHidden = false
+		indeterminateCircle.add(CABasicAnimation.rotate, forKey: "rotate")
+	}
+
+	private func stopIndeterminateState() {
+		indeterminateCircle.isHidden = true
+		progressCircle.isHidden = false
+		indeterminateCircle.removeAnimation(forKey: "rotate")
 	}
 }
