@@ -13,11 +13,11 @@ public final class CircularProgress: NSView {
 		$0.frame = bounds
 		$0.fillColor = nil
 		$0.lineWidth = CGFloat(lineWidth) / 2
-		$0.strokeColor = color.with(alpha: 0.5).cgColor
 	}
 
 	private lazy var progressCircle = with(ProgressCircleShapeLayer(radius: Double(radius), center: bounds.center)) {
 		$0.lineWidth = CGFloat(lineWidth)
+		$0.isHidden = isIndeterminate
 	}
 
 	private lazy var progressLabel = with(CATextLayer(text: "0%")) {
@@ -28,6 +28,11 @@ public final class CircularProgress: NSView {
 		$0.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 		$0.alignmentMode = .center
 		$0.font = NSFont.helveticaNeueLight // Not using the system font as it has too much number width variance
+	}
+
+	internal lazy var indeterminateCircle = with(IndeterminateShapeLayer(radius: Double(radius), center: bounds.center)) {
+		$0.lineWidth = CGFloat(lineWidth)
+		$0.isHidden = !isIndeterminate
 	}
 
 	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
@@ -170,9 +175,11 @@ public final class CircularProgress: NSView {
 		let duration = 0.2
 
 		backgroundCircle.animate(color: color.with(alpha: 0.5).cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
-		progressCircle.animate(color: color.cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
 
+		progressCircle.animate(color: color.cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
 		progressLabel.animate(color: color.cgColor, keyPath: #keyPath(CATextLayer.foregroundColor), duration: duration)
+
+		indeterminateCircle.animate(color: color.cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
 
 		cancelButton.textColor = color
 		cancelButton.backgroundColor = color.with(alpha: 0.1)
@@ -182,6 +189,7 @@ public final class CircularProgress: NSView {
 	private func commonInit() {
 		wantsLayer = true
 		layer?.addSublayer(backgroundCircle)
+		layer?.addSublayer(indeterminateCircle)
 		layer?.addSublayer(progressCircle)
 		layer?.addSublayer(progressLabel)
 
@@ -330,5 +338,22 @@ public final class CircularProgress: NSView {
 
 		progressLabel.isHidden = false
 		cancelButton.isHidden = true
+	}
+
+	/**
+	Returns whether the progress is indeterminate.
+	*/
+	@IBInspectable public var isIndeterminate: Bool = false {
+		didSet {
+			if isIndeterminate {
+				progressCircle.isHidden = true
+				indeterminateCircle.isHidden = false
+				indeterminateCircle.add(CABasicAnimation.rotate, forKey: "rotate")
+			} else {
+				indeterminateCircle.isHidden = true
+				progressCircle.isHidden = false
+				indeterminateCircle.removeAnimation(forKey: "rotate")
+			}
+		}
 	}
 }

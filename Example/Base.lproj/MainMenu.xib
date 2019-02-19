@@ -89,7 +89,7 @@
                         </userDefinedRuntimeAttributes>
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lSV-Ki-zTa">
-                        <rect key="frame" x="74" y="38" width="93" height="18"/>
+                        <rect key="frame" x="74" y="24" width="93" height="18"/>
                         <buttonCell key="cell" type="check" title="Cancellable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="a9K-wg-1zs">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -105,14 +105,26 @@
                             <constraint firstAttribute="height" constant="200" id="wnt-rv-UYT"/>
                         </constraints>
                     </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2tM-JC-wgZ">
+                        <rect key="frame" x="267" y="24" width="106" height="18"/>
+                        <buttonCell key="cell" type="check" title="Indeterminate" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="n3r-Yr-rOc">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="progressCircularProgress.isIndeterminate" id="ZkP-Ga-fdW"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="lSV-Ki-zTa" firstAttribute="centerX" secondItem="Xhy-S9-VRc" secondAttribute="centerX" id="9gn-kh-Bt6"/>
                     <constraint firstItem="w1Y-Wj-BvT" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="J1e-dd-P63"/>
+                    <constraint firstItem="lSV-Ki-zTa" firstAttribute="top" secondItem="Xhy-S9-VRc" secondAttribute="bottom" constant="10" id="Ows-br-YTS"/>
                     <constraint firstItem="Xhy-S9-VRc" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="Yok-5s-sGU"/>
                     <constraint firstItem="w1Y-Wj-BvT" firstAttribute="centerX" secondItem="NR7-Ty-MDa" secondAttribute="centerX" constant="100" id="iuz-Bf-AV5"/>
                     <constraint firstItem="Xhy-S9-VRc" firstAttribute="centerX" secondItem="NR7-Ty-MDa" secondAttribute="centerX" constant="-100" id="jVm-sk-tQA"/>
-                    <constraint firstItem="lSV-Ki-zTa" firstAttribute="bottom" secondItem="Xhy-S9-VRc" secondAttribute="bottom" constant="10" id="mEX-K6-QkT"/>
+                    <constraint firstItem="2tM-JC-wgZ" firstAttribute="centerX" secondItem="w1Y-Wj-BvT" secondAttribute="centerX" id="usM-tu-NaD"/>
+                    <constraint firstItem="2tM-JC-wgZ" firstAttribute="top" secondItem="w1Y-Wj-BvT" secondAttribute="bottom" constant="10" id="xxP-xm-lCf"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="208" y="502"/>

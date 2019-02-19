@@ -185,13 +185,13 @@ extension NSFont {
 
 
 extension NSBezierPath {
-	static func circle(radius: Double, center: CGPoint) -> NSBezierPath {
+	static func circle(radius: Double, center: CGPoint, startAngle: CGFloat = 0.0, endAngle: CGFloat = 360.0) -> NSBezierPath {
 		let path = NSBezierPath()
 		path.appendArc(
 			withCenter: center,
 			radius: CGFloat(radius),
-			startAngle: 0,
-			endAngle: 360
+			startAngle: startAngle,
+			endAngle: endAngle
 		)
 		return path
 	}
@@ -273,6 +273,16 @@ final class ProgressCircleShapeLayer: CAShapeLayer {
 		CALayer.withoutImplicitAnimations {
 			strokeEnd = 0
 		}
+	}
+}
+
+final class IndeterminateShapeLayer: CAShapeLayer {
+	convenience init(radius: Double, center: CGPoint) {
+		self.init()
+		fillColor = nil
+		path = NSBezierPath.circle(radius: radius, center: bounds.center, startAngle: 270.0).cgPath
+		anchorPoint = NSPoint(x: 0.5, y: 0.5)
+		position = center
 	}
 }
 
@@ -380,5 +390,19 @@ extension NSView {
 			},
 			completion: completion
 		)
+	}
+}
+
+extension CABasicAnimation {
+	static var rotate: CABasicAnimation {
+		let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.transform))
+		animation.valueFunction = CAValueFunction(name: .rotateZ)
+		animation.fromValue = 0.0
+		animation.toValue = -(2 * Double.pi)
+		animation.duration = 1.0
+		animation.repeatCount = .infinity
+		animation.timingFunction = CAMediaTimingFunction(name: .linear)
+
+		return animation
 	}
 }
