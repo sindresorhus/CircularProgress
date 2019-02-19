@@ -193,6 +193,10 @@ public final class CircularProgress: NSView {
 		cancelButton.textColor = color
 		cancelButton.backgroundColor = color.with(alpha: 0.1)
 		cancelButton.activeBackgroundColor = color
+
+		if indeterminateCircle.animation(forKey: "rotate") == nil {
+			indeterminateCircle.add(CABasicAnimation.rotate, forKey: "rotate")
+		}
 	}
 
 	private func commonInit() {
@@ -382,12 +386,18 @@ public final class CircularProgress: NSView {
 	private func startIndeterminateState() {
 		progressCircle.isHidden = true
 		indeterminateCircle.isHidden = false
-		indeterminateCircle.add(CABasicAnimation.rotate, forKey: "rotate")
+
+		if progress == 0 || progressInstance == nil {
+			progressLabel.isHidden = true
+		}
 	}
 
 	private func stopIndeterminateState() {
 		indeterminateCircle.isHidden = true
 		progressCircle.isHidden = false
-		indeterminateCircle.removeAnimation(forKey: "rotate")
+
+		if cancelButton.isHidden {
+			progressLabel.isHidden = false
+		}
 	}
 }

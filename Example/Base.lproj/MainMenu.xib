@@ -15,6 +15,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="CircularProgressExample" customModuleProvider="target">
             <connections>
+                <outlet property="indeterminateCircularProgress" destination="7yP-eX-TLj" id="Ubc-re-bJS"/>
                 <outlet property="manualCircularProgress" destination="Xhy-S9-VRc" id="arP-3C-To1"/>
                 <outlet property="progressCircularProgress" destination="w1Y-Wj-BvT" id="Fg3-nC-1Ys"/>
                 <outlet property="window" destination="qrA-6v-96X" id="o33-hG-5om"/>
@@ -70,10 +71,10 @@
         <window title="CircularProgress Example" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="qrA-6v-96X">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
-            <rect key="contentRect" x="131" y="158" width="440" height="300"/>
+            <rect key="contentRect" x="131" y="158" width="687" height="300"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="NR7-Ty-MDa">
-                <rect key="frame" x="0.0" y="0.0" width="440" height="300"/>
+                <rect key="frame" x="0.0" y="0.0" width="680" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Xhy-S9-VRc" customClass="CircularProgress" customModule="CircularProgress">
@@ -99,35 +100,51 @@
                         </connections>
                     </button>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="w1Y-Wj-BvT" customClass="CircularProgress" customModule="CircularProgress">
-                        <rect key="frame" x="220" y="50" width="200" height="200"/>
+                        <rect key="frame" x="240" y="50" width="200" height="200"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="o6o-0R-3ld"/>
                             <constraint firstAttribute="height" constant="200" id="wnt-rv-UYT"/>
                         </constraints>
                     </customView>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2tM-JC-wgZ">
-                        <rect key="frame" x="267" y="24" width="106" height="18"/>
-                        <buttonCell key="cell" type="check" title="Indeterminate" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="n3r-Yr-rOc">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aLq-jZ-Oeu">
+                        <rect key="frame" x="507" y="24" width="106" height="18"/>
+                        <buttonCell key="cell" type="check" title="Indeterminate" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Pre-va-6gl">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <binding destination="Voe-Tx-rLC" name="value" keyPath="progressCircularProgress.isIndeterminate" id="ZkP-Ga-fdW"/>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="indeterminateCircularProgress.isIndeterminate" id="3c9-gS-zNC"/>
                         </connections>
                     </button>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="7yP-eX-TLj" customClass="CircularProgress" customModule="CircularProgress">
+                        <rect key="frame" x="460" y="50" width="200" height="200"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="K7H-a3-Gdw"/>
+                            <constraint firstAttribute="height" constant="200" id="nok-tp-55I"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="progress">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isIndeterminate" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </customView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Xhy-S9-VRc" firstAttribute="leading" secondItem="NR7-Ty-MDa" secondAttribute="leading" constant="20" id="1R5-Yd-INs"/>
+                    <constraint firstItem="aLq-jZ-Oeu" firstAttribute="centerX" secondItem="7yP-eX-TLj" secondAttribute="centerX" id="4z5-NR-BIc"/>
+                    <constraint firstItem="7yP-eX-TLj" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="5ZP-7h-IOJ"/>
                     <constraint firstItem="lSV-Ki-zTa" firstAttribute="centerX" secondItem="Xhy-S9-VRc" secondAttribute="centerX" id="9gn-kh-Bt6"/>
+                    <constraint firstAttribute="trailing" secondItem="7yP-eX-TLj" secondAttribute="trailing" constant="20" id="H3K-Of-0zB"/>
                     <constraint firstItem="w1Y-Wj-BvT" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="J1e-dd-P63"/>
                     <constraint firstItem="lSV-Ki-zTa" firstAttribute="top" secondItem="Xhy-S9-VRc" secondAttribute="bottom" constant="10" id="Ows-br-YTS"/>
+                    <constraint firstItem="7yP-eX-TLj" firstAttribute="leading" secondItem="w1Y-Wj-BvT" secondAttribute="trailing" constant="20" id="QcR-R9-pni"/>
+                    <constraint firstItem="w1Y-Wj-BvT" firstAttribute="leading" secondItem="Xhy-S9-VRc" secondAttribute="trailing" constant="20" id="RrX-o9-ZgH"/>
                     <constraint firstItem="Xhy-S9-VRc" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="Yok-5s-sGU"/>
-                    <constraint firstItem="w1Y-Wj-BvT" firstAttribute="centerX" secondItem="NR7-Ty-MDa" secondAttribute="centerX" constant="100" id="iuz-Bf-AV5"/>
-                    <constraint firstItem="Xhy-S9-VRc" firstAttribute="centerX" secondItem="NR7-Ty-MDa" secondAttribute="centerX" constant="-100" id="jVm-sk-tQA"/>
-                    <constraint firstItem="2tM-JC-wgZ" firstAttribute="centerX" secondItem="w1Y-Wj-BvT" secondAttribute="centerX" id="usM-tu-NaD"/>
-                    <constraint firstItem="2tM-JC-wgZ" firstAttribute="top" secondItem="w1Y-Wj-BvT" secondAttribute="bottom" constant="10" id="xxP-xm-lCf"/>
+                    <constraint firstItem="aLq-jZ-Oeu" firstAttribute="top" secondItem="7yP-eX-TLj" secondAttribute="bottom" constant="10" id="na2-mA-WpM"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="208" y="502"/>
+            <point key="canvasLocation" x="187" y="548"/>
         </window>
     </objects>
 </document>

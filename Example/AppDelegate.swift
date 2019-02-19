@@ -6,6 +6,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet private var window: NSWindow!
 	@IBOutlet private var manualCircularProgress: CircularProgress!
 	@IBOutlet private var progressCircularProgress: CircularProgress!
+	@IBOutlet private var indeterminateCircularProgress: CircularProgress!
 
 	func applicationWillFinishLaunching(_ notification: Notification) {
 		window.isMovableByWindowBackground = true
