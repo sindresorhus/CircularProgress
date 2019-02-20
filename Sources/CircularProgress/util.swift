@@ -34,19 +34,29 @@ extension NSColor {
 		return withAlphaComponent(CGFloat(alpha))
 	}
 
-	/// https://gist.github.com/soffes/68d355e828cb502f75c3b8f989962958
-	var desaturated: NSColor {
-		guard let color = usingColorSpace(.deviceRGB) else {
-			return self
-		}
-
+	typealias HSBAColor = (hue: Double, saturation: Double, brightness: Double, alpha: Double)
+	var hsba: HSBAColor {
 		var hue: CGFloat = 0
+		var saturation: CGFloat = 0
 		var brightness: CGFloat = 0
 		var alpha: CGFloat = 0
+		let color = usingColorSpace(.deviceRGB) ?? self
+		color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+		return HSBAColor(Double(hue), Double(saturation), Double(brightness), Double(alpha))
+	}
 
-		color.getHue(&hue, saturation: nil, brightness: &brightness, alpha: &alpha)
+	private func colorWithSaturation(ratio: Double) -> NSColor {
+		let color = hsba
+		return NSColor(
+			hue: CGFloat(color.hue),
+			saturation: CGFloat(color.saturation * ratio),
+			brightness: CGFloat(color.brightness),
+			alpha: CGFloat(color.alpha)
+		)
+	}
 
-		return NSColor(hue: hue, saturation: 0.3, brightness: brightness, alpha: alpha)
+	func desaturating(by ratio: Double) -> NSColor {
+		return colorWithSaturation(ratio: 1 - ratio)
 	}
 }
 

@@ -270,7 +270,7 @@ public final class CircularProgress: NSView {
 
 		switch cancelledStateVisualizationMethod {
 		case .desaturate:
-			newColor = color.desaturated
+			newColor = color.desaturating(by: 0.7)
 		case .disable:
 			newColor = .disabledControlTextColor
 		default:
