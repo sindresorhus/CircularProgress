@@ -30,8 +30,23 @@ extension NSColor {
 		}
 	}()
 
+	func with(alpha: Double) -> NSColor {
+		return withAlphaComponent(CGFloat(alpha))
+	}
+
+	/// https://gist.github.com/soffes/68d355e828cb502f75c3b8f989962958
 	var desaturated: NSColor {
-		return NSColor.black // TODO: Desaturate color
+		guard let color = usingColorSpace(.deviceRGB) else {
+			return self
+		}
+
+		var hue: CGFloat = 0
+		var brightness: CGFloat = 0
+		var alpha: CGFloat = 0
+
+		color.getHue(&hue, saturation: nil, brightness: &brightness, alpha: &alpha)
+
+		return NSColor(hue: hue, saturation: 0.3, brightness: brightness, alpha: alpha)
 	}
 }
 
@@ -60,13 +75,6 @@ extension CGRect {
 				y: newValue.y - (size.height / 2)
 			)
 		}
-	}
-}
-
-
-extension NSColor {
-	func with(alpha: Double) -> NSColor {
-		return withAlphaComponent(CGFloat(alpha))
 	}
 }
 
