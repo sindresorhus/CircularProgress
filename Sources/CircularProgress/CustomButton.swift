@@ -63,6 +63,14 @@ final class TrackingArea {
 	}
 }
 
+final class AnimationDelegate: NSObject, CAAnimationDelegate {
+	var didStopHandler: ((Bool) -> Void)?
+
+	func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+		didStopHandler?(flag)
+	}
+}
+
 extension CALayer {
 	// TODO: Find a way to use a strongly-typed KeyPath here.
 	// TODO: Accept NSColor instead of CGColor.
@@ -71,14 +79,19 @@ extension CALayer {
 			return
 		}
 
+		let animationDelegate = AnimationDelegate()
+		animationDelegate.didStopHandler = { [weak self] finished in
+			self?.setValue(color, forKey: keyPath)
+		}
+
 		let animation = CABasicAnimation(keyPath: keyPath)
 		animation.fromValue = value(forKey: keyPath)
 		animation.toValue = color
 		animation.duration = duration
 		animation.fillMode = .forwards
+		animation.delegate = animationDelegate
 		animation.isRemovedOnCompletion = false
 		add(animation, forKey: keyPath)
-		setValue(color, forKey: keyPath)
 	}
 }
 

@@ -163,9 +163,16 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func updateLayer() {
-		backgroundCircle.strokeColor = color.with(alpha: 0.5).cgColor
-		progressCircle.strokeColor = color.cgColor
-		progressLabel.foregroundColor = color.cgColor
+		updateColors()
+	}
+
+	private func updateColors() {
+		let duration = 0.2
+
+		backgroundCircle.animate(color: color.with(alpha: 0.5).cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
+		progressCircle.animate(color: color.cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
+
+		progressLabel.animate(color: color.cgColor, keyPath: #keyPath(CATextLayer.foregroundColor), duration: duration)
 
 		cancelButton.textColor = color
 		cancelButton.backgroundColor = color.with(alpha: 0.1)
@@ -261,25 +268,32 @@ public final class CircularProgress: NSView {
 	}
 
 	/**
+	Supply the base color to use for displaying the cancelled state.
+	*/
+	public var cancelledStateColorHandler: ((NSColor) -> NSColor)?
+
+	/**
 	Returns whether to visually show that the progress view is cancelled.
 	*/
 	public var cancelledStateVisualizationMethod: CancelledStateVisualizationMethod = .desaturate
 
 	private func visualizeCancelledState() {
-		let newColor: NSColor
+		if let colorHandler = cancelledStateColorHandler {
+			color = colorHandler(color)
+
+			updateColors()
+		}
 
 		switch cancelledStateVisualizationMethod {
 		case .desaturate:
-			newColor = color.desaturating(by: 0.7)
+			color = color.desaturating(by: 0.7)
 		case .disable:
-			newColor = .disabledControlTextColor
+			color = .disabledControlTextColor
 		default:
 			return
 		}
 
-		color = newColor
-
-		needsDisplay = true
+		updateColors()
 	}
 
 	private var trackingArea: NSTrackingArea?
