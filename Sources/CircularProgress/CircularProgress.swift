@@ -163,13 +163,15 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func updateLayer() {
-		backgroundCircle.strokeColor = color.with(alpha: 0.5).cgColor
-		progressCircle.strokeColor = color.cgColor
-		progressLabel.foregroundColor = color.cgColor
+		let currentColor = isCancelled && visualizeCancelledState ? color.desaturated : color
 
-		cancelButton.textColor = color
-		cancelButton.backgroundColor = color.with(alpha: 0.1)
-		cancelButton.activeBackgroundColor = color
+		backgroundCircle.strokeColor = currentColor.with(alpha: 0.5).cgColor
+		progressCircle.strokeColor = currentColor.cgColor
+		progressLabel.foregroundColor = currentColor.cgColor
+
+		cancelButton.textColor = currentColor
+		cancelButton.backgroundColor = currentColor.with(alpha: 0.1)
+		cancelButton.activeBackgroundColor = currentColor
 	}
 
 	private func commonInit() {
@@ -248,8 +250,18 @@ public final class CircularProgress: NSView {
 
 			if newValue {
 				onCancelled?()
+				desaturate()
 			}
 		}
+	}
+
+	/**
+	Returns whether to visually show that the progress view is cancelled.
+	*/
+	public var visualizeCancelledState: Bool = true
+
+	private func desaturate() {
+		needsDisplay = true
 	}
 
 	private var trackingArea: NSTrackingArea?

@@ -19,9 +19,8 @@ func with<T>(_ item: T, update: (inout T) throws -> Void) rethrows -> T {
 	return this
 }
 
-
-/// macOS 10.14 polyfill
 extension NSColor {
+	/// macOS 10.14 polyfill
 	static let controlAccentColorPolyfill: NSColor = {
 		if #available(macOS 10.14, *) {
 			return NSColor.controlAccentColor
@@ -30,6 +29,10 @@ extension NSColor {
 			return NSColor(red: 0.10, green: 0.47, blue: 0.98, alpha: 1)
 		}
 	}()
+
+	var desaturated: NSColor {
+		return NSColor.black // TODO: Desaturate color
+	}
 }
 
 
