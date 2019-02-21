@@ -123,6 +123,7 @@ extension CALayer {
 		DispatchQueue.main.asyncAfter(duration: delay) {
 			CATransaction.begin()
 			CATransaction.setAnimationDuration(duration)
+			CATransaction.setAnimationTimingFunction(timingFunction)
 
 			if let completion = completion {
 				CATransaction.setCompletionBlock(completion)

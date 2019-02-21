@@ -411,7 +411,7 @@ open class CustomButton: NSButton {
 }
 
 extension CustomButton: NSViewLayerContentScaleDelegate {
-	private func layer(_ layer: CALayer, shouldInheritContentsScale newScale: CGFloat, from window: NSWindow) -> Bool {
+	public func layer(_ layer: CALayer, shouldInheritContentsScale newScale: CGFloat, from window: NSWindow) -> Bool {
 		return true
 	}
 }
