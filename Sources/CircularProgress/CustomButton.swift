@@ -66,7 +66,7 @@ final class TrackingArea {
 final class AnimationDelegate: NSObject, CAAnimationDelegate {
 	var didStopHandler: ((Bool) -> Void)?
 
-	func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+	func animationDidStop(_ animation: CAAnimation, finished flag: Bool) {
 		didStopHandler?(flag)
 	}
 }
@@ -79,19 +79,22 @@ extension CALayer {
 			return
 		}
 
-		let animationDelegate = AnimationDelegate()
-		animationDelegate.didStopHandler = { [weak self] finished in
-			self?.setValue(color, forKey: keyPath)
-		}
-
 		let animation = CABasicAnimation(keyPath: keyPath)
 		animation.fromValue = value(forKey: keyPath)
 		animation.toValue = color
 		animation.duration = duration
 		animation.fillMode = .forwards
-		animation.delegate = animationDelegate
 		animation.isRemovedOnCompletion = false
-		add(animation, forKey: keyPath)
+		add(animation, forKey: keyPath) { [weak self] _ in
+			self?.setValue(color, forKey: keyPath)
+		}
+	}
+
+	func add(_ animation: CAAnimation, forKey key: String?, completion: ((Bool) -> Void)?) {
+		let animationDelegate = AnimationDelegate()
+		animationDelegate.didStopHandler = completion
+		animation.delegate = animationDelegate
+		add(animation, forKey: key)
 	}
 }
 
