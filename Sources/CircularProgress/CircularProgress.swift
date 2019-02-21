@@ -28,6 +28,7 @@ public final class CircularProgress: NSView {
 		$0.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 		$0.alignmentMode = .center
 		$0.font = NSFont.helveticaNeueLight // Not using the system font as it has too much number width variance
+		$0.isHidden = true
 	}
 
 	internal lazy var indeterminateCircle = with(IndeterminateShapeLayer(radius: Double(radius), center: bounds.center)) {
@@ -77,6 +78,12 @@ public final class CircularProgress: NSView {
 			CALayer.animate(duration: 0.5, timingFunction: .easeOut, animations: {
 				self.progressCircle.progress = self._progress
 			})
+
+			if progress == 0 && isIndeterminate {
+				progressLabel.isHidden = cancelButton.isHidden
+			} else {
+				progressLabel.isHidden = !cancelButton.isHidden
+			}
 
 			if !progressLabel.isHidden {
 				progressLabel.string = "\(Int(_progress * 100))%"
@@ -283,7 +290,7 @@ public final class CircularProgress: NSView {
 			if newValue {
 				onCancelled?()
 				visualizeCancelledStateIfNecessary()
-				stopIndeterminateState()
+				isIndeterminate = false
 			}
 		}
 	}
@@ -354,7 +361,7 @@ public final class CircularProgress: NSView {
 			return
 		}
 
-		progressLabel.isHidden = false
+		progressLabel.isHidden = isIndeterminate && progress == 0
 		cancelButton.isHidden = true
 	}
 
@@ -387,17 +394,13 @@ public final class CircularProgress: NSView {
 		progressCircle.isHidden = true
 		indeterminateCircle.isHidden = false
 
-		if progress == 0 || progressInstance == nil {
-			progressLabel.isHidden = true
-		}
+		progressLabel.isHidden = progress == 0 && isIndeterminate && cancelButton.isHidden
 	}
 
 	private func stopIndeterminateState() {
 		indeterminateCircle.isHidden = true
 		progressCircle.isHidden = false
 
-		if cancelButton.isHidden {
-			progressLabel.isHidden = false
-		}
+		progressLabel.isHidden = !cancelButton.isHidden
 	}
 }
