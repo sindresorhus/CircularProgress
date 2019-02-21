@@ -104,6 +104,8 @@ Per default, the cancelled state is indicated by desaturing the current color an
 
 Displays a state that indicates that the remaining progress is indeterminate. After setting `.isIndeterminate = true` make sure to call `startAnimation()` to start the rotation.
 
+Note that the `.progress` property and `.isIndeterminate` are not tied together. You'll need to manually set `.isIndeterminate = false` when progress is being made again.
+
 If you use the `.progressInstance` property, the [`isIndeterminate`](https://developer.apple.com/documentation/foundation/progress/1412871-isindeterminate) property will automatically be observed. The view will then switch back and forth to the indeterminate state when appropriate.
 
 ## API
