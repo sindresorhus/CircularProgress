@@ -17,8 +17,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		configureManualView()
 		configureProgressBasedView()
-
-		indeterminateCircularProgress.startAnimation()
 	}
 
 	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

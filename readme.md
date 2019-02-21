@@ -102,7 +102,7 @@ Per default, the cancelled state is indicated by desaturing the current color an
 
 <img src="screenshot-indeterminate.gif" width="118" align="right">
 
-Displays a state that indicates that the remaining progress is indeterminate. After setting `.isIndeterminate = true` make sure to call `startAnimation()` to start the rotation.
+Displays a state that indicates that the remaining progress is indeterminate.
 
 Note that the `.progress` property and `.isIndeterminate` are not tied together. You'll need to manually set `.isIndeterminate = false` when progress is being made again.
 
@@ -164,16 +164,6 @@ If the progress view is cancellable it shows the cancel button.
 Displays the indeterminate state.
 */
 @IBInspectable public var isIndeterminate: Bool
-
-/**
-Starts the indeterminate animation.
-*/
-func startAnimation()
-
-/**
-Stops the indeterminate animation.
-*/
-func stopAnimation()
 
 /**
 Returns whether the progress has been cancelled.
