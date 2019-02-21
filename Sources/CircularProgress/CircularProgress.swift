@@ -264,7 +264,11 @@ public final class CircularProgress: NSView {
 	Indicates how to visualize the cancelled state.
 	*/
 	public enum CancelledStateVisualizationMethod {
-		case none, desaturate, disable
+		public typealias DesaturationProperties = (ratio: Double, brightness: Double)
+
+		case none
+		case desaturate(properties: DesaturationProperties)
+		case disable
 	}
 
 	/**
@@ -275,7 +279,7 @@ public final class CircularProgress: NSView {
 	/**
 	Returns whether to visually show that the progress view is cancelled.
 	*/
-	public var cancelledStateVisualizationMethod: CancelledStateVisualizationMethod = .desaturate
+	public var cancelledStateVisualizationMethod: CancelledStateVisualizationMethod = .desaturate(properties: (ratio: 0.7, brightness: 0.5))
 
 	private func visualizeCancelledState() {
 		if let colorHandler = cancelledStateColorHandler {
@@ -285,8 +289,8 @@ public final class CircularProgress: NSView {
 		}
 
 		switch cancelledStateVisualizationMethod {
-		case .desaturate:
-			color = color.desaturating(by: 0.7)
+		case .desaturate(let properties):
+			color = color.desaturating(by: properties.ratio, brightness: properties.brightness)
 		case .disable:
 			color = .disabledControlTextColor
 		default:

@@ -45,18 +45,18 @@ extension NSColor {
 		return HSBAColor(Double(hue), Double(saturation), Double(brightness), Double(alpha))
 	}
 
-	private func colorWithSaturation(ratio: Double) -> NSColor {
+	private func colorWithSaturation(ratio: Double, brightness: Double? = nil) -> NSColor {
 		let color = hsba
 		return NSColor(
 			hue: CGFloat(color.hue),
 			saturation: CGFloat(color.saturation * ratio),
-			brightness: CGFloat(color.brightness),
+			brightness: CGFloat(brightness ?? color.brightness),
 			alpha: CGFloat(color.alpha)
 		)
 	}
 
-	func desaturating(by ratio: Double) -> NSColor {
-		return colorWithSaturation(ratio: 1 - ratio)
+	func desaturating(by ratio: Double, brightness: Double? = nil) -> NSColor {
+		return colorWithSaturation(ratio: 1 - ratio, brightness: brightness)
 	}
 }
 
