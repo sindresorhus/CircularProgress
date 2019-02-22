@@ -275,7 +275,7 @@ public final class CircularProgress: NSView {
 	public var cancelledStateColorHandler: ((NSColor) -> NSColor)?
 
 	/**
-	Returns whether to visually show that the progress view is cancelled.
+	Determines how to visually show that the progress view has been cancelled.
 	*/
 	public var cancelledStateVisualizationMethod: CancelledStateVisualizationMethod = .desaturate(ratio: 0.7, brightness: 0.5)
 
