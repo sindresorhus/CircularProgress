@@ -94,9 +94,9 @@ If you use the `.progress` property, you need to opt into the cancel button by s
 
 If you use the `.progressInstance` property, setting a `Progress` object that is [`isCancellable`](https://developer.apple.com/documentation/foundation/progress/1409348-iscancellable), which is the default, automatically enables the cancel button.
 
-<img src="screenshot-desaturate.gif" width="96" align="right">
+<img src="screenshot-desaturate.gif" width="111" align="right">
 
-There are a few ways to visualize the cancelled state. You can set the `.cancelledStateVisualizationMethod` to either `.none`, `.desaturate(ratio: 0.7, brightness: 0.5)` (default) or `.disable`. Lastly you can manipulate the color manually by setting the `.cancelledStateColorHandler` callback.
+Per default, the cancelled state is indicated by desaturing the current color and reducing the opacity. You can customize this by implementing the `.cancelledStateColorHandler` callback and returning a color to use for the cancelled state instead. The opacity is not automatically reduced when the callback has been set. To disable the cancelled state visualization entirely, set `.visualizeCancelledState` to `false`.
 
 ## API
 
@@ -156,14 +156,9 @@ Returns whether the progress has been cancelled.
 @IBInspectable private(set) var isCancelled: Bool
 
 /**
-Determines how to visually show that the progress view has been cancelled.
-
-Options:
-- `.none`
-- `.desaturate(ratio: Double, brightness: Double)`
-- `.disable`
+Determines whether to visualize changing into the cancelled state.
 */
-public var cancelledStateVisualizationMethod: CancelledStateVisualizationMethod = .desaturate(ratio: 0.7, brightness: 0.5)
+public var visualizeCancelledState: Bool = true
 
 /**
 Supply the base color to use for displaying the cancelled state.

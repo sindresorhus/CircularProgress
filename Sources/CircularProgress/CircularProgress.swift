@@ -197,6 +197,8 @@ public final class CircularProgress: NSView {
 		_isCancelled = false
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
+
+		alphaValue = 1.0
 	}
 
 	/**
@@ -255,44 +257,32 @@ public final class CircularProgress: NSView {
 
 			if newValue {
 				onCancelled?()
-				visualizeCancelledState()
+				visualizeCancelledStateIfNecessary()
 			}
 		}
 	}
 
 	/**
-	Indicates how to visualize the cancelled state.
+	Determines whether to visualize changing into the cancelled state.
 	*/
-	public enum CancelledStateVisualizationMethod {
-		case none
-		case desaturate(ratio: Double, brightness: Double)
-		case disable
-	}
+	public var visualizeCancelledState: Bool = true
 
 	/**
 	Supply the base color to use for displaying the cancelled state.
 	*/
 	public var cancelledStateColorHandler: ((NSColor) -> NSColor)?
 
-	/**
-	Determines how to visually show that the progress view has been cancelled.
-	*/
-	public var cancelledStateVisualizationMethod: CancelledStateVisualizationMethod = .desaturate(ratio: 0.7, brightness: 0.5)
-
-	private func visualizeCancelledState() {
-		if let colorHandler = cancelledStateColorHandler {
-			color = colorHandler(color)
-
-			updateColors()
+	private func visualizeCancelledStateIfNecessary() {
+		guard visualizeCancelledState else {
+			return
 		}
 
-		switch cancelledStateVisualizationMethod {
-		case let .desaturate(ratio, brightness):
-			color = color.desaturating(by: ratio, brightness: brightness)
-		case .disable:
-			color = .disabledControlTextColor
-		default:
-			return
+		if let colorHandler = cancelledStateColorHandler {
+			color = colorHandler(color)
+		} else {
+			color = color.desaturating(by: 0.4, brightness: 0.8)
+
+			alphaValue = 0.6
 		}
 
 		updateColors()
