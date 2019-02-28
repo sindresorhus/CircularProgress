@@ -90,7 +90,7 @@ extension CALayer {
 		}
 	}
 
-	func add(_ animation: CAAnimation, forKey key: String?, completion: ((Bool) -> Void)?) {
+	func add(_ animation: CAAnimation, forKey key: String?, completion: @escaping ((Bool) -> Void)) {
 		let animationDelegate = AnimationDelegate()
 		animationDelegate.didStopHandler = completion
 		animation.delegate = animationDelegate
