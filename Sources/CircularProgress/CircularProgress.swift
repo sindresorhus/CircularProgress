@@ -198,7 +198,7 @@ public final class CircularProgress: NSView {
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
 
-		alphaValue = 1.0
+		alphaValue = 1
 	}
 
 	/**
@@ -281,8 +281,7 @@ public final class CircularProgress: NSView {
 			color = colorHandler(color)
 		} else {
 			color = color.desaturating(by: 0.4, brightness: 0.8)
-
-			alphaValue = 0.6
+			alphaValue = 0.7
 		}
 
 		updateColors()
