@@ -185,7 +185,7 @@ extension NSFont {
 
 
 extension NSBezierPath {
-	static func circle(radius: Double, center: CGPoint, startAngle: Double = 0.0, endAngle: Double = 360.0) -> NSBezierPath {
+	static func circle(radius: Double, center: CGPoint, startAngle: Double = 0, endAngle: Double = 360) -> NSBezierPath {
 		let path = NSBezierPath()
 		path.appendArc(
 			withCenter: center,
@@ -285,7 +285,7 @@ final class IndeterminateShapeLayer: CAShapeLayer {
 	convenience init(radius: Double, center: CGPoint) {
 		self.init()
 		fillColor = nil
-		path = NSBezierPath.circle(radius: radius, center: bounds.center, startAngle: 270.0).cgPath
+		path = NSBezierPath.circle(radius: radius, center: bounds.center, startAngle: 270).cgPath
 		anchorPoint = CGPoint(x: 0.5, y: 0.5)
 		position = center
 	}
@@ -403,9 +403,9 @@ extension CABasicAnimation {
 	static var rotate: CABasicAnimation {
 		let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.transform))
 		animation.valueFunction = CAValueFunction(name: .rotateZ)
-		animation.fromValue = 0.0
+		animation.fromValue = 0
 		animation.toValue = -(Double.pi * 2)
-		animation.duration = 1.0
+		animation.duration = 1
 		animation.repeatCount = .infinity
 		animation.timingFunction = CAMediaTimingFunction(name: .linear)
 
