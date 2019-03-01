@@ -79,7 +79,9 @@ public final class CircularProgress: NSView {
 				self.progressCircle.progress = self._progress
 			})
 
-			progressLabel.isHidden = progress == 0 && isIndeterminate ? cancelButton.isHidden : !cancelButton.isHidden
+			DispatchQueue.main.async {
+				self.progressLabel.isHidden = self.progress == 0 && self.isIndeterminate ? self.cancelButton.isHidden : !self.cancelButton.isHidden
+			}
 
 			if !progressLabel.isHidden {
 				progressLabel.string = "\(Int(_progress * 100))%"
