@@ -67,6 +67,7 @@ public final class CircularProgress: NSView {
 	The progress value in the range `0...1`.
 
 	- Note: The value will be clamped to `0...1`.
+	- Note: Can be set from a background thread.
 	*/
 	@IBInspectable public var progress: Double {
 		get {
