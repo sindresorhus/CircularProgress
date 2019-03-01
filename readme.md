@@ -98,6 +98,16 @@ If you use the `.progressInstance` property, setting a `Progress` object that is
 
 Per default, the cancelled state is indicated by desaturing the current color and reducing the opacity. You can customize this by implementing the `.cancelledStateColorHandler` callback and returning a color to use for the cancelled state instead. The opacity is not automatically reduced when the callback has been set. To disable the cancelled state visualization entirely, set `.visualizeCancelledState` to `false`.
 
+### Indeterminate state
+
+<img src="screenshot-indeterminate.gif" width="118" align="right">
+
+Displays a state that indicates that the remaining progress is indeterminate.
+
+Note that the `.progress` property and `.isIndeterminate` are not tied together. You'll need to manually set `.isIndeterminate = false` when progress is being made again.
+
+If you use the `.progressInstance` property, the [`isIndeterminate`](https://developer.apple.com/documentation/foundation/progress/1412871-isindeterminate) property will automatically be observed. The view will then switch back and forth to the indeterminate state when appropriate.
+
 ## API
 
 ```swift
@@ -149,6 +159,11 @@ Returns whether the progress is finished.
 If the progress view is cancellable it shows the cancel button.
 */
 @IBInspectable var isCancellable: Bool
+
+/**
+Displays the indeterminate state.
+*/
+@IBInspectable public var isIndeterminate: Bool
 
 /**
 Returns whether the progress has been cancelled.

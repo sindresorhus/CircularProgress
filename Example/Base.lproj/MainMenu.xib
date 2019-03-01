@@ -15,6 +15,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="CircularProgressExample" customModuleProvider="target">
             <connections>
+                <outlet property="indeterminateCircularProgress" destination="7yP-eX-TLj" id="Ubc-re-bJS"/>
                 <outlet property="manualCircularProgress" destination="Xhy-S9-VRc" id="arP-3C-To1"/>
                 <outlet property="progressCircularProgress" destination="w1Y-Wj-BvT" id="Fg3-nC-1Ys"/>
                 <outlet property="window" destination="qrA-6v-96X" id="o33-hG-5om"/>
@@ -70,14 +71,14 @@
         <window title="CircularProgress Example" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="qrA-6v-96X">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
-            <rect key="contentRect" x="131" y="158" width="440" height="300"/>
+            <rect key="contentRect" x="131" y="158" width="680" height="350"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="NR7-Ty-MDa">
-                <rect key="frame" x="0.0" y="0.0" width="440" height="300"/>
+                <rect key="frame" x="0.0" y="0.0" width="680" height="350"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Xhy-S9-VRc" customClass="CircularProgress" customModule="CircularProgress">
-                        <rect key="frame" x="20" y="50" width="200" height="200"/>
+                        <rect key="frame" x="20" y="75" width="200" height="200"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="F4V-GI-CZs"/>
                             <constraint firstAttribute="height" constant="200" id="Uu5-lc-rUj"/>
@@ -89,7 +90,7 @@
                         </userDefinedRuntimeAttributes>
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lSV-Ki-zTa">
-                        <rect key="frame" x="74" y="38" width="93" height="18"/>
+                        <rect key="frame" x="74" y="49" width="93" height="18"/>
                         <buttonCell key="cell" type="check" title="Cancellable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="a9K-wg-1zs">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -99,23 +100,75 @@
                         </connections>
                     </button>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="w1Y-Wj-BvT" customClass="CircularProgress" customModule="CircularProgress">
-                        <rect key="frame" x="220" y="50" width="200" height="200"/>
+                        <rect key="frame" x="240" y="75" width="200" height="200"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="o6o-0R-3ld"/>
                             <constraint firstAttribute="height" constant="200" id="wnt-rv-UYT"/>
                         </constraints>
                     </customView>
+                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fQj-HV-nuY">
+                        <rect key="frame" x="512" y="281" width="96" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="92" id="MqM-Sg-5rd"/>
+                        </constraints>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="9go-JI-b64"/>
+                        <connections>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="indeterminateCircularProgress.progress" id="dvN-SF-o2v"/>
+                        </connections>
+                    </slider>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="7yP-eX-TLj" customClass="CircularProgress" customModule="CircularProgress">
+                        <rect key="frame" x="460" y="75" width="200" height="200"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="K7H-a3-Gdw"/>
+                            <constraint firstAttribute="height" constant="200" id="nok-tp-55I"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isIndeterminate" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="progress">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aLq-jZ-Oeu">
+                        <rect key="frame" x="507" y="49" width="106" height="18"/>
+                        <buttonCell key="cell" type="check" title="Indeterminate" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Pre-va-6gl">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="indeterminateCircularProgress.isIndeterminate" id="3c9-gS-zNC"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IDE-Uy-BbX">
+                        <rect key="frame" x="514" y="25" width="93" height="18"/>
+                        <buttonCell key="cell" type="check" title="Cancellable" bezelStyle="regularSquare" imagePosition="left" inset="2" id="elh-Fn-f2v">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="indeterminateCircularProgress.isCancellable" id="lMJ-Vb-Mkw"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Xhy-S9-VRc" firstAttribute="leading" secondItem="NR7-Ty-MDa" secondAttribute="leading" constant="20" id="1R5-Yd-INs"/>
+                    <constraint firstItem="fQj-HV-nuY" firstAttribute="centerX" secondItem="7yP-eX-TLj" secondAttribute="centerX" id="49L-nX-4q3"/>
+                    <constraint firstItem="IDE-Uy-BbX" firstAttribute="centerX" secondItem="7yP-eX-TLj" secondAttribute="centerX" id="4ZY-z8-jwf"/>
+                    <constraint firstItem="aLq-jZ-Oeu" firstAttribute="centerX" secondItem="7yP-eX-TLj" secondAttribute="centerX" id="4z5-NR-BIc"/>
+                    <constraint firstItem="7yP-eX-TLj" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="5ZP-7h-IOJ"/>
+                    <constraint firstItem="7yP-eX-TLj" firstAttribute="top" secondItem="fQj-HV-nuY" secondAttribute="bottom" constant="8" id="5ri-Si-1tq"/>
                     <constraint firstItem="lSV-Ki-zTa" firstAttribute="centerX" secondItem="Xhy-S9-VRc" secondAttribute="centerX" id="9gn-kh-Bt6"/>
+                    <constraint firstAttribute="trailing" secondItem="7yP-eX-TLj" secondAttribute="trailing" constant="20" id="H3K-Of-0zB"/>
                     <constraint firstItem="w1Y-Wj-BvT" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="J1e-dd-P63"/>
+                    <constraint firstItem="lSV-Ki-zTa" firstAttribute="top" secondItem="Xhy-S9-VRc" secondAttribute="bottom" constant="10" id="Ows-br-YTS"/>
+                    <constraint firstItem="7yP-eX-TLj" firstAttribute="leading" secondItem="w1Y-Wj-BvT" secondAttribute="trailing" constant="20" id="QcR-R9-pni"/>
+                    <constraint firstItem="w1Y-Wj-BvT" firstAttribute="leading" secondItem="Xhy-S9-VRc" secondAttribute="trailing" constant="20" id="RrX-o9-ZgH"/>
                     <constraint firstItem="Xhy-S9-VRc" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="Yok-5s-sGU"/>
-                    <constraint firstItem="w1Y-Wj-BvT" firstAttribute="centerX" secondItem="NR7-Ty-MDa" secondAttribute="centerX" constant="100" id="iuz-Bf-AV5"/>
-                    <constraint firstItem="Xhy-S9-VRc" firstAttribute="centerX" secondItem="NR7-Ty-MDa" secondAttribute="centerX" constant="-100" id="jVm-sk-tQA"/>
-                    <constraint firstItem="lSV-Ki-zTa" firstAttribute="bottom" secondItem="Xhy-S9-VRc" secondAttribute="bottom" constant="10" id="mEX-K6-QkT"/>
+                    <constraint firstItem="aLq-jZ-Oeu" firstAttribute="top" secondItem="7yP-eX-TLj" secondAttribute="bottom" constant="10" id="na2-mA-WpM"/>
+                    <constraint firstItem="IDE-Uy-BbX" firstAttribute="top" secondItem="aLq-jZ-Oeu" secondAttribute="bottom" constant="10" id="zdn-e0-gum"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="208" y="502"/>
+            <point key="canvasLocation" x="187" y="563"/>
         </window>
     </objects>
 </document>

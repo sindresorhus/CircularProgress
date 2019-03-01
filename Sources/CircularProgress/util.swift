@@ -185,13 +185,13 @@ extension NSFont {
 
 
 extension NSBezierPath {
-	static func circle(radius: Double, center: CGPoint) -> NSBezierPath {
+	static func circle(radius: Double, center: CGPoint, startAngle: Double = 0, endAngle: Double = 360) -> NSBezierPath {
 		let path = NSBezierPath()
 		path.appendArc(
 			withCenter: center,
 			radius: CGFloat(radius),
-			startAngle: 0,
-			endAngle: 360
+			startAngle: CGFloat(startAngle),
+			endAngle: CGFloat(endAngle)
 		)
 		return path
 	}
@@ -273,6 +273,21 @@ final class ProgressCircleShapeLayer: CAShapeLayer {
 		CALayer.withoutImplicitAnimations {
 			strokeEnd = 0
 		}
+	}
+}
+
+/**
+Shows the indeterminate state, when it's activated.
+
+It draws part of a circle that gets animated into a looping motion around its core.
+*/
+final class IndeterminateShapeLayer: CAShapeLayer {
+	convenience init(radius: Double, center: CGPoint) {
+		self.init()
+		fillColor = nil
+		path = NSBezierPath.circle(radius: radius, center: bounds.center, startAngle: 270).cgPath
+		anchorPoint = CGPoint(x: 0.5, y: 0.5)
+		position = center
 	}
 }
 
@@ -380,5 +395,20 @@ extension NSView {
 			},
 			completion: completion
 		)
+	}
+}
+
+extension CABasicAnimation {
+	/// Rotates the element around its center point infinitely.
+	static var rotate: CABasicAnimation {
+		let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.transform))
+		animation.valueFunction = CAValueFunction(name: .rotateZ)
+		animation.fromValue = 0
+		animation.toValue = -(Double.pi * 2)
+		animation.duration = 1
+		animation.repeatCount = .infinity
+		animation.timingFunction = CAMediaTimingFunction(name: .linear)
+
+		return animation
 	}
 }
