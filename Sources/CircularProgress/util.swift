@@ -19,9 +19,8 @@ func with<T>(_ item: T, update: (inout T) throws -> Void) rethrows -> T {
 	return this
 }
 
-
-/// macOS 10.14 polyfill
 extension NSColor {
+	/// macOS 10.14 polyfill
 	static let controlAccentColorPolyfill: NSColor = {
 		if #available(macOS 10.14, *) {
 			return NSColor.controlAccentColor
@@ -30,6 +29,35 @@ extension NSColor {
 			return NSColor(red: 0.10, green: 0.47, blue: 0.98, alpha: 1)
 		}
 	}()
+
+	func with(alpha: Double) -> NSColor {
+		return withAlphaComponent(CGFloat(alpha))
+	}
+
+	typealias HSBAColor = (hue: Double, saturation: Double, brightness: Double, alpha: Double)
+	var hsba: HSBAColor {
+		var hue: CGFloat = 0
+		var saturation: CGFloat = 0
+		var brightness: CGFloat = 0
+		var alpha: CGFloat = 0
+		let color = usingColorSpace(.deviceRGB) ?? self
+		color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+		return HSBAColor(Double(hue), Double(saturation), Double(brightness), Double(alpha))
+	}
+
+	private func colorWithSaturation(ratio: Double, brightness: Double? = nil) -> NSColor {
+		let color = hsba
+		return NSColor(
+			hue: CGFloat(color.hue),
+			saturation: CGFloat(color.saturation * ratio),
+			brightness: CGFloat(brightness ?? color.brightness),
+			alpha: CGFloat(color.alpha)
+		)
+	}
+
+	func desaturating(by ratio: Double, brightness: Double? = nil) -> NSColor {
+		return colorWithSaturation(ratio: 1 - ratio, brightness: brightness)
+	}
 }
 
 
@@ -57,13 +85,6 @@ extension CGRect {
 				y: newValue.y - (size.height / 2)
 			)
 		}
-	}
-}
-
-
-extension NSColor {
-	func with(alpha: Double) -> NSColor {
-		return withAlphaComponent(CGFloat(alpha))
 	}
 }
 

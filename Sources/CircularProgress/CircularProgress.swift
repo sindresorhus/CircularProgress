@@ -163,9 +163,16 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func updateLayer() {
-		backgroundCircle.strokeColor = color.with(alpha: 0.5).cgColor
-		progressCircle.strokeColor = color.cgColor
-		progressLabel.foregroundColor = color.cgColor
+		updateColors()
+	}
+
+	private func updateColors() {
+		let duration = 0.2
+
+		backgroundCircle.animate(color: color.with(alpha: 0.5).cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
+		progressCircle.animate(color: color.cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
+
+		progressLabel.animate(color: color.cgColor, keyPath: #keyPath(CATextLayer.foregroundColor), duration: duration)
 
 		cancelButton.textColor = color
 		cancelButton.backgroundColor = color.with(alpha: 0.1)
@@ -190,6 +197,8 @@ public final class CircularProgress: NSView {
 		_isCancelled = false
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
+
+		alphaValue = 1
 	}
 
 	/**
@@ -248,8 +257,34 @@ public final class CircularProgress: NSView {
 
 			if newValue {
 				onCancelled?()
+				visualizeCancelledStateIfNecessary()
 			}
 		}
+	}
+
+	/**
+	Determines whether to visualize changing into the cancelled state.
+	*/
+	public var visualizeCancelledState: Bool = true
+
+	/**
+	Supply the base color to use for displaying the cancelled state.
+	*/
+	public var cancelledStateColorHandler: ((NSColor) -> NSColor)?
+
+	private func visualizeCancelledStateIfNecessary() {
+		guard visualizeCancelledState else {
+			return
+		}
+
+		if let colorHandler = cancelledStateColorHandler {
+			color = colorHandler(color)
+		} else {
+			color = color.desaturating(by: 0.4, brightness: 0.8)
+			alphaValue = 0.7
+		}
+
+		updateColors()
 	}
 
 	private var trackingArea: NSTrackingArea?
