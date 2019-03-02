@@ -3,7 +3,8 @@ import Cocoa
 @IBDesignable
 public final class CircularProgress: NSView {
 	private var lineWidth: Double = 2
-	private lazy var radius = bounds.width < bounds.height ? bounds.midX * 0.8 : bounds.midY * 0.8
+	// TODO: Remove the closure here when targeting Swift 5
+	private lazy var radius = { bounds.width < bounds.height ? bounds.midX * 0.8 : bounds.midY * 0.8 }()
 	private var _progress: Double = 0
 	private var progressObserver: NSKeyValueObservation?
 	private var finishedObserver: NSKeyValueObservation?
@@ -66,6 +67,7 @@ public final class CircularProgress: NSView {
 	The progress value in the range `0...1`.
 
 	- Note: The value will be clamped to `0...1`.
+	- Note: Can be set from a background thread.
 	*/
 	@IBInspectable public var progress: Double {
 		get {
@@ -79,7 +81,9 @@ public final class CircularProgress: NSView {
 				self.progressCircle.progress = self._progress
 			})
 
-			progressLabel.isHidden = progress == 0 && isIndeterminate ? cancelButton.isHidden : !cancelButton.isHidden
+			DispatchQueue.main.async {
+				self.progressLabel.isHidden = self.progress == 0 && self.isIndeterminate ? self.cancelButton.isHidden : !self.cancelButton.isHidden
+			}
 
 			if !progressLabel.isHidden {
 				progressLabel.string = "\(Int(_progress * 100))%"
