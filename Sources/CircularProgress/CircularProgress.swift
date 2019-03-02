@@ -313,7 +313,7 @@ public final class CircularProgress: NSView {
 		if let colorHandler = cancelledStateColorHandler {
 			color = colorHandler(color)
 		} else {
-			color = color.desaturating(by: 0.4, brightness: 0.8)
+			color = color.adjusting(saturation: -0.4, brightness: -0.2)
 			alphaValue = 0.7
 		}
 
