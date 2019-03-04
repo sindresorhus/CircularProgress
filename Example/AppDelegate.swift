@@ -27,7 +27,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 		animateWithRandomColor(
 			manualCircularProgress,
 			start: { circularProgress in
-				circularProgress.alphaValue = 1
 				circularProgress.resetProgress()
 			},
 			tick: { circularProgress in
@@ -40,7 +39,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 		animateWithRandomColor(
 			progressCircularProgress,
 			start: { circularProgress in
-				circularProgress.alphaValue = 1
 				circularProgress.resetProgress()
 
 				let progress = Progress(totalUnitCount: 50)

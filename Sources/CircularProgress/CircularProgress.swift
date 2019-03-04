@@ -184,10 +184,10 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func updateLayer() {
-		updateColors()
+		updateColors(with: color)
 	}
 
-	private func updateColors() {
+	private func updateColors(with color: NSColor) {
 		let duration = 0.2
 
 		backgroundCircle.animate(color: color.with(alpha: 0.5).cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
@@ -229,8 +229,9 @@ public final class CircularProgress: NSView {
 		isIndeterminate = false
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
-
 		alphaValue = 1
+
+		needsDisplay = true
 	}
 
 	/**
@@ -310,14 +311,15 @@ public final class CircularProgress: NSView {
 			return
 		}
 
+		let cancelledColor: NSColor
 		if let colorHandler = cancelledStateColorHandler {
-			color = colorHandler(color)
+			cancelledColor = colorHandler(color)
 		} else {
-			color = color.adjusting(saturation: -0.4, brightness: -0.2)
+			cancelledColor = color.adjusting(saturation: -0.4, brightness: -0.2)
 			alphaValue = 0.7
 		}
 
-		updateColors()
+		updateColors(with: cancelledColor)
 	}
 
 	private var trackingArea: NSTrackingArea?
