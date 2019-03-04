@@ -202,6 +202,12 @@ convenience init(size: Double) {}
 You might also like my [apps](https://sindresorhus.com/apps).
 
 
+## Maintainers
+
+- [Sindre Sorhus](https://github.com/sindresorhus)
+- [Boy van Amstel](https://github.com/boyvanamstel)
+
+
 ## License
 
-MIT © [Sindre Sorhus](https://sindresorhus.com)
+MIT
