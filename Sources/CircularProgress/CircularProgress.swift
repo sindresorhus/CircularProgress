@@ -254,7 +254,7 @@ public final class CircularProgress: NSView {
 	*/
 	public var onCancelled: (() -> Void)?
 
-	public var _isCancellable = false
+	private var _isCancellable = false
 	/**
 	If the progress view is cancellable it shows the cancel button.
 	*/
