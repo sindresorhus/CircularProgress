@@ -188,8 +188,13 @@ extension NSFont {
 
 
 extension NSBezierPath {
-	static func circle(radius: Double, center: CGPoint, startAngle: Double = 0, endAngle: Double = 360) -> NSBezierPath {
-		let path = NSBezierPath()
+	static func circle(
+		radius: Double,
+		center: CGPoint,
+		startAngle: Double = 0,
+		endAngle: Double = 360
+	) -> Self {
+		let path = self.init()
 		path.appendArc(
 			withCenter: center,
 			radius: CGFloat(radius),
@@ -200,9 +205,9 @@ extension NSBezierPath {
 	}
 
 	/// For making a circle progress indicator
-	static func progressCircle(radius: Double, center: CGPoint) -> NSBezierPath {
+	static func progressCircle(radius: Double, center: CGPoint) -> Self {
 		let startAngle: CGFloat = 90
-		let path = NSBezierPath()
+		let path = self.init()
 		path.appendArc(
 			withCenter: center,
 			radius: CGFloat(radius),
@@ -216,8 +221,10 @@ extension NSBezierPath {
 
 
 extension CAShapeLayer {
-	static func circle(radius: Double, center: CGPoint) -> CAShapeLayer {
-		return CAShapeLayer(path: NSBezierPath.circle(radius: radius, center: center))
+	static func circle(radius: Double, center: CGPoint) -> Self {
+		let layer = self.init()
+		layer.path = NSBezierPath.circle(radius: radius, center: center).cgPath
+		return layer
 	}
 
 	convenience init(path: NSBezierPath) {
@@ -301,8 +308,8 @@ extension NSBezierPath {
 		let path = CGMutablePath()
 		var points = [CGPoint](repeating: .zero, count: 3)
 
-		for i in 0..<elementCount {
-			let type = element(at: i, associatedPoints: &points)
+		for index in 0..<elementCount {
+			let type = element(at: index, associatedPoints: &points)
 			switch type {
 			case .moveTo:
 				path.move(to: points[0])
@@ -312,6 +319,8 @@ extension NSBezierPath {
 				path.addCurve(to: points[2], control1: points[0], control2: points[1])
 			case .closePath:
 				path.closeSubpath()
+			@unknown default:
+				assertionFailure("NSBezierPath received a new enum case. Please handle it.")
 			}
 		}
 
@@ -387,7 +396,11 @@ extension NSView {
 		}
 	}
 
-	func fadeIn(duration: TimeInterval = 1, delay: TimeInterval = 0, completion: (() -> Void)? = nil) {
+	func fadeIn(
+		duration: TimeInterval = 1,
+		delay: TimeInterval = 0,
+		completion: (() -> Void)? = nil
+	) {
 		isHidden = true
 
 		NSView.animate(
@@ -411,7 +424,6 @@ extension CABasicAnimation {
 		animation.duration = 1
 		animation.repeatCount = .infinity
 		animation.timingFunction = CAMediaTimingFunction(name: .linear)
-
 		return animation
 	}
 }
