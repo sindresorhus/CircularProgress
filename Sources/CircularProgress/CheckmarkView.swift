@@ -74,7 +74,7 @@ class CheckmarkView: NSView {
 		$0.values = [0, 0.333, 1.0]
 		$0.duration = animationDuration
 		$0.timingFunctions = [
-			CAMediaTimingFunction(name: .easeInEaseOut),
+			CAMediaTimingFunction(name: .easeOut),
 			CAMediaTimingFunction(name: .easeOut)
 		]
 	}
