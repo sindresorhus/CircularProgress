@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F2F370B224E9BD100C71D8E /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F370A224E9BD100C71D8E /* CheckmarkView.swift */; };
 		B5344AB721F8B27100C12ADB /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5344AB621F8B27100C12ADB /* CustomButton.swift */; };
 		E327393D2177359E00FFE124 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E327393C2177359E00FFE124 /* util.swift */; };
 		E3FB30C420EA5DBC009BA1BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FB30C320EA5DBC009BA1BD /* AppDelegate.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9F2F370A224E9BD100C71D8E /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		B5344AB621F8B27100C12ADB /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CustomButton.swift; sourceTree = "<group>"; usesTabs = 1; };
 		"CircularProgress::CircularProgress::Product" /* CircularProgress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CircularProgress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E327393C2177359E00FFE124 /* util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = util.swift; sourceTree = "<group>"; usesTabs = 1; };
@@ -118,6 +120,7 @@
 			children = (
 				OBJ_9 /* CircularProgress.swift */,
 				B5344AB621F8B27100C12ADB /* CustomButton.swift */,
+				9F2F370A224E9BD100C71D8E /* CheckmarkView.swift */,
 				OBJ_10 /* util.swift */,
 			);
 			name = CircularProgress;
@@ -263,6 +266,7 @@
 			files = (
 				OBJ_19 /* CircularProgress.swift in Sources */,
 				OBJ_20 /* util.swift in Sources */,
+				9F2F370B224E9BD100C71D8E /* CheckmarkView.swift in Sources */,
 				B5344AB721F8B27100C12ADB /* CustomButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
