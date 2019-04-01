@@ -15,6 +15,10 @@ class CheckmarkView: NSView {
 
 	override var isHidden: Bool {
 		didSet {
+			guard isHidden != oldValue else {
+				return
+			}
+
 			if isHidden {
 				stopAnimation()
 			} else {
@@ -47,25 +51,26 @@ class CheckmarkView: NSView {
 
 	private lazy var shapeLayer: CAShapeLayer = {
 		let scale: CGFloat = 0.4
-		let marginScale = (1 - scale) / 2
-		let width = bounds.size.width * scale
-		let height = bounds.size.height * scale
+		let size = min(bounds.size.width, bounds.size.height) * scale
+		let originalSize = size / scale
+		let margin = ((1 - scale) / 2) * originalSize
 
-		let checkmarkPath = NSBezierPath()
-		checkmarkPath.move(to: CGPoint(x: 0, y: width / 2))
-		checkmarkPath.line(to: CGPoint(x: width / 3, y: width / 6))
-		checkmarkPath.line(to: CGPoint(x: width, y: 5 * width / 6))
+		let checkmarkPath = with(NSBezierPath()) {
+			$0.move(to: CGPoint(x: 0, y: size / 2))
+			$0.line(to: CGPoint(x: size / 3, y: size / 6))
+			$0.line(to: CGPoint(x: size, y: 5 * size / 6))
+		}
 
-		let layer = CAShapeLayer()
-		layer.frame = CGRect(x: marginScale * bounds.size.width, y: marginScale * bounds.size.height, width: width, height: height)
-		layer.path = checkmarkPath.cgPath
-		layer.fillColor = nil
-		layer.fillMode = .forwards
-		layer.lineCap = .round
-		layer.lineJoin = .miter
-		layer.lineWidth = lineWidth
-		layer.strokeColor = color.cgColor
-		return layer
+		return with(CAShapeLayer()) {
+			$0.frame = CGRect(x: margin, y: margin, width: size, height: size)
+			$0.path = checkmarkPath.cgPath
+			$0.fillColor = nil
+			$0.fillMode = .forwards
+			$0.lineCap = .round
+			$0.lineJoin = .miter
+			$0.lineWidth = lineWidth
+			$0.strokeColor = color.cgColor
+		}
 	}()
 
 	// MARK: - CheckmarkView (Animation)
