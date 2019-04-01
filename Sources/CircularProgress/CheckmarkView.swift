@@ -71,9 +71,12 @@ class CheckmarkView: NSView {
 	// MARK: - CheckmarkView (Animation)
 
 	private lazy var animation = with(CAKeyframeAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))) {
-		$0.values = [0, 1]
-		$0.keyTimes = [0, 1]
+		$0.values = [0, 0.333, 1.0]
 		$0.duration = animationDuration
+		$0.timingFunctions = [
+			CAMediaTimingFunction(name: .easeInEaseOut),
+			CAMediaTimingFunction(name: .easeOut)
+		]
 	}
 
 	private let animationKey = "checkmarkAnimation"
