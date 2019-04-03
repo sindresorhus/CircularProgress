@@ -35,7 +35,7 @@ public final class CircularProgress: NSView {
 		$0.lineWidth = CGFloat(lineWidth)
 	}
 
-	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
+	private lazy var cancelButton: CustomButton = with(.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
 		$0.textColor = color
 		$0.backgroundColor = color.with(alpha: 0.1)
 		$0.activeBackgroundColor = color
@@ -331,7 +331,7 @@ public final class CircularProgress: NSView {
 		needsDisplay = true
 	}
 
-	private var trackingArea: NSTrackingArea?
+//	private var trackingArea: NSTrackingArea?
 
 	override public func updateTrackingAreas() {
 		if let oldTrackingArea = trackingArea {

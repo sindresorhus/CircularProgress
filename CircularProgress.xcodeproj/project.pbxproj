@@ -13,6 +13,7 @@
 		E3FB30C920EA5DBE009BA1BD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FB30C720EA5DBE009BA1BD /* MainMenu.xib */; };
 		E3FB30CF20EA5EBD009BA1BD /* CircularProgress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "CircularProgress::CircularProgress::Product" /* CircularProgress.framework */; };
 		E3FB30D020EA5EBD009BA1BD /* CircularProgress.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = "CircularProgress::CircularProgress::Product" /* CircularProgress.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F1FDA5892254CE8D00797872 /* Trackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FDA5882254CE8D00797872 /* Trackable.swift */; };
 		OBJ_19 /* CircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* CircularProgress.swift */; };
 		OBJ_20 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* util.swift */; };
 		OBJ_27 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
@@ -50,6 +51,7 @@
 		E3FB30C320EA5DBC009BA1BD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 1; };
 		E3FB30C820EA5DBE009BA1BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		E3FB30CA20EA5DBE009BA1BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1FDA5882254CE8D00797872 /* Trackable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trackable.swift; sourceTree = "<group>"; };
 		OBJ_10 /* util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = util.swift; sourceTree = "<group>"; usesTabs = 1; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; fileEncoding = 4; lineEnding = 0; path = Package.swift; sourceTree = "<group>"; usesTabs = 1; };
 		OBJ_9 /* CircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CircularProgress.swift; sourceTree = "<group>"; usesTabs = 1; };
@@ -85,6 +87,14 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
+		F1FDA5872254CE7D00797872 /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				F1FDA5882254CE8D00797872 /* Trackable.swift */,
+			);
+			path = protocol;
+			sourceTree = "<group>";
+		};
 		OBJ_12 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* CircularProgress.swift */,
+				F1FDA5872254CE7D00797872 /* protocol */,
 				B5344AB621F8B27100C12ADB /* CustomButton.swift */,
 				OBJ_10 /* util.swift */,
 			);
@@ -200,6 +211,7 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				en,
 				Base,
 			);
 			mainGroup = OBJ_5;
@@ -264,6 +276,7 @@
 				OBJ_19 /* CircularProgress.swift in Sources */,
 				OBJ_20 /* util.swift in Sources */,
 				B5344AB721F8B27100C12ADB /* CustomButton.swift in Sources */,
+				F1FDA5892254CE8D00797872 /* Trackable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
