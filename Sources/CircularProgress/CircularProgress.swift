@@ -417,34 +417,21 @@ public final class CircularProgress: NSView {
 	}
 }
 
-extension CircularProgress:Trackable{
-	/**
-	* This is the last NSView so we dont forward the hitTest to further descendants, however we could forward the hit test one more step to the CALayer
-	* - TODO: ⚠️️ the logic inside this method should be in the Shape, and this method should just forward to the shape, if there is a shape
-	*/
-	override public func hitTest(_ point: NSPoint) -> NSView? {
-		let localP = self.convert(point, from: nil)/*you have to convert the point to localspace*/
+extension CircularProgress:MouseTrackable{
+	public override func hitTest(_ point: NSPoint) -> NSView? {
+		guard let mousePos = self.window?.mouseLocationOutsideOfEventStream else {return nil}
+		let localMousePos = self.convert(mousePos,from:nil)
 		if let path = path {
-			return path.contains(localP) ? self : nil/*return nil will tell the parent that there was no hit on this view*/
+			let contains:Bool = path.contains(localMousePos)
+			return contains ? self : nil
 		}
 		return super.hitTest(point)
 	}
-	var path: CGPath? { return CGPath.init(ellipseIn: bounds,transform: nil) }
-	/**
-	* - Abstract: the only way to update trackingArea is to remove it and add a new one
-	* - Note: we could keep the trackingArea in lower level shapes/graphics so it's always easy to access, but i don't think it needs to be easily accesible atm.
-	* - Parameter owner: is the instance that receives the interaction event
-	* - TODO: ⚠️️ should probably not have .mouseMoved here, but rather only add it for `onOut` events
-	*/
+	var path: CGPath? { return CGPath.init(ellipseIn: bounds.insetBy(dx: 20, dy: 20), transform: nil) }
 	override public func updateTrackingAreas() {
-		//      Swift.print("updateTrackingAreas")
 		createTrackingArea([.activeAlways, .mouseMoved, .mouseEnteredAndExited])
 		super.updateTrackingAreas()
 	}
-	/**
-	* Fires when the mouse enters the tracking area, regardless if it is overlapping with other trackingAreas of other views
-	* - Note: if you override this method in subclasses, then also call the the super of this method to avoid loss of functionality
-	*/
 	override public func mouseEntered(with event: NSEvent) {
 		let viewUnderMouse:NSView? = window?.contentView?.hitTest(event.locationInWindow)
 		if hasMouseEntered == false && viewUnderMouse === self {
@@ -453,10 +440,6 @@ extension CircularProgress:Trackable{
 		}
 		super.mouseEntered(with: event)
 	}
-	/**
-	* Fires when the mouse exits the tracking area, regardless if it is overlapping with other trackingAreas of other views
-	* - Note: if you override this method in subclasses, then also call the the super of this method to avoid loss of functionality
-	*/
 	override public func mouseExited(with event: NSEvent) {
 		if hasMouseEntered {
 			hasMouseEntered = false
@@ -464,10 +447,6 @@ extension CircularProgress:Trackable{
 		}
 		super.mouseEntered(with: event)
 	}
-	/**
-	* MouseMoved
-	* - Note: mouseMoved doesn't work if the leftmouse button is pressed, then mouseDragged is used instead
-	*/
 	override public func mouseMoved(with event: NSEvent) {
 		super.mouseMoved(with: event)
 		let viewUnderMouse:NSView? = window?.contentView?.hitTest(event.locationInWindow)
@@ -480,20 +459,12 @@ extension CircularProgress:Trackable{
 			hasMouseEntered = false
 		}
 	}
-	/**
-	* When the mouse enters the tracking area or tracking shape (Overridable)
-	*/
 	@objc func onOver(){
-		Swift.print("onOver")
 		guard isCancellable else {return}
 		progressLabel.isHidden = true
 		cancelButton.fadeIn()
 	}
-	/**
-	* When the mouse exits the tracking area or tracking shape (Overridable)
-	*/
 	@objc func onOut(){
-		Swift.print("onOut")
 		guard isCancellable else {return}
 		progressLabel.isHidden = isIndeterminate && progress == 0
 		cancelButton.isHidden = true
