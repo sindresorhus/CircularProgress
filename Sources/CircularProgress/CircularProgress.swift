@@ -332,51 +332,6 @@ public final class CircularProgress: NSView {
 		needsDisplay = true
 	}
 
-//	private var trackingArea: NSTrackingArea?
-
-//	override public func updateTrackingAreas() {
-//		if let oldTrackingArea = trackingArea {
-//			removeTrackingArea(oldTrackingArea)
-//		}
-//
-//		guard isCancellable else {
-//			return
-//		}
-//
-//		let newTrackingArea = NSTrackingArea(
-//			rect: cancelButton.frame,
-//			options: [
-//				.mouseEnteredAndExited,
-//				.activeInActiveApp
-//			],
-//			owner: self,
-//			userInfo: nil
-//		)
-//
-//		addTrackingArea(newTrackingArea)
-//		trackingArea = newTrackingArea
-//	}
-
-//	override public func mouseEntered(with event: NSEvent) {
-//		guard isCancellable else {
-//			super.mouseEntered(with: event)
-//			return
-//		}
-//
-//		progressLabel.isHidden = true
-//		cancelButton.fadeIn()
-//	}
-//
-//	override public func mouseExited(with event: NSEvent) {
-//		guard isCancellable else {
-//			super.mouseExited(with: event)
-//			return
-//		}
-//
-//		progressLabel.isHidden = isIndeterminate && progress == 0
-//		cancelButton.isHidden = true
-//	}
-
 	private var _isIndeterminate = false
 	/**
 	Returns whether the progress is indeterminate.
@@ -429,6 +384,9 @@ extension CircularProgress:MouseTrackable{
 	}
 	var path: CGPath? { return CGPath.init(ellipseIn: bounds.insetBy(dx: 20, dy: 20), transform: nil) }
 	override public func updateTrackingAreas() {
+		guard isCancellable else {
+			return
+		}
 		createTrackingArea([.activeAlways, .mouseMoved, .mouseEnteredAndExited])
 		super.updateTrackingAreas()
 	}
