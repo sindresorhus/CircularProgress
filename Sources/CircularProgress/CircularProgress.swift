@@ -31,7 +31,7 @@ public final class CircularProgress: NSView {
 		$0.isHidden = true
 	}
 
-	internal lazy var indeterminateCircle = with(IndeterminateShapeLayer(radius: Double(radius), center: bounds.center)) {
+	internal lazy var indeterminateCircle = with(IndeterminateProgressCircleShapeLayer(radius: Double(radius), center: bounds.center)) {
 		$0.lineWidth = lineWidth
 	}
 
