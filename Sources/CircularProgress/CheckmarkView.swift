@@ -1,9 +1,9 @@
 import Cocoa
 
-class CheckmarkView: NSView {
+final class CheckmarkView: NSView {
 	// MARK: - NSView
 
-	override init(frame frameRect: NSRect) {
+	override init(frame frameRect: CGRect) {
 		super.init(frame: frameRect)
 		commonInit()
 	}

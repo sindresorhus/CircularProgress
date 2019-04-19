@@ -72,7 +72,7 @@ public final class CircularProgress: NSView {
 	}
 
 	/**
-	Show an animating `CheckmarkView` instead of `100%`.
+	Show an animated checkmark instead of `100%`.
 	*/
 	@IBInspectable public var showCheckmarkAtHundredPercent: Bool = true
 
