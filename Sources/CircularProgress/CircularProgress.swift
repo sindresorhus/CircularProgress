@@ -132,7 +132,8 @@ public final class CircularProgress: NSView {
 
 				if showCheckmarkAtHundredPercent {
 					progressLabel.string = ""
-					successView.isHidden = shouldHideSuccessView
+					cancelButton.isHidden = true
+					successView.isHidden = false
 				}
 			}
 		}
@@ -426,6 +427,6 @@ public final class CircularProgress: NSView {
 	}
 
 	private var shouldHideSuccessView: Bool {
-		return !cancelButton.isHidden || !showCheckmarkAtHundredPercent || !isFinished
+		return !showCheckmarkAtHundredPercent || !isFinished
 	}
 }
