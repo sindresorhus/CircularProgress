@@ -42,9 +42,9 @@ public final class CircularProgress: NSView {
 		$0.activeBackgroundColor = color
 		$0.borderWidth = 0
 		$0.isHidden = true
-		$0.onAction = { _ in
-			self.cancelProgress()
-		}
+//		$0.onAction = { _ in
+//			self.cancelProgress()
+//		}
 	}
 
 	private var originalColor: NSColor = .controlAccentColorPolyfill
@@ -415,6 +415,10 @@ extension CircularProgress: MouseTrackable {
 			onOut()
 			hasMouseEntered = false
 		}
+	}
+	override public func mouseDown(with event: NSEvent) {
+		super.mouseDown(with: event)
+		self.cancelProgress()
 	}
 	@objc func onOver() {
 		guard isCancellable else { return }
