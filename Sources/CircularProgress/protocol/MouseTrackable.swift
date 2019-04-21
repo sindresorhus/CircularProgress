@@ -10,7 +10,7 @@ extension MouseTrackable where Self: NSView {
 	/**
 	* Creates a new tracking area
 	*/
-	internal func createTrackingArea(_ options: NSTrackingArea.Options = [.activeInActiveApp, .mouseEnteredAndExited, .mouseMoved]) {
+	func createTrackingArea(_ options: NSTrackingArea.Options = [.activeInActiveApp, .mouseEnteredAndExited, .mouseMoved]) {
 		trackingAreas.forEach { trackingArea in
 			self.removeTrackingArea(trackingArea)
 		}
