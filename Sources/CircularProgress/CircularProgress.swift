@@ -376,13 +376,13 @@ extension CircularProgress: MouseTrackable {
 	override public func hitTest(_ point: NSPoint) -> NSView? {
 		guard let mousePos = self.window?.mouseLocationOutsideOfEventStream else { return nil }
 		let localMousePos = self.convert(mousePos, from: nil)
-		if let path = path {
+		if let path = hitTestPath {
 			let contains: Bool = path.contains(localMousePos)
 			return contains ? self : nil
 		}
 		return super.hitTest(point)
 	}
-	var path: CGPath? { return .init(ellipseIn: bounds.insetBy(dx: 20, dy: 20), transform: nil) }
+	var hitTestPath: CGPath? { return .init(ellipseIn: bounds.insetBy(dx: 20, dy: 20), transform: nil) }
 	override public func updateTrackingAreas() {
 		guard isCancellable else {
 			return
