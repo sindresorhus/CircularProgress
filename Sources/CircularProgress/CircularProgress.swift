@@ -9,7 +9,7 @@ public final class CircularProgress: NSView {
 	private var finishedObserver: NSKeyValueObservation?
 	private var cancelledObserver: NSKeyValueObservation?
 	private var indeterminateObserver: NSKeyValueObservation?
-	internal var hasMouseEntered: Bool = false/*Required for onOver / onOut to work*/
+	private var hasMouseEntered: Bool = false/*Required for onOver / onOut to work*/
 
 	private lazy var backgroundCircle = with(CAShapeLayer.circle(radius: Double(radius), center: bounds.center)) {
 		$0.frame = bounds
