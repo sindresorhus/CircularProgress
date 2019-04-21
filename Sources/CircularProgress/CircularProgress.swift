@@ -9,7 +9,7 @@ public final class CircularProgress: NSView {
 	private var finishedObserver: NSKeyValueObservation?
 	private var cancelledObserver: NSKeyValueObservation?
 	private var indeterminateObserver: NSKeyValueObservation?
-	internal var hasMouseEntered:Bool = false/*Required for onOver / onOut to work*/
+	internal var hasMouseEntered: Bool = false/*Required for onOver / onOut to work*/
 
 	private lazy var backgroundCircle = with(CAShapeLayer.circle(radius: Double(radius), center: bounds.center)) {
 		$0.frame = bounds
@@ -372,17 +372,17 @@ public final class CircularProgress: NSView {
 	}
 }
 
-extension CircularProgress:MouseTrackable{
-	public override func hitTest(_ point: NSPoint) -> NSView? {
-		guard let mousePos = self.window?.mouseLocationOutsideOfEventStream else {return nil}
-		let localMousePos = self.convert(mousePos,from:nil)
+extension CircularProgress: MouseTrackable {
+	override public func hitTest(_ point: NSPoint) -> NSView? {
+		guard let mousePos = self.window?.mouseLocationOutsideOfEventStream else { return nil }
+		let localMousePos = self.convert(mousePos, from: nil)
 		if let path = path {
-			let contains:Bool = path.contains(localMousePos)
+			let contains: Bool = path.contains(localMousePos)
 			return contains ? self : nil
 		}
 		return super.hitTest(point)
 	}
-	var path: CGPath? { return CGPath.init(ellipseIn: bounds.insetBy(dx: 20, dy: 20), transform: nil) }
+	var path: CGPath? { return .init(ellipseIn: bounds.insetBy(dx: 20, dy: 20), transform: nil) }
 	override public func updateTrackingAreas() {
 		guard isCancellable else {
 			return
@@ -391,7 +391,7 @@ extension CircularProgress:MouseTrackable{
 		super.updateTrackingAreas()
 	}
 	override public func mouseEntered(with event: NSEvent) {
-		let viewUnderMouse:NSView? = window?.contentView?.hitTest(event.locationInWindow)
+		let viewUnderMouse: NSView? = window?.contentView?.hitTest(event.locationInWindow)
 		if hasMouseEntered == false && viewUnderMouse === self {
 			onOver()
 			hasMouseEntered = true
@@ -407,23 +407,22 @@ extension CircularProgress:MouseTrackable{
 	}
 	override public func mouseMoved(with event: NSEvent) {
 		super.mouseMoved(with: event)
-		let viewUnderMouse:NSView? = window?.contentView?.hitTest(event.locationInWindow)
+		let viewUnderMouse: NSView? = window?.contentView?.hitTest(event.locationInWindow)
 		if hasMouseEntered == false && viewUnderMouse === self {
 			onOver()
 			hasMouseEntered = true
-		}
-		else if hasMouseEntered && viewUnderMouse !== self{
+		} else if hasMouseEntered && viewUnderMouse !== self {
 			onOut()
 			hasMouseEntered = false
 		}
 	}
-	@objc func onOver(){
-		guard isCancellable else {return}
+	@objc func onOver() {
+		guard isCancellable else { return }
 		progressLabel.isHidden = true
 		cancelButton.fadeIn()
 	}
-	@objc func onOut(){
-		guard isCancellable else {return}
+	@objc func onOut() {
+		guard isCancellable else { return }
 		progressLabel.isHidden = isIndeterminate && progress == 0
 		cancelButton.isHidden = true
 	}
