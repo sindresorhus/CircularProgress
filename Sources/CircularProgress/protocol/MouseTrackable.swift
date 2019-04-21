@@ -1,4 +1,3 @@
-#if os(macOS)
 import Cocoa
 /**
 Makes it possible to utilize mouseOver/mouseOut functionality on a view (Supports custom bezier path)
@@ -22,4 +21,3 @@ extension MouseTrackable where Self: NSView {
 	*/
 	var path: CGPath? { return nil }
 }
-#endif
