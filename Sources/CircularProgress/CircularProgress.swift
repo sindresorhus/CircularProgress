@@ -36,7 +36,7 @@ public final class CircularProgress: NSView {
 		$0.lineWidth = CGFloat(lineWidth)
 	}
 
-	private lazy var cancelButton: CustomButton = with(.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
+	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
 		$0.textColor = color
 		$0.backgroundColor = color.with(alpha: 0.1)
 		$0.activeBackgroundColor = color
@@ -387,7 +387,7 @@ extension CircularProgress: MouseTrackable {
 		guard isCancellable else {
 			return
 		}
-		createTrackingArea([.activeAlways, .mouseMoved, .mouseEnteredAndExited])
+		createTrackingArea([.activeInActiveApp, .mouseMoved, .mouseEnteredAndExited])
 		super.updateTrackingAreas()
 	}
 	override public func mouseEntered(with event: NSEvent) {
