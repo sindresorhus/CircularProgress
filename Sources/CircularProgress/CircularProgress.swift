@@ -1,5 +1,150 @@
 import Cocoa
 
+enum AssociationPolicy {
+	case assign
+	case retainNonatomic
+	case copyNonatomic
+	case retain
+	case copy
+
+	fileprivate var rawValue: objc_AssociationPolicy {
+		switch self {
+		case .assign:
+			return .OBJC_ASSOCIATION_ASSIGN
+		case .retainNonatomic:
+			return .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+		case .copyNonatomic:
+			return .OBJC_ASSOCIATION_COPY_NONATOMIC
+		case .retain:
+			return .OBJC_ASSOCIATION_RETAIN
+		case .copy:
+			return .OBJC_ASSOCIATION_COPY
+		}
+	}
+}
+
+final class ObjectAssociation<T: Any> {
+	private let policy: AssociationPolicy
+
+	init(policy: AssociationPolicy = .retainNonatomic) {
+		self.policy = policy
+	}
+
+	subscript(index: Any) -> T? {
+		get {
+			return objc_getAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque()) as! T?
+		} set {
+			objc_setAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque(), newValue, policy.rawValue)
+		}
+	}
+}
+
+protocol MouseTrackable: NSView {
+	var hitTestPath: CGPath? { get }
+	func onHover(didEnter: Bool)
+}
+
+private let hasMouseEnteredObjectAssociation = ObjectAssociation<Bool>()
+extension MouseTrackable {
+	func createTrackingArea(_ options: NSTrackingArea.Options = [.activeInActiveApp, .mouseEnteredAndExited, .mouseMoved]) {
+		trackingAreas.forEach { trackingArea in
+			self.removeTrackingArea(trackingArea)
+		}
+		let trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
+		self.addTrackingArea(trackingArea)
+	}
+
+	func getHit(_ point: CGPoint, _ superHitTest: ((_ point: NSPoint) -> NSView?)) -> NSView? {
+		guard let mousePosition = window?.mouseLocationOutsideOfEventStream else {
+			return nil
+		}
+
+		let localMousePosition = convert(mousePosition, from: nil)
+
+		if let path = hitTestPath {
+			let contains: Bool = path.contains(localMousePosition)
+			return contains ? self : nil
+		}
+
+		return superHitTest(point)
+	}
+
+	private func handleMouseEvent(event: NSEvent) {
+		let hasMouseEntered = hasMouseEnteredObjectAssociation[self] ?? false
+		print("has", hasMouseEntered)
+		let viewUnderMouse: NSView? = window?.contentView?.hitTest(event.locationInWindow)
+
+		if hasMouseEntered == false && viewUnderMouse === self {
+			onHover(didEnter: true)
+			hasMouseEnteredObjectAssociation[self] = true
+		} else if hasMouseEntered && viewUnderMouse !== self {
+			onHover(didEnter: false)
+			hasMouseEnteredObjectAssociation[self] = false
+		}
+	}
+
+	func notifyMouseMoved(event: NSEvent) {
+		handleMouseEvent(event: event)
+	}
+
+	func notifyMouseEntered(event: NSEvent) {
+		handleMouseEvent(event: event)
+	}
+
+	func notifyMouseExited(event: NSEvent) {
+		handleMouseEvent(event: event)
+	}
+}
+
+extension CircularProgress: MouseTrackable {
+	var hitTestPath: CGPath? {
+		return .init(ellipseIn: bounds.insetBy(dx: 20, dy: 20), transform: nil)
+	}
+
+	override public func hitTest(_ point: NSPoint) -> NSView? {
+		return getHit(point, super.hitTest)
+	}
+
+	override public func mouseMoved(with event: NSEvent) {
+		super.mouseMoved(with: event)
+		notifyMouseMoved(event: event)
+	}
+
+	override public func mouseEntered(with event: NSEvent) {
+		super.mouseEntered(with: event)
+		notifyMouseEntered(event: event)
+	}
+
+	override public func mouseExited(with event: NSEvent) {
+		super.mouseExited(with: event)
+		notifyMouseExited(event: event)
+	}
+
+	func onHover(didEnter: Bool) {
+		print("hover", didEnter)
+
+		guard isCancellable else {
+			return
+		}
+
+		if didEnter {
+			progressLabel.isHidden = true
+			cancelButton.fadeIn()
+		} else {
+			progressLabel.isHidden = isIndeterminate && progress == 0
+			cancelButton.isHidden = true
+		}
+	}
+
+	override public func updateTrackingAreas() {
+		guard isCancellable else {
+			return
+		}
+		createTrackingArea([.activeInActiveApp, .mouseMoved, .mouseEnteredAndExited])
+		super.updateTrackingAreas()
+	}
+}
+
 @IBDesignable
 public final class CircularProgress: NSView {
 	private var lineWidth: Double = 2
@@ -333,48 +478,28 @@ public final class CircularProgress: NSView {
 
 	private var trackingArea: NSTrackingArea?
 
-	override public func updateTrackingAreas() {
-		if let oldTrackingArea = trackingArea {
-			removeTrackingArea(oldTrackingArea)
-		}
-
-		guard isCancellable else {
-			return
-		}
-
-		let newTrackingArea = NSTrackingArea(
-			rect: cancelButton.frame,
-			options: [
-				.mouseEnteredAndExited,
-				.activeInActiveApp
-			],
-			owner: self,
-			userInfo: nil
-		)
-
-		addTrackingArea(newTrackingArea)
-		trackingArea = newTrackingArea
-	}
-
-	override public func mouseEntered(with event: NSEvent) {
-		guard isCancellable else {
-			super.mouseEntered(with: event)
-			return
-		}
-
-		progressLabel.isHidden = true
-		cancelButton.fadeIn()
-	}
-
-	override public func mouseExited(with event: NSEvent) {
-		guard isCancellable else {
-			super.mouseExited(with: event)
-			return
-		}
-
-		progressLabel.isHidden = isIndeterminate && progress == 0
-		cancelButton.isHidden = true
-	}
+//	override public func updateTrackingAreas() {
+//		if let oldTrackingArea = trackingArea {
+//			removeTrackingArea(oldTrackingArea)
+//		}
+//
+//		guard isCancellable else {
+//			return
+//		}
+//
+//		let newTrackingArea = NSTrackingArea(
+//			rect: cancelButton.frame,
+//			options: [
+//				.mouseEnteredAndExited,
+//				.activeInActiveApp
+//			],
+//			owner: self,
+//			userInfo: nil
+//		)
+//
+//		addTrackingArea(newTrackingArea)
+//		trackingArea = newTrackingArea
+//	}
 
 	private var _isIndeterminate = false
 	/**
