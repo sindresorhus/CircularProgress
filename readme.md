@@ -115,7 +115,7 @@ Defaults to the user's accent color. For High Sierra and below it uses a fallbac
 @IBInspectable var color: NSColor = .controlAccentColor
 
 /**
-Show `✔` instead `100%`.
+Show an animated checkmark instead of `100%`.
 */
 @IBInspectable var showCheckmarkAtHundredPercent: Bool = true
 
@@ -202,8 +202,3 @@ You might also like my [apps](https://sindresorhus.com/apps).
 
 - [Sindre Sorhus](https://github.com/sindresorhus)
 - [Boy van Amstel](https://github.com/boyvanamstel)
-
-
-## License
-
-MIT
