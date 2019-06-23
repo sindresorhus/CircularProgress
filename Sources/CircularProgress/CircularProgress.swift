@@ -130,7 +130,7 @@ public final class CircularProgress: NSView {
 			if _isFinished {
 				isIndeterminate = false
 
-				if showCheckmarkAtHundredPercent {
+				if !isCancelled, showCheckmarkAtHundredPercent {
 					progressLabel.string = ""
 					cancelButton.isHidden = true
 
@@ -430,6 +430,6 @@ public final class CircularProgress: NSView {
 	}
 
 	private var shouldHideSuccessView: Bool {
-		return !showCheckmarkAtHundredPercent || !isFinished
+		return !showCheckmarkAtHundredPercent || !isFinished || isCancelled
 	}
 }

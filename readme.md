@@ -4,7 +4,7 @@
 
 <img src="screenshot.gif" width="834">
 
-This package is used in production by the [Gifski](https://github.com/sindresorhus/gifski-app) and [HEIC Converter](https://sindresorhus.com/heic-converter) app.
+This package is used in production by the [Gifski](https://github.com/sindresorhus/Gifski) and [HEIC Converter](https://sindresorhus.com/heic-converter) app.
 
 
 ## Requirements
