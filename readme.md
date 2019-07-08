@@ -108,6 +108,13 @@ If you use the `.progressInstance` property, the [`isIndeterminate`](https://dev
 
 ```swift
 /**
+Line width of the circular progress view.
+
+Default value is 2.
+*/
+@IBInspectable public var lineWidth: CGFloat = 2
+
+/**
 Color of the circular progress view.
 
 Defaults to the user's accent color. For High Sierra and below it uses a fallback color.
