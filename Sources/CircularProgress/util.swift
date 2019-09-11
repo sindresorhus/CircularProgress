@@ -1,8 +1,7 @@
 import Cocoa
 
-
 /**
-Convenience function for initializing an object and modifying its properties
+Convenience function for initializing an object and modifying its properties.
 
 ```
 let label = with(NSTextField()) {
@@ -30,8 +29,8 @@ extension NSColor {
 		}
 	}()
 
-	func with(alpha: Double) -> NSColor {
-		return withAlphaComponent(CGFloat(alpha))
+	func withAlpha(_ alpha: Double) -> NSColor {
+		withAlphaComponent(CGFloat(alpha))
 	}
 
 	typealias HSBAColor = (hue: Double, saturation: Double, brightness: Double, alpha: Double)
@@ -71,16 +70,14 @@ extension Comparable {
 	```
 	*/
 	func clamped(to range: ClosedRange<Self>) -> Self {
-		return min(max(self, range.lowerBound), range.upperBound)
+		min(max(self, range.lowerBound), range.upperBound)
 	}
 }
 
 
 extension CGRect {
 	var center: CGPoint {
-		get {
-			return CGPoint(x: midX, y: midY)
-		}
+		get { CGPoint(x: midX, y: midY) }
 		set {
 			origin = CGPoint(
 				x: newValue.x - (size.width / 2),
@@ -160,9 +157,7 @@ extension CALayer {
 	Can be useful for text layers
 	*/
 	var implicitAnimations: Bool {
-		get {
-			return actions == nil
-		}
+		get { actions == nil }
 		set {
 			if newValue {
 				actions = nil
@@ -235,7 +230,7 @@ extension CAShapeLayer {
 
 
 extension CATextLayer {
-	/// Initializer with better defaults
+	/// Initializer with better defaults.
 	convenience init(text: String, fontSize: Double? = nil, color: NSColor? = nil) {
 		self.init()
 		string = text
@@ -271,9 +266,7 @@ final class ProgressCircleShapeLayer: CAShapeLayer {
 	}
 
 	var progress: Double {
-		get {
-			return Double(strokeEnd)
-		}
+		get { Double(strokeEnd) }
 		set {
 			strokeEnd = CGFloat(newValue)
 		}
@@ -303,7 +296,7 @@ final class IndeterminateProgressCircleShapeLayer: CAShapeLayer {
 
 
 extension NSBezierPath {
-	/// UIKit polyfill
+	/// UIKit polyfill.
 	var cgPath: CGPath {
 		let path = CGMutablePath()
 		var points = [CGPoint](repeating: .zero, count: 3)
@@ -327,7 +320,7 @@ extension NSBezierPath {
 		return path
 	}
 
-	/// UIKit polyfill
+	/// UIKit polyfill.
 	convenience init(roundedRect rect: CGRect, cornerRadius: CGFloat) {
 		self.init(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
 	}
@@ -336,7 +329,7 @@ extension NSBezierPath {
 final class AssociatedObject<T: Any> {
 	subscript(index: Any) -> T? {
 		get {
-			return objc_getAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque()) as! T?
+			objc_getAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque()) as! T?
 		} set {
 			objc_setAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque(), newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 		}
@@ -356,7 +349,7 @@ extension NSControl {
 	}
 
 	/**
-	Closure version of `.action`
+	Closure version of `.action`.
 
 	```
 	let button = NSButton(title: "Unicorn", target: nil, action: nil)
@@ -367,9 +360,7 @@ extension NSControl {
 	```
 	*/
 	var onAction: ActionClosure? {
-		get {
-			return AssociatedKeys.onActionClosure[self]
-		}
+		get { AssociatedKeys.onActionClosure[self] }
 		set {
 			AssociatedKeys.onActionClosure[self] = newValue
 			action = #selector(callClosure)

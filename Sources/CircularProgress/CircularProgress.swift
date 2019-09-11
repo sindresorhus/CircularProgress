@@ -37,7 +37,7 @@ public final class CircularProgress: NSView {
 
 	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
 		$0.textColor = color
-		$0.backgroundColor = color.with(alpha: 0.1)
+		$0.backgroundColor = color.withAlpha(0.1)
 		$0.activeBackgroundColor = color
 		$0.borderWidth = 0
 		$0.isHidden = true
@@ -60,13 +60,10 @@ public final class CircularProgress: NSView {
 	Defaults to the user's accent color. For High Sierra and below it uses a fallback color.
 	*/
 	@IBInspectable public var color: NSColor {
-		get {
-			return _color
-		}
+		get { _color }
 		set {
 			_color = newValue
 			originalColor = newValue
-
 			needsDisplay = true
 		}
 	}
@@ -83,9 +80,7 @@ public final class CircularProgress: NSView {
 	- Note: Can be set from a background thread.
 	*/
 	@IBInspectable public var progress: Double {
-		get {
-			return _progress
-		}
+		get { _progress }
 		set {
 			_progress = newValue.clamped(to: 0...1)
 
@@ -208,7 +203,7 @@ public final class CircularProgress: NSView {
 
 	private func updateColors() {
 		let duration = 0.2
-		backgroundCircle.animate(color: color.with(alpha: 0.5).cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
+		backgroundCircle.animate(color: color.withAlpha(0.5).cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
 
 		progressCircle.animate(color: color.cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
 		progressLabel.animate(color: color.cgColor, keyPath: #keyPath(CATextLayer.foregroundColor), duration: duration)
@@ -216,7 +211,7 @@ public final class CircularProgress: NSView {
 		indeterminateCircle.animate(color: color.cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
 
 		cancelButton.textColor = color
-		cancelButton.backgroundColor = color.with(alpha: 0.1)
+		cancelButton.backgroundColor = color.withAlpha(0.1)
 		cancelButton.activeBackgroundColor = color
 
 		successView.color = color
@@ -418,18 +413,16 @@ public final class CircularProgress: NSView {
 	private func startIndeterminateState() {
 		progressCircle.isHidden = true
 		indeterminateCircle.isHidden = false
-
 		progressLabel.isHidden = progress == 0 && isIndeterminate && cancelButton.isHidden
 	}
 
 	private func stopIndeterminateState() {
 		indeterminateCircle.isHidden = true
 		progressCircle.isHidden = false
-
 		progressLabel.isHidden = !cancelButton.isHidden
 	}
 
 	private var shouldHideSuccessView: Bool {
-		return !showCheckmarkAtHundredPercent || !isFinished || isCancelled
+		!showCheckmarkAtHundredPercent || !isFinished || isCancelled
 	}
 }

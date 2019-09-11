@@ -19,9 +19,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 		configureProgressBasedView()
 	}
 
-	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-		return true
-	}
+	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
 	private func configureManualView() {
 		animateWithRandomColor(

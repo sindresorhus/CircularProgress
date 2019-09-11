@@ -56,18 +56,17 @@ extension NSColor {
 	]
 
 	private static let uniqueRandomSystemColors = systemColors.uniqueRandomElementIterator()
-	static func uniqueRandomSystemColor() -> NSColor {
-		return uniqueRandomSystemColors.next()!
-	}
+
+	static func uniqueRandomSystemColor() -> NSColor { uniqueRandomSystemColors.next()! }
 }
 
 
 extension CGRect {
 	/**
-	Returns a CGRect where `self` is centered in `rect`
+	Returns a CGRect where `self` is centered in `rect`.
 	*/
-	func centered(in rect: CGRect, xOffset: Double = 0, yOffset: Double = 0) -> CGRect {
-		return CGRect(
+	func centered(in rect: Self, xOffset: Double = 0, yOffset: Double = 0) -> Self {
+		Self(
 			x: ((rect.width - size.width) / 2) + CGFloat(xOffset),
 			y: ((rect.height - size.height) / 2) + CGFloat(yOffset),
 			width: size.width,
@@ -79,7 +78,7 @@ extension CGRect {
 
 extension NSView {
 	/**
-	- Note: You should almost never need to set `appearanceName` as it's done automatically
+	- Note: You should almost never need to set `appearanceName` as it's done automatically.
 	*/
 	@discardableResult
 	func insertVibrancyView(

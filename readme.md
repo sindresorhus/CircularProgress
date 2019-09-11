@@ -4,14 +4,14 @@
 
 <img src="screenshot.gif" width="834">
 
-This package is used in production by the [Gifski](https://github.com/sindresorhus/Gifski) and [HEIC Converter](https://sindresorhus.com/heic-converter) app.
+This package is used in production by apps like [Gifski](https://github.com/sindresorhus/Gifski) and [HEIC Converter](https://sindresorhus.com/heic-converter).
 
 
 ## Requirements
 
 - macOS 10.12+
 - Xcode 10.2+
-- Swift 5+
+- Swift 5.1+
 
 
 ## Install
