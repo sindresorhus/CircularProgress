@@ -55,8 +55,6 @@ public final class CircularProgress: NSView {
 	private var _color: NSColor = .controlAccentColorPolyfill
 	/**
 	Line width of the circular progress view.
-	
-	Default value is 2.
 	*/
 	@IBInspectable public var lineWidth: CGFloat = 2 {
 		didSet {
