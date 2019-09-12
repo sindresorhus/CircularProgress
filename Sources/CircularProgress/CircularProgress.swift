@@ -53,6 +53,7 @@ public final class CircularProgress: NSView {
 
 	private var originalColor: NSColor = .controlAccentColorPolyfill
 	private var _color: NSColor = .controlAccentColorPolyfill
+
 	/**
 	Line width of the circular progress view.
 	*/
@@ -64,6 +65,7 @@ public final class CircularProgress: NSView {
 			successView.lineWidth = lineWidth
 		}
 	}
+
 	/**
 	Color of the circular progress view.
 
