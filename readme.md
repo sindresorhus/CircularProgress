@@ -109,8 +109,6 @@ If you use the `.progressInstance` property, the [`isIndeterminate`](https://dev
 ```swift
 /**
 Line width of the circular progress view.
-
-Default value is 2.
 */
 @IBInspectable public var lineWidth: CGFloat = 2
 
