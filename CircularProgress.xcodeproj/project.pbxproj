@@ -399,7 +399,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CircularProgress.xcodeproj/CircularProgress_Info.plist;
-				MARKETING_VERSION = 0.4.1;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -427,7 +427,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CircularProgress.xcodeproj/CircularProgress_Info.plist;
-				MARKETING_VERSION = 0.4.1;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
