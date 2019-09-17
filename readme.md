@@ -10,7 +10,7 @@ This package is used in production by apps like [Gifski](https://github.com/sind
 ## Requirements
 
 - macOS 10.12+
-- Xcode 10.2+
+- Xcode 11+
 - Swift 5.1+
 
 
@@ -108,16 +108,16 @@ If you use the `.progressInstance` property, the [`isIndeterminate`](https://dev
 
 ```swift
 /**
-Line width of the circular progress view.
-*/
-@IBInspectable public var lineWidth: CGFloat = 2
-
-/**
 Color of the circular progress view.
 
 Defaults to the user's accent color. For High Sierra and below it uses a fallback color.
 */
 @IBInspectable var color: NSColor = .controlAccentColor
+
+/**
+Line width of the circular progress view.
+*/
+@IBInspectable public var lineWidth: CGFloat = 2
 
 /**
 Show an animated checkmark instead of `100%`.

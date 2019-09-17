@@ -55,18 +55,6 @@ public final class CircularProgress: NSView {
 	private var _color: NSColor = .controlAccentColorPolyfill
 
 	/**
-	Line width of the circular progress view.
-	*/
-	@IBInspectable public var lineWidth: CGFloat = 2 {
-		didSet {
-			backgroundCircle.lineWidth = lineWidth / 2
-			progressCircle.lineWidth = lineWidth
-			indeterminateCircle.lineWidth = lineWidth
-			successView.lineWidth = lineWidth
-		}
-	}
-
-	/**
 	Color of the circular progress view.
 
 	Defaults to the user's accent color. For High Sierra and below it uses a fallback color.
@@ -77,6 +65,18 @@ public final class CircularProgress: NSView {
 			_color = newValue
 			originalColor = newValue
 			needsDisplay = true
+		}
+	}
+
+	/**
+	Line width of the circular progress view.
+	*/
+	@IBInspectable public var lineWidth: CGFloat = 2 {
+		didSet {
+			backgroundCircle.lineWidth = lineWidth / 2
+			progressCircle.lineWidth = lineWidth
+			indeterminateCircle.lineWidth = lineWidth
+			successView.lineWidth = lineWidth
 		}
 	}
 
