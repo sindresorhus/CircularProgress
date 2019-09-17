@@ -2,7 +2,6 @@ import Cocoa
 
 @IBDesignable
 public final class CircularProgress: NSView {
-	private var lineWidth: CGFloat = 2
 	private lazy var radius = bounds.width < bounds.height ? bounds.midX * 0.8 : bounds.midY * 0.8
 	private var _progress: Double = 0
 	private var progressObserver: NSKeyValueObservation?
@@ -54,6 +53,19 @@ public final class CircularProgress: NSView {
 
 	private var originalColor: NSColor = .controlAccentColorPolyfill
 	private var _color: NSColor = .controlAccentColorPolyfill
+
+	/**
+	Line width of the circular progress view.
+	*/
+	@IBInspectable public var lineWidth: CGFloat = 2 {
+		didSet {
+			backgroundCircle.lineWidth = lineWidth / 2
+			progressCircle.lineWidth = lineWidth
+			indeterminateCircle.lineWidth = lineWidth
+			successView.lineWidth = lineWidth
+		}
+	}
+
 	/**
 	Color of the circular progress view.
 

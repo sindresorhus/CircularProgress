@@ -149,6 +149,16 @@
                             <binding destination="Voe-Tx-rLC" name="value" keyPath="indeterminateCircularProgress.isCancellable" id="lMJ-Vb-Mkw"/>
                         </connections>
                     </button>
+                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3l9-GE-cqm">
+                        <rect key="frame" x="512" y="312" width="96" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="92" id="oJL-KD-KJe"/>
+                        </constraints>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="2" maxValue="20" doubleValue="2" tickMarkPosition="above" sliderType="linear" id="c26-aa-4y5"/>
+                        <connections>
+                            <binding destination="Voe-Tx-rLC" name="value" keyPath="indeterminateCircularProgress.lineWidth" id="kjV-zy-ubv"/>
+                        </connections>
+                    </slider>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Xhy-S9-VRc" firstAttribute="leading" secondItem="NR7-Ty-MDa" secondAttribute="leading" constant="20" id="1R5-Yd-INs"/>
@@ -160,11 +170,13 @@
                     <constraint firstItem="lSV-Ki-zTa" firstAttribute="centerX" secondItem="Xhy-S9-VRc" secondAttribute="centerX" id="9gn-kh-Bt6"/>
                     <constraint firstAttribute="trailing" secondItem="7yP-eX-TLj" secondAttribute="trailing" constant="20" id="H3K-Of-0zB"/>
                     <constraint firstItem="w1Y-Wj-BvT" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="J1e-dd-P63"/>
+                    <constraint firstItem="fQj-HV-nuY" firstAttribute="top" secondItem="3l9-GE-cqm" secondAttribute="bottom" constant="16" id="M9e-ti-Fsy"/>
                     <constraint firstItem="lSV-Ki-zTa" firstAttribute="top" secondItem="Xhy-S9-VRc" secondAttribute="bottom" constant="10" id="Ows-br-YTS"/>
                     <constraint firstItem="7yP-eX-TLj" firstAttribute="leading" secondItem="w1Y-Wj-BvT" secondAttribute="trailing" constant="20" id="QcR-R9-pni"/>
                     <constraint firstItem="w1Y-Wj-BvT" firstAttribute="leading" secondItem="Xhy-S9-VRc" secondAttribute="trailing" constant="20" id="RrX-o9-ZgH"/>
                     <constraint firstItem="Xhy-S9-VRc" firstAttribute="centerY" secondItem="NR7-Ty-MDa" secondAttribute="centerY" id="Yok-5s-sGU"/>
                     <constraint firstItem="aLq-jZ-Oeu" firstAttribute="top" secondItem="7yP-eX-TLj" secondAttribute="bottom" constant="10" id="na2-mA-WpM"/>
+                    <constraint firstItem="3l9-GE-cqm" firstAttribute="centerX" secondItem="7yP-eX-TLj" secondAttribute="centerX" id="xEd-ql-gzn"/>
                     <constraint firstItem="IDE-Uy-BbX" firstAttribute="top" secondItem="aLq-jZ-Oeu" secondAttribute="bottom" constant="10" id="zdn-e0-gum"/>
                 </constraints>
             </view>
