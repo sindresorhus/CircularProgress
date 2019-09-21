@@ -200,8 +200,6 @@ convenience init(size: Double) {}
 - [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) - Add "Launch at Login" functionality to your macOS app
 - [More…](https://github.com/search?q=user%3Asindresorhus+language%3Aswift)
 
-You might also like my [apps](https://sindresorhus.com/apps).
-
 
 ## Maintainers
 
