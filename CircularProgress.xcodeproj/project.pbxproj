@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9F2F370B224E9BD100C71D8E /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F370A224E9BD100C71D8E /* CheckmarkView.swift */; };
 		B5344AB721F8B27100C12ADB /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5344AB621F8B27100C12ADB /* CustomButton.swift */; };
+		E303038B233786DA00B8ED1F /* CustomButton+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E303038A233786DA00B8ED1F /* CustomButton+Util.swift */; };
 		E327393D2177359E00FFE124 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E327393C2177359E00FFE124 /* util.swift */; };
 		E3FB30C420EA5DBC009BA1BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FB30C320EA5DBC009BA1BD /* AppDelegate.swift */; };
 		E3FB30C920EA5DBE009BA1BD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FB30C720EA5DBE009BA1BD /* MainMenu.xib */; };
@@ -47,6 +48,7 @@
 		9F2F370A224E9BD100C71D8E /* CheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CheckmarkView.swift; sourceTree = "<group>"; usesTabs = 1; };
 		B5344AB621F8B27100C12ADB /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CustomButton.swift; sourceTree = "<group>"; usesTabs = 1; };
 		"CircularProgress::CircularProgress::Product" /* CircularProgress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CircularProgress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E303038A233786DA00B8ED1F /* CustomButton+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "CustomButton+Util.swift"; sourceTree = "<group>"; usesTabs = 1; };
 		E327393C2177359E00FFE124 /* util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = util.swift; sourceTree = "<group>"; usesTabs = 1; };
 		E3FB30C120EA5DBC009BA1BD /* CircularProgressExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CircularProgressExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3FB30C320EA5DBC009BA1BD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 1; };
@@ -76,6 +78,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E3030389233786B100B8ED1F /* Vendored */ = {
+			isa = PBXGroup;
+			children = (
+				B5344AB621F8B27100C12ADB /* CustomButton.swift */,
+				E303038A233786DA00B8ED1F /* CustomButton+Util.swift */,
+			);
+			path = Vendored;
+			sourceTree = "<group>";
+		};
 		E3FB30C220EA5DBC009BA1BD /* Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,9 +130,9 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* CircularProgress.swift */,
-				B5344AB621F8B27100C12ADB /* CustomButton.swift */,
 				9F2F370A224E9BD100C71D8E /* CheckmarkView.swift */,
 				OBJ_10 /* util.swift */,
+				E3030389233786B100B8ED1F /* Vendored */,
 			);
 			name = CircularProgress;
 			path = Sources/CircularProgress;
@@ -265,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				E303038B233786DA00B8ED1F /* CustomButton+Util.swift in Sources */,
 				OBJ_19 /* CircularProgress.swift in Sources */,
 				OBJ_20 /* util.swift in Sources */,
 				9F2F370B224E9BD100C71D8E /* CheckmarkView.swift in Sources */,
