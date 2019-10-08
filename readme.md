@@ -39,6 +39,8 @@ pod 'CircularProgressMac'
 
 Also check out the example app in the Xcode project.
 
+Note: All the properties/methods must be set/called from the main thread.
+
 ### Manually set the progress
 
 ```swift
@@ -117,7 +119,7 @@ Defaults to the user's accent color. For High Sierra and below it uses a fallbac
 /**
 Line width of the circular progress view.
 */
-@IBInspectable public var lineWidth: CGFloat = 2
+@IBInspectable var lineWidth: CGFloat = 2
 
 /**
 Show an animated checkmark instead of `100%`.
@@ -128,7 +130,6 @@ Show an animated checkmark instead of `100%`.
 The progress value in the range `0...1`.
 
 - Note: The value will be clamped to `0...1`.
-- Note: Can be set from a background thread.
 */
 @IBInspectable var progress: Double = 0
 
@@ -155,7 +156,7 @@ var onCancelled: (() -> Void)?
 /**
 Returns whether the progress is finished.
 */
-@IBInspectable private(set) var isFinished: Bool
+@IBInspectable var isFinished: Bool { get }
 
 /**
 If the progress view is cancellable it shows the cancel button.
@@ -165,22 +166,22 @@ If the progress view is cancellable it shows the cancel button.
 /**
 Displays the indeterminate state.
 */
-@IBInspectable public var isIndeterminate: Bool
+@IBInspectable var isIndeterminate: Bool
 
 /**
 Returns whether the progress has been cancelled.
 */
-@IBInspectable private(set) var isCancelled: Bool
+@IBInspectable var isCancelled: Bool { get }
 
 /**
 Determines whether to visualize changing into the cancelled state.
 */
-public var visualizeCancelledState: Bool = true
+var visualizeCancelledState: Bool = true
 
 /**
 Supply the base color to use for displaying the cancelled state.
 */
-public var cancelledStateColorHandler: ((NSColor) -> NSColor)?
+var cancelledStateColorHandler: ((NSColor) -> NSColor)?
 
 init(frame: CGRect) {}
 init?(coder: NSCoder) {}
