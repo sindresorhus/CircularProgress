@@ -228,12 +228,12 @@ public final class CircularProgress: NSView {
 
 	private func updateColors() {
 		let duration = 0.2
-		backgroundCircle.animate(color: color.withAlpha(0.5).cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
+		backgroundCircle.animate(color: color.withAlpha(0.5).cgColor, keyPath: \.strokeColor, duration: duration)
 
-		progressCircle.animate(color: color.cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
-		progressLabel.animate(color: color.cgColor, keyPath: #keyPath(CATextLayer.foregroundColor), duration: duration)
+		progressCircle.animate(color: color.cgColor, keyPath: \.strokeColor, duration: duration)
+		progressLabel.animate(color: color.cgColor, keyPath: \.foregroundColor, duration: duration)
 
-		indeterminateCircle.animate(color: color.cgColor, keyPath: #keyPath(CAShapeLayer.strokeColor), duration: duration)
+		indeterminateCircle.animate(color: color.cgColor, keyPath: \.strokeColor, duration: duration)
 
 		cancelButton.textColor = color
 		cancelButton.backgroundColor = color.withAlpha(0.1)

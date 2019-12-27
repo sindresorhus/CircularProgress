@@ -75,30 +75,25 @@ final class AnimationDelegate: NSObject, CAAnimationDelegate {
 }
 
 
-extension CALayer {
-	// TODO: Find a way to use a strongly-typed KeyPath here.
-	// TODO: Accept `NSColor` instead of `CGColor`.
-	func animate(color: CGColor, keyPath: String, duration: Double) {
-		guard (value(forKey: keyPath) as! CGColor?) != color else {
-			return
-		}
-
-		let animation = CABasicAnimation(keyPath: keyPath)
-		animation.fromValue = value(forKey: keyPath)
+protocol LayerColorAnimation: AnyObject {}
+extension LayerColorAnimation where Self: CALayer {
+	func animate(color: CGColor, keyPath: ReferenceWritableKeyPath<Self, CGColor?>, duration: Double) {
+		let keyPathStr = NSExpression(forKeyPath: keyPath).keyPath
+		let animation = CABasicAnimation(keyPath: keyPathStr)
+		animation.fromValue = self[keyPath: keyPath]
 		animation.toValue = color
 		animation.duration = duration
 		animation.fillMode = .forwards
 		animation.isRemovedOnCompletion = false
-		add(animation, forKey: keyPath) { [weak self] _ in
-			self?.setValue(color, forKey: keyPath)
+		add(animation, forKey: keyPathStr) { [weak self] _ in
+			self?[keyPath: keyPath] = color
 		}
 	}
+}
 
-	func add(
-		_ animation: CAAnimation,
-		forKey key: String?,
-		completion: @escaping ((Bool) -> Void)
-	) {
+
+extension CALayer: LayerColorAnimation {
+	func add(_ animation: CAAnimation, forKey key: String?, completion: @escaping ((Bool) -> Void)) {
 		let animationDelegate = AnimationDelegate()
 		animationDelegate.didStopHandler = completion
 		animation.delegate = animationDelegate
