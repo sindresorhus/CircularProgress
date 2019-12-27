@@ -239,11 +239,11 @@ open class CustomButton: NSButton {
 		let textColor = isOn ? color(for: \.activeTextColor) : color(for: \.textColor)
 		let borderColor = isOn ? color(for: \.activeBorderColor) : color(for: \.borderColor)
 		let shadowColor = isOn ? (activeShadowColor ?? color(for: \.shadowColor)) : color(for: \.shadowColor)
-
-		layer?.animate(color: backgroundColor.cgColor, keyPath: \.backgroundColor, duration: duration)
-		layer?.animate(color: borderColor.cgColor, keyPath: \.borderColor, duration: duration)
-		layer?.animate(color: shadowColor.cgColor, keyPath: \.shadowColor, duration: duration)
-		titleLayer.animate(color: textColor.cgColor, keyPath: \.foregroundColor, duration: duration)
+		
+		layer?.animate(\.backgroundColor, to: backgroundColor, duration: duration)
+		layer?.animate(\.borderColor, to: borderColor, duration: duration)
+		layer?.animate(\.shadowColor, to: shadowColor, duration: duration)
+		titleLayer.animate(\.foregroundColor, to: textColor, duration: duration)
 	}
 
 	private func toggleState() {
