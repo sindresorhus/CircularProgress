@@ -90,11 +90,11 @@ extension LayerColorAnimation where Self: CALayer {
 			self?[keyPath: keyPath] = color
 		}
 	}
-	
+
 	func animate(_ keyPath: ReferenceWritableKeyPath<Self, CGColor?>, to color: NSColor, duration: Double) {
 		animate(keyPath, to: color.cgColor, duration: duration)
 	}
-	
+
 	func add(_ animation: CAAnimation, forKeyPath keyPath: ReferenceWritableKeyPath<Self, CGColor?>, completion: @escaping ((Bool) -> Void)) {
 		let keyPathString = NSExpression(forKeyPath: keyPath).keyPath
 		let animationDelegate = AnimationDelegate()
