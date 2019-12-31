@@ -78,13 +78,14 @@ final class AnimationDelegate: NSObject, CAAnimationDelegate {
 protocol LayerColorAnimation: AnyObject {}
 extension LayerColorAnimation where Self: CALayer {
 	func animate(_ keyPath: ReferenceWritableKeyPath<Self, CGColor?>, to color: CGColor, duration: Double) {
-		let keyPathStr = NSExpression(forKeyPath: keyPath).keyPath
-		let animation = CABasicAnimation(keyPath: keyPathStr)
+		let keyPathString = NSExpression(forKeyPath: keyPath).keyPath
+		let animation = CABasicAnimation(keyPath: keyPathString)
 		animation.fromValue = self[keyPath: keyPath]
 		animation.toValue = color
 		animation.duration = duration
 		animation.fillMode = .forwards
 		animation.isRemovedOnCompletion = false
+
 		add(animation, forKeyPath: keyPath) { [weak self] _ in
 			self?[keyPath: keyPath] = color
 		}
@@ -95,11 +96,11 @@ extension LayerColorAnimation where Self: CALayer {
 	}
 	
 	func add(_ animation: CAAnimation, forKeyPath keyPath: ReferenceWritableKeyPath<Self, CGColor?>, completion: @escaping ((Bool) -> Void)) {
-		let keyPathStr = NSExpression(forKeyPath: keyPath).keyPath
+		let keyPathString = NSExpression(forKeyPath: keyPath).keyPath
 		let animationDelegate = AnimationDelegate()
 		animationDelegate.didStopHandler = completion
 		animation.delegate = animationDelegate
-		add(animation, forKey: keyPathStr)
+		add(animation, forKey: keyPathString)
 	}
 }
 
