@@ -6,20 +6,18 @@
 
 This package is used in production by apps like [Gifski](https://github.com/sindresorhus/Gifski) and [HEIC Converter](https://sindresorhus.com/heic-converter).
 
-
 ## Requirements
 
 - macOS 10.12+
 - Xcode 11+
 - Swift 5.1+
 
-
 ## Install
 
 #### SwiftPM
 
 ```swift
-.package(url: "https://github.com/sindresorhus/CircularProgress", from: "2.0.0")
+.package(url: "https://github.com/sindresorhus/CircularProgress", from: "2.0.1")
 ```
 
 #### Carthage
@@ -33,7 +31,6 @@ github "sindresorhus/CircularProgress"
 ```ruby
 pod 'CircularProgressMac'
 ```
-
 
 ## Usage
 
@@ -65,6 +62,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 ### Specify a [`Progress`](https://developer.apple.com/documentation/foundation/progress) instance
 
+The given `Progress` instance is strongly kept alive as long as the `CircularProgress` instance or until you set `.progressInstance = nil`.
+
 ```swift
 import Cocoa
 import CircularProgress
@@ -73,6 +72,7 @@ import CircularProgress
 final class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet private var window: NSWindow!
 
+	let circularProgress = CircularProgress(size: 200)
 	let progress = Progress(totalUnitCount: 1)
 
 	func applicationDidFinishLaunching(_ notification: Notification) {
@@ -192,7 +192,6 @@ Initialize the progress view with a width/height of the given `size`.
 convenience init(size: Double) {}
 ```
 
-
 ## Related
 
 - [DockProgress](https://github.com/sindresorhus/DockProgress) - Show progress in your app's Dock icon
@@ -200,7 +199,6 @@ convenience init(size: Double) {}
 - [Preferences](https://github.com/sindresorhus/Preferences) - Add a preferences window to your macOS app
 - [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) - Add "Launch at Login" functionality to your macOS app
 - [More…](https://github.com/search?q=user%3Asindresorhus+language%3Aswift)
-
 
 ## Maintainers
 
