@@ -279,6 +279,7 @@ final class ProgressCircleShapeLayer: CAShapeLayer {
 	}
 }
 
+
 /**
 Shows the indeterminate state, when it's activated.
 
@@ -326,8 +327,9 @@ extension NSBezierPath {
 	}
 }
 
+
 final class AssociatedObject<T: Any> {
-	subscript(index: Any) -> T? {
+	subscript(index: AnyObject) -> T? {
 		get {
 			objc_getAssociatedObject(index, Unmanaged.passUnretained(self).toOpaque()) as! T?
 		} set {
@@ -335,6 +337,7 @@ final class AssociatedObject<T: Any> {
 		}
 	}
 }
+
 
 extension NSControl {
 	typealias ActionClosure = ((NSControl) -> Void)
@@ -368,6 +371,7 @@ extension NSControl {
 		}
 	}
 }
+
 
 extension NSView {
 	static func animate(
@@ -405,10 +409,11 @@ extension NSView {
 	}
 }
 
+
 extension CABasicAnimation {
 	/// Rotates the element around its center point infinitely.
-	static var rotate: CABasicAnimation {
-		let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.transform))
+	static var rotate: Self {
+		let animation = self.init(keyPath: #keyPath(CAShapeLayer.transform))
 		animation.valueFunction = CAValueFunction(name: .rotateZ)
 		animation.fromValue = 0
 		animation.toValue = -(Double.pi * 2)
@@ -419,6 +424,7 @@ extension CABasicAnimation {
 	}
 }
 
+
 extension NSWindow {
 	/// Whether the window or its owning app is showing a modal or sheet.
 	/// This can be useful to disable any unintended interaction underneath it,
@@ -428,6 +434,7 @@ extension NSWindow {
 		attachedSheet != nil
 	}
 }
+
 
 func assertMainThread(
 	function: StaticString = #function,
