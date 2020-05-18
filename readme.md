@@ -16,9 +16,7 @@ This package is used in production by apps like [Gifski](https://github.com/sind
 
 #### Swift Package Manager
 
-```swift
-.package(url: "https://github.com/sindresorhus/CircularProgress", from: "2.0.1")
-```
+Add `https://github.com/sindresorhus/CircularProgress` in the [“Swift Package Manager” tab in Xcode](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
 
 #### Carthage
 
