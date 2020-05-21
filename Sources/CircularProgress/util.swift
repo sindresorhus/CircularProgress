@@ -1,5 +1,6 @@
 import Cocoa
 
+
 /**
 Convenience function for initializing an object and modifying its properties.
 
@@ -17,6 +18,7 @@ func with<T>(_ item: T, update: (inout T) throws -> Void) rethrows -> T {
 	try update(&this)
 	return this
 }
+
 
 extension NSColor {
 	/// macOS 10.14 polyfill
@@ -442,4 +444,12 @@ func assertMainThread(
 	line: UInt = #line
 ) {
 	assert(Thread.isMainThread, "\(function) in \((file as NSString).lastPathComponent):\(line) must run on the main thread!")
+}
+
+
+extension KeyPath where Root: NSObject {
+	/// Get the string version of the key path when the root is an `NSObject`.
+	var toString: String {
+		NSExpression(forKeyPath: self).keyPath
+	}
 }
