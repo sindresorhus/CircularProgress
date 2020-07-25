@@ -82,7 +82,7 @@ extension NSView {
 	*/
 	@discardableResult
 	func insertVibrancyView(
-		material: NSVisualEffectView.Material = .appearanceBased,
+		material: NSVisualEffectView.Material,
 		blendingMode: NSVisualEffectView.BlendingMode = .behindWindow,
 		appearanceName: NSAppearance.Name? = nil
 	) -> NSVisualEffectView {
