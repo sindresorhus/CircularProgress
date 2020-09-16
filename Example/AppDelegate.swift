@@ -1,7 +1,7 @@
 import Cocoa
 import CircularProgress
 
-@NSApplicationMain
+@main
 final class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet private var window: NSWindow!
 	@IBOutlet private var manualCircularProgress: CircularProgress!
@@ -57,7 +57,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 		var timer: Timer!
 
 		startAnimating = {
-			circularProgress.color = NSColor.uniqueRandomSystemColor()
+			circularProgress.color = .uniqueRandomSystemColor()
 			start(circularProgress)
 
 			timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in

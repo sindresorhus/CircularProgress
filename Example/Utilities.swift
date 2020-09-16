@@ -31,12 +31,11 @@ extension Collection {
 		return AnyIterator {
 			var offset: Int
 			repeat {
-				offset = Int.random(in: 0..<self.count)
+				offset = Int.random(in: 0..<count)
 			} while offset == previousNumber
 			previousNumber = offset
 
-			let index = self.index(self.startIndex, offsetBy: offset)
-			return self[index]
+			return self[index(startIndex, offsetBy: offset)]
 		}
 	}
 }

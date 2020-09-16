@@ -42,7 +42,7 @@ Note: All the properties/methods must be set/called from the main thread.
 import Cocoa
 import CircularProgress
 
-@NSApplicationMain
+@main
 final class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet private var window: NSWindow!
 
@@ -66,7 +66,7 @@ The given `Progress` instance is strongly kept alive as long as the `CircularPro
 import Cocoa
 import CircularProgress
 
-@NSApplicationMain
+@main
 final class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet private var window: NSWindow!
 

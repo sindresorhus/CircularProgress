@@ -11,7 +11,7 @@ open class CustomButton: NSButton {
 			$0.title = title
 			$0.frame = CGRect(x: Double(center.x) - radius, y: Double(center.y) - radius, width: radius * 2, height: radius * 2)
 			$0.cornerRadius = radius
-			$0.font = NSFont.systemFont(ofSize: CGFloat(radius * 2 / 3))
+			$0.font = .systemFont(ofSize: CGFloat(radius * 2 / 3))
 		}
 	}
 

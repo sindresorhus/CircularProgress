@@ -403,8 +403,8 @@ extension NSView {
 		NSView.animate(
 			duration: duration,
 			delay: delay,
-			animations: {
-				self.isHidden = false
+			animations: { [self] in
+				isHidden = false
 			},
 			completion: completion
 		)
@@ -440,10 +440,10 @@ extension NSWindow {
 
 func assertMainThread(
 	function: StaticString = #function,
-	file: String = #file,
-	line: UInt = #line
+	file: StaticString = #fileID,
+	line: Int = #line
 ) {
-	assert(Thread.isMainThread, "\(function) in \((file as NSString).lastPathComponent):\(line) must run on the main thread!")
+	assert(Thread.isMainThread, "\(function) in \(file):\(line) must run on the main thread!")
 }
 
 
