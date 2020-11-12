@@ -344,7 +344,7 @@ final class AssociatedObject<T: Any> {
 extension NSControl {
 	typealias ActionClosure = ((NSControl) -> Void)
 
-	private struct AssociatedKeys {
+	private enum AssociatedKeys {
 		static let onActionClosure = AssociatedObject<ActionClosure>()
 	}
 
