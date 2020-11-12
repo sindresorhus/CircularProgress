@@ -129,6 +129,8 @@ public final class CircularProgress: NSView {
 	private var _isFinished = false
 	/**
 	Returns whether the progress is finished.
+
+	The property supports KVO.
 	*/
 	@IBInspectable public private(set) var isFinished: Bool {
 		get {
@@ -143,7 +145,9 @@ public final class CircularProgress: NSView {
 		set {
 			assertMainThread()
 
+			willChangeValue(for: \.isFinished)
 			_isFinished = newValue
+			didChangeValue(for: \.isFinished)
 
 			if _isFinished {
 				isIndeterminate = false
@@ -349,6 +353,8 @@ public final class CircularProgress: NSView {
 	private var _isCancelled = false
 	/**
 	Returns whether the progress has been cancelled.
+
+	The property supports KVO.
 	*/
 	@IBInspectable public private(set) var isCancelled: Bool {
 		get {
@@ -363,7 +369,9 @@ public final class CircularProgress: NSView {
 		set {
 			assertMainThread()
 
+			willChangeValue(for: \.isCancelled)
 			_isCancelled = newValue
+			didChangeValue(for: \.isCancelled)
 
 			if newValue {
 				onCancelled?()

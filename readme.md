@@ -153,6 +153,8 @@ var onCancelled: (() -> Void)?
 
 /**
 Returns whether the progress is finished.
+
+The property supports KVO.
 */
 @IBInspectable var isFinished: Bool { get }
 
@@ -168,6 +170,8 @@ Displays the indeterminate state.
 
 /**
 Returns whether the progress has been cancelled.
+
+The property supports KVO.
 */
 @IBInspectable var isCancelled: Bool { get }
 
