@@ -8,6 +8,7 @@ public final class CircularProgress: NSView {
 	private var finishedObserver: NSKeyValueObservation?
 	private var cancelledObserver: NSKeyValueObservation?
 	private var indeterminateObserver: NSKeyValueObservation?
+	private var hiddenLabelObserver: NSKeyValueObservation?
 
 	private lazy var backgroundCircle = with(CAShapeLayer.circle(radius: Double(radius), center: bounds.center)) {
 		$0.frame = bounds
@@ -113,7 +114,7 @@ public final class CircularProgress: NSView {
 				self.progressCircle.progress = self._progress
 			})
 
-			progressLabel.isHidden = progress == 0 && isIndeterminate ? cancelButton.isHidden : !cancelButton.isHidden
+			progressLabel.isHidden = isLabelHidden || (progress == 0 && isIndeterminate ? cancelButton.isHidden : !cancelButton.isHidden)
 
 			if !progressLabel.isHidden {
 				progressLabel.string = "\(Int(_progress * 100))%"
@@ -280,6 +281,7 @@ public final class CircularProgress: NSView {
 
 		progressCircle.isHidden = isIndeterminate
 		indeterminateCircle.isHidden = !isIndeterminate
+		progressLabel.isHidden = isLabelHidden
 	}
 
 	/**
@@ -299,6 +301,7 @@ public final class CircularProgress: NSView {
 
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
+		progressLabel.isHidden = isLabelHidden
 
 		successView.isHidden = true
 
@@ -493,6 +496,29 @@ public final class CircularProgress: NSView {
 		indeterminateCircle.isHidden = true
 		progressCircle.isHidden = false
 		progressLabel.isHidden = !cancelButton.isHidden
+	}
+
+	private var _isLabelHidden = false
+	/**
+	Returns whether the progress label is hidden.
+	*/
+	@IBInspectable public var isLabelHidden: Bool {
+		get {
+			return _isLabelHidden
+		}
+		set {
+			assertMainThread()
+
+			willChangeValue(for: \.isLabelHidden)
+			_isLabelHidden = newValue
+			didChangeValue(for: \.isLabelHidden)
+
+			if _isLabelHidden {
+				progressLabel.isHidden = true
+			} else {
+				progressLabel.isHidden = false
+			}
+		}
 	}
 
 	private var shouldHideSuccessView: Bool {
