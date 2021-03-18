@@ -503,9 +503,7 @@ public final class CircularProgress: NSView {
 	Returns whether the progress label is hidden.
 	*/
 	@IBInspectable public var isLabelHidden: Bool {
-		get {
-			return _isLabelHidden
-		}
+		get { _isLabelHidden }
 		set {
 			assertMainThread()
 
@@ -513,11 +511,7 @@ public final class CircularProgress: NSView {
 			_isLabelHidden = newValue
 			didChangeValue(for: \.isLabelHidden)
 
-			if _isLabelHidden {
-				progressLabel.isHidden = true
-			} else {
-				progressLabel.isHidden = false
-			}
+			progressLabel.isHidden = _isLabelHidden
 		}
 	}
 
