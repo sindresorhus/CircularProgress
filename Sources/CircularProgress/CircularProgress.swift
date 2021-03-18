@@ -8,7 +8,6 @@ public final class CircularProgress: NSView {
 	private var finishedObserver: NSKeyValueObservation?
 	private var cancelledObserver: NSKeyValueObservation?
 	private var indeterminateObserver: NSKeyValueObservation?
-	private var hiddenLabelObserver: NSKeyValueObservation?
 
 	private lazy var backgroundCircle = with(CAShapeLayer.circle(radius: Double(radius), center: bounds.center)) {
 		$0.frame = bounds
