@@ -453,7 +453,7 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func mouseExited(with event: NSEvent) {
-		progressLabel.isHidden = isIndeterminate && progress == 0
+		progressLabel.isHidden = _isLabelHidden || (isIndeterminate && progress == 0)
 		cancelButton.isHidden = true
 		successView.isHidden = shouldHideSuccessView
 	}
@@ -488,13 +488,13 @@ public final class CircularProgress: NSView {
 	private func startIndeterminateState() {
 		progressCircle.isHidden = true
 		indeterminateCircle.isHidden = false
-		progressLabel.isHidden = progress == 0 && isIndeterminate && cancelButton.isHidden
+		progressLabel.isHidden = _isLabelHidden || (progress == 0 && isIndeterminate && cancelButton.isHidden)
 	}
 
 	private func stopIndeterminateState() {
 		indeterminateCircle.isHidden = true
 		progressCircle.isHidden = false
-		progressLabel.isHidden = !cancelButton.isHidden
+		progressLabel.isHidden = _isLabelHidden || !cancelButton.isHidden
 	}
 
 	private var _isLabelHidden = false
