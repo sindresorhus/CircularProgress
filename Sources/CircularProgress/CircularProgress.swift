@@ -386,7 +386,7 @@ public final class CircularProgress: NSView {
 	/**
 	Determines whether to visualize changing into the cancelled state.
 	*/
-	public var visualizeCancelledState: Bool = true
+	public var visualizeCancelledState = true
 
 	/**
 	Supply the base color to use for displaying the cancelled state.
@@ -460,7 +460,9 @@ public final class CircularProgress: NSView {
 
 	private var _isIndeterminate = false
 	/**
-	Returns whether the progress is indeterminate.
+	Make the progress indeterminate.
+
+	The property supports KVO.
 	*/
 	@IBInspectable public var isIndeterminate: Bool {
 		get {
@@ -499,7 +501,9 @@ public final class CircularProgress: NSView {
 
 	private var _isLabelHidden = false
 	/**
-	Returns whether the progress label is hidden.
+	Hide the progress label.
+
+	The property supports KVO.
 	*/
 	@IBInspectable public var isLabelHidden: Bool {
 		get { _isLabelHidden }

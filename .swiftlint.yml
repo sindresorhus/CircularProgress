@@ -1,7 +1,6 @@
-whitelist_rules:
+only_rules:
   - anyobject_protocol
   - array_init
-  - attributes
   - block_based_kvo
   - class_delegate_protocol
   - closing_brace
@@ -12,13 +11,17 @@ whitelist_rules:
   - colon
   - comma
   - compiler_protocol_init
+  - computed_accessors_order
   - conditional_returns_on_newline
   - contains_over_filter_count
   - contains_over_filter_is_empty
   - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
   - control_statement
+  - custom_rules
   - deployment_target
   - discarded_notification_center_observer
+  - discouraged_assert
   - discouraged_direct_init
   - discouraged_object_literal
   - discouraged_optional_boolean
@@ -33,16 +36,20 @@ whitelist_rules:
   - empty_parentheses_with_trailing_closure
   - empty_string
   - empty_xctest_method
+  - enum_case_associated_values_count
   - explicit_init
   - fallthrough
   - fatal_error_message
   - first_where
+  - flatmap_over_map_reduce
   - for_where
   - generic_type_name
+  - ibinspectable_in_extension
   - identical_operands
   - identifier_name
   - implicit_getter
   - implicit_return
+  - inclusive_language
   - inert_defer
   - is_disjoint
   - joined_default_parameter
@@ -64,7 +71,6 @@ whitelist_rules:
   - multiline_literal_brackets
   - multiline_parameters
   - multiline_parameters_brackets
-  - multiple_closures_with_trailing_closure
   - nimble_operator
   - no_extension_access_modifier
   - no_fallthrough_only
@@ -72,13 +78,16 @@ whitelist_rules:
   - notification_center_detachment
   - nsobject_prefer_isequal
   - number_separator
-  - object_literal
   - opening_brace
   - operator_usage_whitespace
   - operator_whitespace
+  - orphaned_doc_comment
   - overridden_super_call
+  - prefer_self_type_over_type_of_self
+  - prefer_zero_over_explicit_init
   - private_action
   - private_outlet
+  - private_subject
   - private_unit_test
   - prohibited_super_call
   - protocol_property_accessors_order
@@ -104,18 +113,19 @@ whitelist_rules:
   - switch_case_on_newline
   - syntactic_sugar
   - todo
+  - test_case_accessibility
   - toggle_bool
   - trailing_closure
   - trailing_comma
   - trailing_newline
   - trailing_semicolon
   - trailing_whitespace
-  - type_name
   - unavailable_function
   - unneeded_break_in_switch
   - unneeded_parentheses_in_closure_argument
   - unowned_variable_capture
   - untyped_error_in_catch
+  - unused_capture_list
   - unused_closure_parameter
   - unused_control_flow_label
   - unused_enumerated
@@ -132,28 +142,11 @@ whitelist_rules:
   - xctfail_message
   - yoda_condition
 analyzer_rules:
+  - capture_variable
   - unused_declaration
   - unused_import
-force_cast: warning
-force_unwrapping: warning
 number_separator:
   minimum_length: 5
-object_literal:
-  image_literal: false
-discouraged_object_literal:
-  color_literal: false
-type_contents_order:
-  order:
-    - case
-    - [type_alias, associated_type, subtype]
-    - type_property
-    - type_method
-    - ib_outlet
-    - [ib_inspectable, instance_property]
-    - initializer
-    - subscript
-    - view_life_cycle_method
-    - [ib_action, other_method]
 identifier_name:
   max_length:
     warning: 100
@@ -173,4 +166,5 @@ identifier_name:
     - 'x2'
     - 'y1'
     - 'y2'
-macOS_deployment_target: '10.12'
+deployment_target:
+  macOS_deployment_target: '10.12'

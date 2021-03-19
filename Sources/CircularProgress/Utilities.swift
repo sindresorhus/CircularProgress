@@ -249,6 +249,7 @@ extension CATextLayer {
 			guard let color = foregroundColor else {
 				return nil
 			}
+
 			return NSColor(cgColor: color)
 		}
 		set {

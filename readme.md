@@ -130,7 +130,14 @@ Line width of the circular progress view.
 /**
 Show an animated checkmark instead of `100%`.
 */
-@IBInspectable var showCheckmarkAtHundredPercent: Bool = true
+@IBInspectable var showCheckmarkAtHundredPercent = true
+
+/**
+Hide the progress label.
+
+The property supports KVO.
+*/
+@IBInspectable var isLabelHidden = true
 
 /**
 The progress value in the range `0...1`.
@@ -172,7 +179,9 @@ If the progress view is cancellable it shows the cancel button.
 @IBInspectable var isCancellable: Bool
 
 /**
-Displays the indeterminate state.
+Make the progress indeterminate.
+
+The property supports KVO.
 */
 @IBInspectable var isIndeterminate: Bool
 
