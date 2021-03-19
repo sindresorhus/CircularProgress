@@ -113,7 +113,7 @@ public final class CircularProgress: NSView {
 				self.progressCircle.progress = self._progress
 			})
 
-			progressLabel.isHidden = progress == 0 && isIndeterminate ? cancelButton.isHidden : !cancelButton.isHidden
+			progressLabel.isHidden = isLabelHidden || (progress == 0 && isIndeterminate ? cancelButton.isHidden : !cancelButton.isHidden)
 
 			if !progressLabel.isHidden {
 				progressLabel.string = "\(Int(_progress * 100))%"
@@ -280,6 +280,7 @@ public final class CircularProgress: NSView {
 
 		progressCircle.isHidden = isIndeterminate
 		indeterminateCircle.isHidden = !isIndeterminate
+		progressLabel.isHidden = isLabelHidden
 	}
 
 	/**
@@ -299,6 +300,7 @@ public final class CircularProgress: NSView {
 
 		progressCircle.resetProgress()
 		progressLabel.string = "0%"
+		progressLabel.isHidden = isLabelHidden
 
 		successView.isHidden = true
 
@@ -451,7 +453,7 @@ public final class CircularProgress: NSView {
 	}
 
 	override public func mouseExited(with event: NSEvent) {
-		progressLabel.isHidden = isIndeterminate && progress == 0
+		progressLabel.isHidden = _isLabelHidden || (isIndeterminate && progress == 0)
 		cancelButton.isHidden = true
 		successView.isHidden = shouldHideSuccessView
 	}
@@ -486,13 +488,30 @@ public final class CircularProgress: NSView {
 	private func startIndeterminateState() {
 		progressCircle.isHidden = true
 		indeterminateCircle.isHidden = false
-		progressLabel.isHidden = progress == 0 && isIndeterminate && cancelButton.isHidden
+		progressLabel.isHidden = _isLabelHidden || (progress == 0 && isIndeterminate && cancelButton.isHidden)
 	}
 
 	private func stopIndeterminateState() {
 		indeterminateCircle.isHidden = true
 		progressCircle.isHidden = false
-		progressLabel.isHidden = !cancelButton.isHidden
+		progressLabel.isHidden = _isLabelHidden || !cancelButton.isHidden
+	}
+
+	private var _isLabelHidden = false
+	/**
+	Returns whether the progress label is hidden.
+	*/
+	@IBInspectable public var isLabelHidden: Bool {
+		get { _isLabelHidden }
+		set {
+			assertMainThread()
+
+			willChangeValue(for: \.isLabelHidden)
+			_isLabelHidden = newValue
+			didChangeValue(for: \.isLabelHidden)
+
+			progressLabel.isHidden = _isLabelHidden
+		}
 	}
 
 	private var shouldHideSuccessView: Bool {

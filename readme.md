@@ -104,6 +104,14 @@ Note that the `.progress` property and `.isIndeterminate` are not tied together.
 
 If you use the `.progressInstance` property, the [`isIndeterminate`](https://developer.apple.com/documentation/foundation/progress/1412871-isindeterminate) property will automatically be observed. The view will then switch back and forth to the indeterminate state when appropriate.
 
+### Hidden progress label
+
+<img src="screenshot-hiddenLabel.gif" width="118" align="right">
+
+Displays a spinner without a percentage indicator in the center.
+
+This is accomplished by setting the `.isLabelHidden` property to `true`. The default state is `false` (the label is displayed).
+
 ## API
 
 ```swift
