@@ -51,8 +51,8 @@ public final class CircularProgress: NSView {
 		$0.isHidden = true
 	}
 
-	private var originalColor: NSColor = .controlAccentColorPolyfill
-	private var _color: NSColor = .controlAccentColorPolyfill
+	private var originalColor = NSColor.controlAccentColorPolyfill
+	private var _color = NSColor.controlAccentColorPolyfill
 
 	/**
 	Color of the circular progress view.

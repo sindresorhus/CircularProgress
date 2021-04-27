@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -73,7 +73,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <rect key="contentRect" x="131" y="158" width="680" height="350"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <view key="contentView" id="NR7-Ty-MDa">
                 <rect key="frame" x="0.0" y="0.0" width="680" height="350"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -91,7 +91,7 @@
                         </userDefinedRuntimeAttributes>
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lSV-Ki-zTa">
-                        <rect key="frame" x="74" y="49" width="93" height="18"/>
+                        <rect key="frame" x="71" y="48" width="97" height="18"/>
                         <buttonCell key="cell" type="check" title="Cancellable" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="a9K-wg-1zs">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -108,7 +108,7 @@
                         </constraints>
                     </customView>
                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fQj-HV-nuY">
-                        <rect key="frame" x="512" y="281" width="96" height="19"/>
+                        <rect key="frame" x="512" y="277" width="96" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="92" id="MqM-Sg-5rd"/>
                         </constraints>
@@ -131,7 +131,7 @@
                         </userDefinedRuntimeAttributes>
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aLq-jZ-Oeu">
-                        <rect key="frame" x="507" y="49" width="106" height="18"/>
+                        <rect key="frame" x="504" y="48" width="110" height="18"/>
                         <buttonCell key="cell" type="check" title="Indeterminate" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Pre-va-6gl">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -141,7 +141,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IDE-Uy-BbX">
-                        <rect key="frame" x="514" y="25" width="93" height="18"/>
+                        <rect key="frame" x="511" y="22" width="97" height="18"/>
                         <buttonCell key="cell" type="check" title="Cancellable" bezelStyle="regularSquare" imagePosition="left" inset="2" id="elh-Fn-f2v">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -151,7 +151,7 @@
                         </connections>
                     </button>
                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3l9-GE-cqm">
-                        <rect key="frame" x="512" y="312" width="96" height="19"/>
+                        <rect key="frame" x="512" y="313" width="96" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="92" id="oJL-KD-KJe"/>
                         </constraints>

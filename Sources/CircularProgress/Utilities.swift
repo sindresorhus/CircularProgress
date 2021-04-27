@@ -24,7 +24,7 @@ extension NSColor {
 	/// macOS 10.14 polyfill
 	static let controlAccentColorPolyfill: NSColor = {
 		if #available(macOS 10.14, *) {
-			return NSColor.controlAccentColor
+			return .controlAccentColor
 		} else {
 			// swiftlint:disable:next object_literal
 			return NSColor(red: 0.10, green: 0.47, blue: 0.98, alpha: 1)
@@ -422,7 +422,7 @@ extension CABasicAnimation {
 		animation.toValue = -(Double.pi * 2)
 		animation.duration = 1
 		animation.repeatCount = .infinity
-		animation.timingFunction = CAMediaTimingFunction(name: .linear)
+		animation.timingFunction = .linear
 		return animation
 	}
 }
