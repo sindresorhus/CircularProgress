@@ -218,6 +218,7 @@ convenience init(size: Double) {}
 - [Preferences](https://github.com/sindresorhus/Preferences) - Add a preferences window to your macOS app
 - [KeyboardShortcuts](https://github.com/sindresorhus/KeyboardShortcuts) - Add user-customizable global keyboard shortcuts to your macOS app
 - [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) - Add "Launch at Login" functionality to your macOS app
+- [Regex](https://github.com/sindresorhus/Regex) - Swifty regular expressions
 - [More…](https://github.com/search?q=user%3Asindresorhus+language%3Aswift)
 
 ## Maintainers
