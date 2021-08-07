@@ -95,6 +95,11 @@ public final class CircularProgress: NSView {
 	@IBInspectable public var showPercent: Bool = true
 
 	/**
+	Custom progress label.
+	*/
+	@IBInspectable public var progressString: String? = nil
+
+	/**
 	The progress value in the range `0...1`.
 
 	- Note: The value will be clamped to `0...1`.
@@ -121,8 +126,12 @@ public final class CircularProgress: NSView {
 			progressLabel.isHidden = isLabelHidden || (progress == 0 && isIndeterminate ? cancelButton.isHidden : !cancelButton.isHidden)
 
 			if !progressLabel.isHidden {
-				let percentString = showPercent ? "%" : ""
-				progressLabel.string = "\(Int(_progress * 100))" + percentString
+				if let progressString = self.progressString {
+					progressLabel.string = progressString
+				} else {
+					let percentString = showPercent ? "%" : ""
+					progressLabel.string = "\(Int(_progress * 100))" + percentString
+				}
 				successView.isHidden = true
 			}
 
@@ -305,8 +314,13 @@ public final class CircularProgress: NSView {
 		isIndeterminate = false
 
 		progressCircle.resetProgress()
-		let percentString = showPercent ? "%" : ""
-		progressLabel.string = "0" + percentString
+
+		if let progressString = self.progressString {
+			progressLabel.string = progressString
+		} else {
+			let percentString = showPercent ? "%" : ""
+			progressLabel.string = "0" + percentString
+		}
 		progressLabel.isHidden = isLabelHidden
 
 		successView.isHidden = true
