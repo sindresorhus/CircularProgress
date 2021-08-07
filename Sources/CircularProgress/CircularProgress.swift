@@ -19,10 +19,8 @@ public final class CircularProgress: NSView {
 		$0.lineWidth = lineWidth
 	}
 
-	private lazy var progressLabel = with(CATextLayer(text: "0%")) {
+	private lazy var progressLabel = with(CATextLayer(text: "0")) {
 		$0.color = color
-		let percentString = showPercent ? "%" : ""
-		$0.string = "0" + percentString
 		$0.fontSize = bounds.width < bounds.height ? bounds.width * 0.2 : bounds.height * 0.2
 		$0.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 		$0.alignmentMode = .center
