@@ -21,6 +21,8 @@ public final class CircularProgress: NSView {
 
 	private lazy var progressLabel = with(CATextLayer(text: "0%")) {
 		$0.color = color
+		let percentString = showPercent ? "%" : ""
+		$0.string = "0" + percentString
 		$0.fontSize = bounds.width < bounds.height ? bounds.width * 0.2 : bounds.height * 0.2
 		$0.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 		$0.alignmentMode = .center
@@ -97,7 +99,7 @@ public final class CircularProgress: NSView {
 	/**
 	Custom progress label.
 	*/
-	@IBInspectable public var progressString: String? = nil
+	@IBInspectable public var progressString: String?
 
 	/**
 	The progress value in the range `0...1`.
