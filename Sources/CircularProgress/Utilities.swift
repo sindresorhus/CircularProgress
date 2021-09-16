@@ -32,7 +32,7 @@ extension NSColor {
 	}()
 
 	func withAlpha(_ alpha: Double) -> NSColor {
-		withAlphaComponent(CGFloat(alpha))
+		withAlphaComponent(alpha)
 	}
 
 	typealias HSBAColor = (hue: Double, saturation: Double, brightness: Double, alpha: Double)
@@ -43,6 +43,7 @@ extension NSColor {
 		var alpha: CGFloat = 0
 		let color = usingColorSpace(.deviceRGB) ?? self
 		color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+		// TODO: Seems like the Swift 5.5 compiler cannot infer the `Double` here. Open an issue if it's still a problem in Swift 6.
 		return HSBAColor(Double(hue), Double(saturation), Double(brightness), Double(alpha))
 	}
 
@@ -55,10 +56,10 @@ extension NSColor {
 	) -> NSColor {
 		let color = hsba
 		return NSColor(
-			hue: CGFloat(color.hue * (hue + 1)),
-			saturation: CGFloat(color.saturation * (saturation + 1)),
-			brightness: CGFloat(color.brightness * (brightness + 1)),
-			alpha: CGFloat(color.alpha * (alpha + 1))
+			hue: color.hue * (hue + 1),
+			saturation: color.saturation * (saturation + 1),
+			brightness: color.brightness * (brightness + 1),
+			alpha: color.alpha * (alpha + 1)
 		)
 	}
 }
@@ -194,20 +195,20 @@ extension NSBezierPath {
 		let path = self.init()
 		path.appendArc(
 			withCenter: center,
-			radius: CGFloat(radius),
-			startAngle: CGFloat(startAngle),
-			endAngle: CGFloat(endAngle)
+			radius: radius,
+			startAngle: startAngle,
+			endAngle: endAngle
 		)
 		return path
 	}
 
 	/// For making a circle progress indicator
 	static func progressCircle(radius: Double, center: CGPoint) -> Self {
-		let startAngle: CGFloat = 90
+		let startAngle = 90.0
 		let path = self.init()
 		path.appendArc(
 			withCenter: center,
-			radius: CGFloat(radius),
+			radius: radius,
 			startAngle: startAngle,
 			endAngle: startAngle - 360,
 			clockwise: true
@@ -237,7 +238,7 @@ extension CATextLayer {
 		self.init()
 		string = text
 		if let fontSize = fontSize {
-			self.fontSize = CGFloat(fontSize)
+			self.fontSize = fontSize
 		}
 		self.color = color
 		implicitAnimations = false
@@ -269,9 +270,9 @@ final class ProgressCircleShapeLayer: CAShapeLayer {
 	}
 
 	var progress: Double {
-		get { Double(strokeEnd) }
+		get { strokeEnd }
 		set {
-			strokeEnd = CGFloat(newValue)
+			strokeEnd = newValue
 		}
 	}
 

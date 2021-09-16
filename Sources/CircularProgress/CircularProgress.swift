@@ -9,13 +9,13 @@ public final class CircularProgress: NSView {
 	private var cancelledObserver: NSKeyValueObservation?
 	private var indeterminateObserver: NSKeyValueObservation?
 
-	private lazy var backgroundCircle = with(CAShapeLayer.circle(radius: Double(radius), center: bounds.center)) {
+	private lazy var backgroundCircle = with(CAShapeLayer.circle(radius: radius, center: bounds.center)) {
 		$0.frame = bounds
 		$0.fillColor = nil
 		$0.lineWidth = lineWidth / 2
 	}
 
-	private lazy var progressCircle = with(ProgressCircleShapeLayer(radius: Double(radius), center: bounds.center)) {
+	private lazy var progressCircle = with(ProgressCircleShapeLayer(radius: radius, center: bounds.center)) {
 		$0.lineWidth = lineWidth
 	}
 
@@ -30,11 +30,11 @@ public final class CircularProgress: NSView {
 		$0.isHidden = true
 	}
 
-	internal lazy var indeterminateCircle = with(IndeterminateProgressCircleShapeLayer(radius: Double(radius), center: bounds.center)) {
+	internal lazy var indeterminateCircle = with(IndeterminateProgressCircleShapeLayer(radius: radius, center: bounds.center)) {
 		$0.lineWidth = lineWidth
 	}
 
-	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: Double(radius), center: bounds.center)) {
+	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: radius, center: bounds.center)) {
 		$0.textColor = color
 		$0.backgroundColor = color.withAlpha(0.1)
 		$0.activeBackgroundColor = color
@@ -72,6 +72,7 @@ public final class CircularProgress: NSView {
 		}
 	}
 
+	// TODO: Make this a `Double` instead in the next major release.
 	/**
 	Line width of the circular progress view.
 	*/

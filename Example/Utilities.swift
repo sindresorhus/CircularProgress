@@ -66,8 +66,8 @@ extension CGRect {
 	*/
 	func centered(in rect: Self, xOffset: Double = 0, yOffset: Double = 0) -> Self {
 		Self(
-			x: ((rect.width - size.width) / 2) + CGFloat(xOffset),
-			y: ((rect.height - size.height) / 2) + CGFloat(yOffset),
+			x: ((rect.width - size.width) / 2) + xOffset,
+			y: ((rect.height - size.height) / 2) + yOffset,
 			width: size.width,
 			height: size.height
 		)

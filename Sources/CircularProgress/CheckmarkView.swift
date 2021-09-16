@@ -37,7 +37,7 @@ final class CheckmarkView: NSView {
 		}
 	}
 
-	var lineWidth: CGFloat = 2 {
+	var lineWidth = 2.0 {
 		didSet {
 			shapeLayer.lineWidth = lineWidth
 		}
@@ -50,7 +50,7 @@ final class CheckmarkView: NSView {
 	}
 
 	private lazy var shapeLayer: CAShapeLayer = {
-		let scale: CGFloat = 0.4
+		let scale = 0.4
 		let size = min(bounds.size.width, bounds.size.height) * scale
 		let originalSize = size / scale
 		let margin = ((1 - scale) / 2) * originalSize
