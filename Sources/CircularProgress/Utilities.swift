@@ -21,7 +21,6 @@ func with<T>(_ item: T, update: (inout T) throws -> Void) rethrows -> T {
 
 
 extension NSColor {
-	/// macOS 10.14 polyfill
 	static let controlAccentColorPolyfill: NSColor = {
 		if #available(macOS 10.14, *) {
 			return .controlAccentColor
@@ -47,7 +46,9 @@ extension NSColor {
 		return HSBAColor(Double(hue), Double(saturation), Double(brightness), Double(alpha))
 	}
 
-	/// Adjust color components by ratio.
+	/**
+	Adjust color components by ratio.
+	*/
 	func adjusting(
 		hue: Double = 0,
 		saturation: Double = 0,
@@ -173,7 +174,9 @@ extension CALayer {
 
 
 extension CALayer {
-	/// This is required for CALayers that are created independently of a view
+	/**
+	This is required for CALayers that are created independently of a view.
+	*/
 	func setAutomaticContentsScale() {
 		contentsScale = NSScreen.main?.backingScaleFactor ?? 2
 	}
@@ -202,7 +205,9 @@ extension NSBezierPath {
 		return path
 	}
 
-	/// For making a circle progress indicator
+	/**
+	For making a circle progress indicator.
+	*/
 	static func progressCircle(radius: Double, center: CGPoint) -> Self {
 		let startAngle = 90.0
 		let path = self.init()
@@ -233,7 +238,9 @@ extension CAShapeLayer {
 
 
 extension CATextLayer {
-	/// Initializer with better defaults.
+	/**
+	Initializer with better defaults.
+	*/
 	convenience init(text: String, fontSize: Double? = nil, color: NSColor? = nil) {
 		self.init()
 		string = text
@@ -301,7 +308,9 @@ final class IndeterminateProgressCircleShapeLayer: CAShapeLayer {
 
 
 extension NSBezierPath {
-	/// UIKit polyfill.
+	/**
+	UIKit polyfill.
+	*/
 	var cgPath: CGPath {
 		let path = CGMutablePath()
 		var points = [CGPoint](repeating: .zero, count: 3)
@@ -325,7 +334,9 @@ extension NSBezierPath {
 		return path
 	}
 
-	/// UIKit polyfill.
+	/**
+	UIKit polyfill.
+	*/
 	convenience init(roundedRect rect: CGRect, cornerRadius: CGFloat) {
 		self.init(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
 	}
@@ -415,7 +426,9 @@ extension NSView {
 
 
 extension CABasicAnimation {
-	/// Rotates the element around its center point infinitely.
+	/**
+	Rotates the element around its center point infinitely.
+	*/
 	static var rotate: Self {
 		let animation = self.init(keyPath: #keyPath(CAShapeLayer.transform))
 		animation.valueFunction = CAValueFunction(name: .rotateZ)
@@ -430,9 +443,11 @@ extension CABasicAnimation {
 
 
 extension NSWindow {
-	/// Whether the window or its owning app is showing a modal or sheet.
-	/// This can be useful to disable any unintended interaction underneath it,
-	/// for example, drag and drop or mouse hover.
+	/**
+	Whether the window or its owning app is showing a modal or sheet.
+
+	This can be useful to disable any unintended interaction underneath it, for example, drag and drop or mouse hover.
+	*/
 	var isShowingModalOrSheet: Bool {
 		NSApp.modalWindow != nil ||
 		attachedSheet != nil
@@ -450,7 +465,9 @@ func assertMainThread(
 
 
 extension KeyPath where Root: NSObject {
-	/// Get the string version of the key path when the root is an `NSObject`.
+	/**
+	Get the string version of the key path when the root is an `NSObject`.
+	*/
 	var toString: String {
 		NSExpression(forKeyPath: self).keyPath
 	}

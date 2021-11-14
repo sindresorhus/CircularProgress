@@ -193,9 +193,11 @@ open class CustomButton: NSButton {
 
 	private var colorGenerators = [KeyPath<CustomButton, NSColor>: ColorGenerator]()
 
-	/// Gets or sets the color generation closure for the provided key path.
-	///
-	/// - Parameter keyPath: The key path that specifies the color related property.
+	/**
+	Gets or sets the color generation closure for the provided key path.
+
+	- Parameter keyPath: The key path that specifies the color related property.
+	*/
 	public subscript(colorGenerator keyPath: KeyPath<CustomButton, NSColor>) -> ColorGenerator? {
 		get { colorGenerators[keyPath] }
 		set {

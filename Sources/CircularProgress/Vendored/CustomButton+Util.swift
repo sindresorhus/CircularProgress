@@ -123,7 +123,9 @@ extension CGRect {
 
 
 extension CGSize {
-	/// Returns a CGRect with `self` centered in it.
+	/**
+	Returns a CGRect with `self` centered in it.
+	*/
 	func centered(in rect: CGRect) -> CGRect {
 		CGRect(
 			x: (rect.width - width) / 2,
