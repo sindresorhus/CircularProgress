@@ -14,21 +14,9 @@ This package is used in production by apps like [Gifski](https://github.com/sind
 
 ## Install
 
-#### Swift Package Manager
-
 Add `https://github.com/sindresorhus/CircularProgress` in the [“Swift Package Manager” tab in Xcode](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
 
-#### Carthage
-
-```
-github "sindresorhus/CircularProgress"
-```
-
-#### CocoaPods
-
-```ruby
-pod 'CircularProgressMac'
-```
+*Latest version: 2.2.0*
 
 ## Usage
 
