@@ -20,6 +20,7 @@ final class HoverView: NSView {
 }
 ```
 */
+@MainActor
 final class TrackingArea {
 	private weak var view: NSView?
 	private let rect: CGRect
@@ -77,6 +78,7 @@ final class AnimationDelegate: NSObject, CAAnimationDelegate {
 
 protocol LayerColorAnimation: AnyObject {}
 extension LayerColorAnimation where Self: CALayer {
+	@MainActor // TODO: Can probably be removed when targeting macOS 13.
 	func animate(_ keyPath: ReferenceWritableKeyPath<Self, CGColor?>, to color: CGColor, duration: Double) {
 		let animation = CABasicAnimation(keyPath: keyPath.toString)
 		animation.fromValue = self[keyPath: keyPath]
@@ -90,10 +92,12 @@ extension LayerColorAnimation where Self: CALayer {
 		}
 	}
 
+	@MainActor // TODO: Can probably be removed when targeting macOS 13.
 	func animate(_ keyPath: ReferenceWritableKeyPath<Self, CGColor?>, to color: NSColor, duration: Double) {
 		animate(keyPath, to: color.cgColor, duration: duration)
 	}
 
+	@MainActor // TODO: Can probably be removed when targeting macOS 13.
 	func add(_ animation: CAAnimation, forKeyPath keyPath: ReferenceWritableKeyPath<Self, CGColor?>, completion: @escaping ((Bool) -> Void)) {
 		let animationDelegate = AnimationDelegate()
 		animationDelegate.didStopHandler = completion

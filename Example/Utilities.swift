@@ -79,6 +79,7 @@ extension NSView {
 	/**
 	- Note: You should almost never need to set `appearanceName` as it's done automatically.
 	*/
+	@MainActor // TODO: Can probably be removed when targeting macOS 13.
 	@discardableResult
 	func insertVibrancyView(
 		material: NSVisualEffectView.Material,
@@ -103,8 +104,6 @@ extension NSView {
 
 extension NSWindow {
 	func makeVibrant() {
-		if #available(macOS 10.14, *) {
-			contentView?.insertVibrancyView(material: .underWindowBackground)
-		}
+		contentView?.insertVibrancyView(material: .underWindowBackground)
 	}
 }

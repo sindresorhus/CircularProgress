@@ -8,9 +8,9 @@ This package is used in production by apps like [Gifski](https://github.com/sind
 
 ## Requirements
 
-- macOS 10.12+
-- Xcode 13+
-- Swift 5.5+
+- macOS 10.15+
+- Xcode 13.4+
+- Swift 5.6+
 
 ## Install
 
@@ -33,8 +33,6 @@ pod 'CircularProgressMac'
 ## Usage
 
 Also check out the example app in the Xcode project.
-
-Note: All the properties/methods must be set/called from the main thread.
 
 ### Manually set the progress
 
@@ -117,15 +115,13 @@ This is accomplished by setting the `.isLabelHidden` property to `true`. The def
 ```swift
 /**
 Color of the circular progress view.
-
-Defaults to the user's accent color. For High Sierra and below it uses a fallback color.
 */
 @IBInspectable var color: NSColor = .controlAccentColor
 
 /**
 Line width of the circular progress view.
 */
-@IBInspectable var lineWidth: CGFloat = 2
+@IBInspectable var lineWidth: Double = 2
 
 /**
 Show an animated checkmark instead of `100%`.
@@ -220,8 +216,3 @@ convenience init(size: Double) {}
 - [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) - Add "Launch at Login" functionality to your macOS app
 - [Regex](https://github.com/sindresorhus/Regex) - Swifty regular expressions
 - [More…](https://github.com/search?q=user%3Asindresorhus+language%3Aswift)
-
-## Maintainers
-
-- [Sindre Sorhus](https://github.com/sindresorhus)
-- [Boy van Amstel](https://github.com/boyvanamstel)

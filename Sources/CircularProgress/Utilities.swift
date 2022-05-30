@@ -21,20 +21,8 @@ func with<T>(_ item: T, update: (inout T) throws -> Void) rethrows -> T {
 
 
 extension NSColor {
-	static let controlAccentColorPolyfill: NSColor = {
-		if #available(macOS 10.14, *) {
-			return .controlAccentColor
-		} else {
-			// swiftlint:disable:next object_literal
-			return NSColor(red: 0.10, green: 0.47, blue: 0.98, alpha: 1)
-		}
-	}()
-
-	func withAlpha(_ alpha: Double) -> NSColor {
-		withAlphaComponent(alpha)
-	}
-
 	typealias HSBAColor = (hue: Double, saturation: Double, brightness: Double, alpha: Double)
+
 	var hsba: HSBAColor {
 		var hue: CGFloat = 0
 		var saturation: CGFloat = 0
@@ -42,7 +30,7 @@ extension NSColor {
 		var alpha: CGFloat = 0
 		let color = usingColorSpace(.deviceRGB) ?? self
 		color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-		// TODO: Seems like the Swift 5.5 compiler cannot infer the `Double` here. Open an issue if it's still a problem in Swift 6.
+		// TODO: Seems like the Swift 5.6 compiler cannot infer the `Double` here. Open an issue if it's still a problem in Swift 6.
 		return HSBAColor(Double(hue), Double(saturation), Double(brightness), Double(alpha))
 	}
 
@@ -452,15 +440,6 @@ extension NSWindow {
 		NSApp.modalWindow != nil ||
 		attachedSheet != nil
 	}
-}
-
-
-func assertMainThread(
-	function: StaticString = #function,
-	file: StaticString = #fileID,
-	line: Int = #line
-) {
-	assert(Thread.isMainThread, "\(function) in \(file):\(line) must run on the main thread!")
 }
 
 

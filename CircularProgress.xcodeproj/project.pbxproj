@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9F2F370B224E9BD100C71D8E /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F370A224E9BD100C71D8E /* CheckmarkView.swift */; };
 		B5344AB721F8B27100C12ADB /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5344AB621F8B27100C12ADB /* CustomButton.swift */; };
-		E303038B233786DA00B8ED1F /* CustomButton+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E303038A233786DA00B8ED1F /* CustomButton+Util.swift */; };
+		E303038B233786DA00B8ED1F /* CustomButton+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E303038A233786DA00B8ED1F /* CustomButton+Utilities.swift */; };
 		E327393D2177359E00FFE124 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E327393C2177359E00FFE124 /* Utilities.swift */; };
 		E3FB30C420EA5DBC009BA1BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FB30C320EA5DBC009BA1BD /* AppDelegate.swift */; };
 		E3FB30C920EA5DBE009BA1BD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FB30C720EA5DBE009BA1BD /* MainMenu.xib */; };
@@ -48,7 +48,7 @@
 		9F2F370A224E9BD100C71D8E /* CheckmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CheckmarkView.swift; sourceTree = "<group>"; usesTabs = 1; };
 		B5344AB621F8B27100C12ADB /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CustomButton.swift; sourceTree = "<group>"; usesTabs = 1; };
 		"CircularProgress::CircularProgress::Product" /* CircularProgress.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CircularProgress.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E303038A233786DA00B8ED1F /* CustomButton+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "CustomButton+Util.swift"; sourceTree = "<group>"; usesTabs = 1; };
+		E303038A233786DA00B8ED1F /* CustomButton+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "CustomButton+Utilities.swift"; sourceTree = "<group>"; usesTabs = 1; };
 		E327393C2177359E00FFE124 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Utilities.swift; sourceTree = "<group>"; usesTabs = 1; };
 		E3FB30C120EA5DBC009BA1BD /* CircularProgressExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CircularProgressExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3FB30C320EA5DBC009BA1BD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; usesTabs = 1; };
@@ -82,7 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				B5344AB621F8B27100C12ADB /* CustomButton.swift */,
-				E303038A233786DA00B8ED1F /* CustomButton+Util.swift */,
+				E303038A233786DA00B8ED1F /* CustomButton+Utilities.swift */,
 			);
 			path = Vendored;
 			sourceTree = "<group>";
@@ -276,7 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
-				E303038B233786DA00B8ED1F /* CustomButton+Util.swift in Sources */,
+				E303038B233786DA00B8ED1F /* CustomButton+Utilities.swift in Sources */,
 				OBJ_19 /* CircularProgress.swift in Sources */,
 				OBJ_20 /* Utilities.swift in Sources */,
 				9F2F370B224E9BD100C71D8E /* CheckmarkView.swift in Sources */,
@@ -518,7 +518,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -566,7 +566,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				OTHER_SWIFT_FLAGS = "-DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

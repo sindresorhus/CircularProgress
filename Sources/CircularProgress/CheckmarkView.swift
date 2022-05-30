@@ -31,7 +31,7 @@ final class CheckmarkView: NSView {
 
 	private let animationDuration: TimeInterval = 0.5
 
-	var color: NSColor = .controlAccentColorPolyfill {
+	var color: NSColor = .controlAccentColor {
 		didSet {
 			shapeLayer.strokeColor = color.cgColor
 		}

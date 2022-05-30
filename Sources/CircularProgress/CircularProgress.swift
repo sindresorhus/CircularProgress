@@ -1,5 +1,6 @@
 import Cocoa
 
+@MainActor
 @IBDesignable
 public final class CircularProgress: NSView {
 	private lazy var radius = bounds.width < bounds.height ? bounds.midX * 0.8 : bounds.midY * 0.8
@@ -36,7 +37,7 @@ public final class CircularProgress: NSView {
 
 	private lazy var cancelButton = with(CustomButton.circularButton(title: "╳", radius: radius, center: bounds.center)) {
 		$0.textColor = color
-		$0.backgroundColor = color.withAlpha(0.1)
+		$0.backgroundColor = color.withAlphaComponent(0.1)
 		$0.activeBackgroundColor = color
 		$0.borderWidth = 0
 		$0.isHidden = true
@@ -51,32 +52,25 @@ public final class CircularProgress: NSView {
 		$0.isHidden = true
 	}
 
-	private var originalColor = NSColor.controlAccentColorPolyfill
-	private var _color = NSColor.controlAccentColorPolyfill
+	private var originalColor = NSColor.controlAccentColor
+	private var _color = NSColor.controlAccentColor
 
 	/**
 	Color of the circular progress view.
-
-	Defaults to the user's accent color. For High Sierra and below it uses a fallback color.
 	*/
 	@IBInspectable public var color: NSColor {
-		get {
-			assertMainThread()
-			return _color
-		}
+		get { _color }
 		set {
-			assertMainThread()
 			_color = newValue
 			originalColor = newValue
 			needsDisplay = true
 		}
 	}
 
-	// TODO: Make this a `Double` instead in the next major release.
 	/**
 	Line width of the circular progress view.
 	*/
-	@IBInspectable public var lineWidth: CGFloat = 2 {
+	@IBInspectable public var lineWidth: Double = 2 {
 		didSet {
 			backgroundCircle.lineWidth = lineWidth / 2
 			progressCircle.lineWidth = lineWidth
@@ -96,13 +90,8 @@ public final class CircularProgress: NSView {
 	- Note: The value will be clamped to `0...1`.
 	*/
 	@IBInspectable public var progress: Double {
-		get {
-			assertMainThread()
-			return _progress
-		}
+		get { _progress }
 		set {
-			assertMainThread()
-
 			_progress = newValue.clamped(to: 0...1)
 
 			// swiftlint:disable:next trailing_closure
@@ -135,8 +124,6 @@ public final class CircularProgress: NSView {
 	*/
 	@IBInspectable public private(set) var isFinished: Bool {
 		get {
-			assertMainThread()
-
 			if let progressInstance = progressInstance {
 				return progressInstance.isFinished
 			}
@@ -144,8 +131,6 @@ public final class CircularProgress: NSView {
 			return _isFinished
 		}
 		set {
-			assertMainThread()
-
 			willChangeValue(for: \.isFinished)
 			_isFinished = newValue
 			didChangeValue(for: \.isFinished)
@@ -167,8 +152,7 @@ public final class CircularProgress: NSView {
 	*/
 	public var progressInstance: Progress? {
 		didSet {
-			assertMainThread()
-
+			// TODO: Use `AsyncStream` for all these listeners.
 			if let progressInstance = progressInstance {
 				progressObserver = progressInstance.observe(\.fractionCompleted) { [weak self] sender, _ in
 					DispatchQueue.main.async {
@@ -234,6 +218,7 @@ public final class CircularProgress: NSView {
 		commonInit()
 	}
 
+	@MainActor
 	override public func prepareForInterfaceBuilder() {
 		super.prepareForInterfaceBuilder()
 		commonInit()
@@ -253,13 +238,13 @@ public final class CircularProgress: NSView {
 
 	private func updateColors() {
 		let duration = 0.2
-		backgroundCircle.animate(\.strokeColor, to: color.withAlpha(0.5), duration: duration)
+		backgroundCircle.animate(\.strokeColor, to: color.withAlphaComponent(0.5), duration: duration)
 		progressCircle.animate(\.strokeColor, to: color, duration: duration)
 		progressLabel.animate(\.foregroundColor, to: color, duration: duration)
 		indeterminateCircle.animate(\.strokeColor, to: color, duration: duration)
 
 		cancelButton.textColor = color
-		cancelButton.backgroundColor = color.withAlpha(0.1)
+		cancelButton.backgroundColor = color.withAlphaComponent(0.1)
 		cancelButton.activeBackgroundColor = color
 
 		successView.color = color
@@ -288,8 +273,6 @@ public final class CircularProgress: NSView {
 	Reset the progress back to zero without animating.
 	*/
 	public func resetProgress() {
-		assertMainThread()
-
 		alphaValue = 1
 
 		_color = originalColor
@@ -312,8 +295,6 @@ public final class CircularProgress: NSView {
 	Cancels `Progress` if it's set and prevents further updates.
 	*/
 	public func cancelProgress() {
-		assertMainThread()
-
 		guard isCancellable else {
 			return
 		}
@@ -337,8 +318,6 @@ public final class CircularProgress: NSView {
 	*/
 	@IBInspectable public var isCancellable: Bool {
 		get {
-			assertMainThread()
-
 			if let progressInstance = progressInstance {
 				return progressInstance.isCancellable
 			}
@@ -346,8 +325,6 @@ public final class CircularProgress: NSView {
 			return _isCancellable
 		}
 		set {
-			assertMainThread()
-
 			_isCancellable = newValue
 			updateTrackingAreas()
 		}
@@ -361,8 +338,6 @@ public final class CircularProgress: NSView {
 	*/
 	@IBInspectable public private(set) var isCancelled: Bool {
 		get {
-			assertMainThread()
-
 			if let progressInstance = progressInstance {
 				return progressInstance.isCancelled
 			}
@@ -370,8 +345,6 @@ public final class CircularProgress: NSView {
 			return _isCancelled
 		}
 		set {
-			assertMainThread()
-
 			willChangeValue(for: \.isCancelled)
 			_isCancelled = newValue
 			didChangeValue(for: \.isCancelled)
@@ -474,8 +447,6 @@ public final class CircularProgress: NSView {
 			return _isIndeterminate
 		}
 		set {
-			assertMainThread()
-
 			willChangeValue(for: \.isIndeterminate)
 			_isIndeterminate = newValue
 			didChangeValue(for: \.isIndeterminate)
@@ -509,8 +480,6 @@ public final class CircularProgress: NSView {
 	@IBInspectable public var isLabelHidden: Bool {
 		get { _isLabelHidden }
 		set {
-			assertMainThread()
-
 			willChangeValue(for: \.isLabelHidden)
 			_isLabelHidden = newValue
 			didChangeValue(for: \.isLabelHidden)

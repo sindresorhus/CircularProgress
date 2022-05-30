@@ -1,6 +1,7 @@
 // Vendored from: https://github.com/sindresorhus/CustomButton
 import Cocoa
 
+@MainActor
 @IBDesignable
 open class CustomButton: NSButton {
 	private let titleLayer = CATextLayer()
@@ -49,28 +50,28 @@ open class CustomButton: NSButton {
 		}
 	}
 
-	@IBInspectable public var borderColor: NSColor = .controlAccentColorPolyfill {
+	@IBInspectable public var borderColor: NSColor = .controlAccentColor {
 		didSet {
 			needsDisplay = true
 			animateColor()
 		}
 	}
 
-	@IBInspectable public var activeBorderColor: NSColor = .controlAccentColorPolyfill {
+	@IBInspectable public var activeBorderColor: NSColor = .controlAccentColor {
 		didSet {
 			needsDisplay = true
 			animateColor()
 		}
 	}
 
-	@IBInspectable public var backgroundColor: NSColor = .controlAccentColorPolyfill {
+	@IBInspectable public var backgroundColor: NSColor = .controlAccentColor {
 		didSet {
 			needsDisplay = true
 			animateColor()
 		}
 	}
 
-	@IBInspectable public var activeBackgroundColor: NSColor = .controlAccentColorPolyfill {
+	@IBInspectable public var activeBackgroundColor: NSColor = .controlAccentColor {
 		didSet {
 			needsDisplay = true
 			animateColor()
@@ -131,6 +132,7 @@ open class CustomButton: NSButton {
 		}
 	}
 
+	@MainActor
 	public convenience init() {
 		self.init(frame: .zero)
 	}
