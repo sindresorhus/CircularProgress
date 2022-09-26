@@ -47,8 +47,8 @@ final class TrackingArea {
 	- Note: This should be called in your `NSView#updateTrackingAreas()` method.
 	*/
 	func update() {
-		if let oldTrackingArea = trackingArea {
-			view?.removeTrackingArea(oldTrackingArea)
+		if let trackingArea {
+			view?.removeTrackingArea(trackingArea)
 		}
 
 		let newTrackingArea = NSTrackingArea(

@@ -96,7 +96,7 @@ public final class CircularProgress: NSView {
 
 			// swiftlint:disable:next trailing_closure
 			CALayer.animate(duration: 0.5, timingFunction: .easeOut, animations: { [weak self] in
-				guard let self = self else {
+				guard let self else {
 					return
 				}
 
@@ -124,7 +124,7 @@ public final class CircularProgress: NSView {
 	*/
 	@IBInspectable public private(set) var isFinished: Bool {
 		get {
-			if let progressInstance = progressInstance {
+			if let progressInstance {
 				return progressInstance.isFinished
 			}
 
@@ -153,11 +153,11 @@ public final class CircularProgress: NSView {
 	public var progressInstance: Progress? {
 		didSet {
 			// TODO: Use `AsyncStream` for all these listeners.
-			if let progressInstance = progressInstance {
+			if let progressInstance {
 				progressObserver = progressInstance.observe(\.fractionCompleted) { [weak self] sender, _ in
 					DispatchQueue.main.async {
 						guard
-							let self = self,
+							let self,
 							!self.isCancelled,
 							!sender.isFinished
 						else {
@@ -171,7 +171,7 @@ public final class CircularProgress: NSView {
 				finishedObserver = progressInstance.observe(\.isFinished) { [weak self] sender, _ in
 					DispatchQueue.main.async {
 						guard
-							let self = self,
+							let self,
 							!self.isCancelled,
 							sender.isFinished
 						else {
@@ -184,7 +184,7 @@ public final class CircularProgress: NSView {
 
 				cancelledObserver = progressInstance.observe(\.isCancelled) { [weak self] sender, _ in
 					DispatchQueue.main.async {
-						guard let self = self else {
+						guard let self else {
 							return
 						}
 
@@ -194,7 +194,7 @@ public final class CircularProgress: NSView {
 
 				indeterminateObserver = progressInstance.observe(\.isIndeterminate) { [weak self] sender, _ in
 					DispatchQueue.main.async {
-						guard let self = self else {
+						guard let self else {
 							return
 						}
 
@@ -299,7 +299,7 @@ public final class CircularProgress: NSView {
 			return
 		}
 
-		guard let progressInstance = progressInstance else {
+		guard let progressInstance else {
 			isCancelled = true
 			return
 		}
@@ -318,7 +318,7 @@ public final class CircularProgress: NSView {
 	*/
 	@IBInspectable public var isCancellable: Bool {
 		get {
-			if let progressInstance = progressInstance {
+			if let progressInstance {
 				return progressInstance.isCancellable
 			}
 
@@ -338,7 +338,7 @@ public final class CircularProgress: NSView {
 	*/
 	@IBInspectable public private(set) var isCancelled: Bool {
 		get {
-			if let progressInstance = progressInstance {
+			if let progressInstance {
 				return progressInstance.isCancelled
 			}
 
@@ -372,8 +372,8 @@ public final class CircularProgress: NSView {
 			return
 		}
 
-		if let colorHandler = cancelledStateColorHandler {
-			_color = colorHandler(originalColor)
+		if let cancelledStateColorHandler {
+			_color = cancelledStateColorHandler(originalColor)
 		} else {
 			_color = originalColor.adjusting(saturation: -0.4, brightness: -0.2)
 			alphaValue = 0.7
@@ -385,8 +385,8 @@ public final class CircularProgress: NSView {
 	private weak var trackingArea: NSTrackingArea?
 
 	override public func updateTrackingAreas() {
-		if let oldTrackingArea = trackingArea {
-			removeTrackingArea(oldTrackingArea)
+		if let trackingArea {
+			removeTrackingArea(trackingArea)
 		}
 
 		guard isCancellable else {
@@ -440,7 +440,7 @@ public final class CircularProgress: NSView {
 	*/
 	@IBInspectable public var isIndeterminate: Bool {
 		get {
-			if let progressInstance = progressInstance {
+			if let progressInstance {
 				return progressInstance.isIndeterminate
 			}
 

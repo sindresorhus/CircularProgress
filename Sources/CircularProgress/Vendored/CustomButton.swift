@@ -223,7 +223,7 @@ open class CustomButton: NSButton {
 	private func setTitle() {
 		titleLayer.string = title
 
-		if let font = font {
+		if let font {
 			titleLayer.font = font
 			titleLayer.fontSize = font.pointSize
 		}

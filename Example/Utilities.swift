@@ -91,7 +91,7 @@ extension NSView {
 		view.material = material
 		view.blendingMode = blendingMode
 
-		if let appearanceName = appearanceName {
+		if let appearanceName {
 			view.appearance = NSAppearance(named: appearanceName)
 		}
 

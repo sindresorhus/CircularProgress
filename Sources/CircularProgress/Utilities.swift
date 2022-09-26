@@ -116,7 +116,7 @@ extension CALayer {
 			CATransaction.setAnimationDuration(duration)
 			CATransaction.setAnimationTimingFunction(timingFunction)
 
-			if let completion = completion {
+			if let completion {
 				CATransaction.setCompletionBlock(completion)
 			}
 
@@ -232,7 +232,7 @@ extension CATextLayer {
 	convenience init(text: String, fontSize: Double? = nil, color: NSColor? = nil) {
 		self.init()
 		string = text
-		if let fontSize = fontSize {
+		if let fontSize {
 			self.fontSize = fontSize
 		}
 		self.color = color
@@ -242,11 +242,11 @@ extension CATextLayer {
 
 	var color: NSColor? {
 		get {
-			guard let color = foregroundColor else {
+			guard let foregroundColor else {
 				return nil
 			}
 
-			return NSColor(cgColor: color)
+			return NSColor(cgColor: foregroundColor)
 		}
 		set {
 			foregroundColor = newValue?.cgColor
