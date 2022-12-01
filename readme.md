@@ -14,7 +14,7 @@ macOS 10.15+
 
 Add `https://github.com/sindresorhus/CircularProgress` in the [“Swift Package Manager” tab in Xcode](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
 
-*Latest version: 3.0.0*
+*Latest version: 3.0.1*
 
 ## Usage
 
