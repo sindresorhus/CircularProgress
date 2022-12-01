@@ -154,8 +154,8 @@ public final class CircularProgress: NSView {
 		didSet {
 			// TODO: Use `AsyncStream` for all these listeners.
 			if let progressInstance {
-				progressObserver = progressInstance.observe(\.fractionCompleted) { [weak self] sender, _ in
-					DispatchQueue.main.async {
+				progressObserver = progressInstance.observe(\.fractionCompleted) { sender, _ in
+					Task { @MainActor [weak self] in
 						guard
 							let self,
 							!self.isCancelled,
@@ -168,8 +168,8 @@ public final class CircularProgress: NSView {
 					}
 				}
 
-				finishedObserver = progressInstance.observe(\.isFinished) { [weak self] sender, _ in
-					DispatchQueue.main.async {
+				finishedObserver = progressInstance.observe(\.isFinished) { sender, _ in
+					Task { @MainActor [weak self] in
 						guard
 							let self,
 							!self.isCancelled,
@@ -182,8 +182,8 @@ public final class CircularProgress: NSView {
 					}
 				}
 
-				cancelledObserver = progressInstance.observe(\.isCancelled) { [weak self] sender, _ in
-					DispatchQueue.main.async {
+				cancelledObserver = progressInstance.observe(\.isCancelled) { sender, _ in
+					Task { @MainActor [weak self] in
 						guard let self else {
 							return
 						}
@@ -192,8 +192,8 @@ public final class CircularProgress: NSView {
 					}
 				}
 
-				indeterminateObserver = progressInstance.observe(\.isIndeterminate) { [weak self] sender, _ in
-					DispatchQueue.main.async {
+				indeterminateObserver = progressInstance.observe(\.isIndeterminate) { sender, _ in
+					Task { @MainActor [weak self] in
 						guard let self else {
 							return
 						}
