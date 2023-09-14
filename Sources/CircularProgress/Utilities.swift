@@ -214,13 +214,13 @@ extension NSBezierPath {
 extension CAShapeLayer {
 	static func circle(radius: Double, center: CGPoint) -> Self {
 		let layer = self.init()
-		layer.path = NSBezierPath.circle(radius: radius, center: center).cgPath
+		layer.path = NSBezierPath.circle(radius: radius, center: center).ss_cgPath
 		return layer
 	}
 
 	convenience init(path: NSBezierPath) {
 		self.init()
-		self.path = path.cgPath
+		self.path = path.ss_cgPath
 	}
 }
 
@@ -260,7 +260,7 @@ final class ProgressCircleShapeLayer: CAShapeLayer {
 		self.init()
 		fillColor = nil
 		lineCap = .round
-		path = NSBezierPath.progressCircle(radius: radius, center: center).cgPath
+		path = NSBezierPath.progressCircle(radius: radius, center: center).ss_cgPath
 		strokeEnd = 0
 	}
 
@@ -288,7 +288,7 @@ final class IndeterminateProgressCircleShapeLayer: CAShapeLayer {
 	convenience init(radius: Double, center: CGPoint) {
 		self.init()
 		fillColor = nil
-		path = NSBezierPath.circle(radius: radius, center: bounds.center, startAngle: 270).cgPath
+		path = NSBezierPath.circle(radius: radius, center: bounds.center, startAngle: 270).ss_cgPath
 		anchorPoint = CGPoint(x: 0.5, y: 0.5)
 		position = center
 	}
@@ -299,7 +299,11 @@ extension NSBezierPath {
 	/**
 	UIKit polyfill.
 	*/
-	var cgPath: CGPath {
+	var ss_cgPath: CGPath {
+		if #available(macOS 14, *) {
+			return cgPath
+		}
+
 		let path = CGMutablePath()
 		var points = [CGPoint](repeating: .zero, count: 3)
 
@@ -314,8 +318,8 @@ extension NSBezierPath {
 				path.addCurve(to: points[2], control1: points[0], control2: points[1])
 			case .closePath:
 				path.closeSubpath()
-			@unknown default:
-				assertionFailure("NSBezierPath received a new enum case. Please handle it.")
+			default:
+				continue
 			}
 		}
 
@@ -343,7 +347,7 @@ final class AssociatedObject<T: Any> {
 
 
 extension NSControl {
-	typealias ActionClosure = ((NSControl) -> Void)
+	typealias ActionClosure = (NSControl) -> Void
 
 	private enum AssociatedKeys {
 		static let onActionClosure = AssociatedObject<ActionClosure>()

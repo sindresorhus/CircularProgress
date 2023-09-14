@@ -1,8 +1,8 @@
 import Cocoa
 import CircularProgress
 
-@main
 @MainActor
+@main
 final class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet private var window: NSWindow!
 	@IBOutlet private var manualCircularProgress: CircularProgress!

@@ -63,7 +63,7 @@ final class CheckmarkView: NSView {
 
 		return with(CAShapeLayer()) {
 			$0.frame = CGRect(x: margin, y: margin, width: size, height: size)
-			$0.path = checkmarkPath.cgPath
+			$0.path = checkmarkPath.ss_cgPath
 			$0.fillColor = nil
 			$0.fillMode = .forwards
 			$0.lineCap = .round

@@ -31,7 +31,7 @@ public final class CircularProgress: NSView {
 		$0.isHidden = true
 	}
 
-	internal lazy var indeterminateCircle = with(IndeterminateProgressCircleShapeLayer(radius: radius, center: bounds.center)) {
+	lazy var indeterminateCircle = with(IndeterminateProgressCircleShapeLayer(radius: radius, center: bounds.center)) {
 		$0.lineWidth = lineWidth
 	}
 
@@ -100,7 +100,7 @@ public final class CircularProgress: NSView {
 					return
 				}
 
-				self.progressCircle.progress = self._progress
+				progressCircle.progress = _progress
 			})
 
 			progressLabel.isHidden = isLabelHidden || (progress == 0 && isIndeterminate ? cancelButton.isHidden : !cancelButton.isHidden)
